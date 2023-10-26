@@ -4,17 +4,16 @@
  */
 package com.GrupoD.AppServSalud.dominio.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.List;
 
 /**
  *
@@ -36,9 +35,15 @@ public class HistoriaClinica {
     
     private String historia;
      
-    @OneToMany
-    private Profesional profesional;
+    @ManyToMany
+    @JoinTable(name = "historia_clinica_profesional",
+            joinColumns = @JoinColumn(name = "id_historia_clinica"),
+            inverseJoinColumns = @JoinColumn(name = "id_profesional"))
+    private List<Profesional> profesional;
 
-    @OneToOne
-    private Paciente paciente;
+    @ManyToMany
+    @JoinTable(name = "historia_clinica_paciente",
+            joinColumns = @JoinColumn(name = "id_historia_clinica"),
+            inverseJoinColumns = @JoinColumn(name = "id_paciente"))
+    private List<Paciente> paciente;
 }

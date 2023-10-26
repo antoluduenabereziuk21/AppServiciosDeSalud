@@ -1,28 +1,27 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
-import com.GrupoD.AppServSalud.dominio.entidades.HistoriaClinica;
-import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
-import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
-import com.GrupoD.AppServSalud.dominio.entidades.Turno;
-import com.GrupoD.AppServSalud.dominio.repositorio.HistoriaClinicaRepositorio;
+
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
-import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
-import com.GrupoD.AppServSalud.dominio.repositorio.TurnoRepositorio;
 import com.GrupoD.AppServSalud.excepciones.Excepcion;
-import com.GrupoD.AppServSalud.utilidades.ObraSocial;
-import com.GrupoD.AppServSalud.utilidades.Rol;
-import com.GrupoD.AppServSalud.utilidades.Sexo;
+import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
+import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
 import java.util.Optional;
+
+import com.GrupoD.AppServSalud.utilidades.Sexo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+
+@Service
 public class ServicioPaciente {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
+    /*
     @Autowired
     private ImagenServicio imagenServio;
     @Autowired
@@ -31,31 +30,36 @@ public class ServicioPaciente {
     private ProfesionalRepositorio profesionalRepositorio;
     @Autowired
     private TurnoRepositorio turnoRepositorio;
+    */
 
     @Transactional
-    public void crearPaciente(MultipartFile archivo, String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            Sexo sexo, String telefono, ObraSocial obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws Excepcion {
+    public void crearPaciente(String email, String contraseña, String nombre, String apellido,
+                              String dni, Date fechaDeNacimiento, String sexo, String telefono,
+                              String obraSocial /*,MultipartFile archivo, String idHistoriaClinica,
+                              String idProfesional, String idTurno*/) throws Excepcion {
 
-        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial, idProfesional, idTurno);
-        
+        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
+
+        /*
         HistoriaClinica historiaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica).get();
         Profesional profesional = profesionalRepositorio.findById(idProfesional).get();
         Turno turno = turnoRepositorio.findById(idTurno).get();
-
+        */
         Paciente paciente = new Paciente();
 
         paciente.setEmail(email);
-        paciente.setContraseña(contraseña);
+        paciente.setPassword(contraseña);
         paciente.setNombre(nombre);
         paciente.setApellido(apellido);
         paciente.setDni(dni);
-        paciente.setFechaDeNacimiento(fechaDeNacimiento);
+        paciente.setFechaNacimiento(fechaDeNacimiento);
         paciente.setTelefono(telefono);
-        paciente.setEnable(true);
-        paciente.setFechaCreacion(new Date());
-        paciente.setRol(Rol.PACIENTE);
-        paciente.setSexo(sexo);
-        paciente.setObraSocial(obraSocial);
+        paciente.setActivo(true);
+        paciente.setFechaAlta(new Date());
+        paciente.setRol(RolEnum.PACIENTE);
+        paciente.setSexo(Sexo.valueOf(sexo));
+        paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+        /*
         paciente.setHistoriaClinica(historiaClinica);
         paciente.setProfesional(profesional);
         paciente.setTurno(turno);
@@ -63,21 +67,20 @@ public class ServicioPaciente {
         Imagen imagen = imagenServio.Guardar(archivo);
 
         paciente.setImagen(imagen);
-
+        */
         pacienteRepositorio.save(paciente);
     }
 
     @Transactional
     public void modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            Sexo sexo, String telefono, ObraSocial obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws Excepcion {
+            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws Excepcion {
 
-        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial, idProfesional, idTurno);
-        
+        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
+        Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
+        /*
         Optional<HistoriaClinica> respuestaHistoriaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica);
         Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
         Optional<Turno> respuestaTurno = turnoRepositorio.findById(idTurno);
-        Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
-
         HistoriaClinica historiaClinica = new HistoriaClinica();
         Profesional profesional = new Profesional();
         Turno turno = new Turno();
@@ -96,23 +99,23 @@ public class ServicioPaciente {
 
             turno = respuestaTurno.get();
         }
-
+        */
         if (respuestaPaciente.isPresent()) {
 
             Paciente paciente = respuestaPaciente.get();
 
             paciente.setEmail(email);
-            paciente.setContraseña(contraseña);
+            paciente.setPassword(contraseña);
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
             paciente.setDni(dni);
-            paciente.setFechaDeNacimiento(fechaDeNacimiento);
+            paciente.setFechaNacimiento(fechaDeNacimiento);
             paciente.setTelefono(telefono);
-            paciente.setEnable(true);
-            paciente.setFechaCreacion(new Date());
-            paciente.setRol(Rol.PACIENTE);
-            paciente.setSexo(sexo);
-            paciente.setObraSocial(obraSocial);
+            paciente.setActivo(true);
+            paciente.setRol(RolEnum.PACIENTE);
+            paciente.setSexo(Sexo.valueOf(sexo));
+            paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+            /*
             paciente.setHistoriaClinica(historiaClinica);
             paciente.setProfesional(profesional);
             paciente.setTurno(turno);
@@ -127,7 +130,7 @@ public class ServicioPaciente {
             Imagen imagen = imagenServio.actualizar(archivo, idImagen);
 
             paciente.setImagen(imagen);
-
+            */
             pacienteRepositorio.save(paciente);
 
         }
@@ -142,13 +145,13 @@ public class ServicioPaciente {
         
             Paciente paciente = respuesta.get();
             
-            paciente.setEnable(enable);
+            paciente.setActivo(enable);
         }
         
     }
 
-    public void validar(String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            Sexo sexo, String telefono, ObraSocial obraSocial, String idProfesional, String idTurno) throws Excepcion{
+    public void validar(String email, String contraseña, String nombre, String apellido, String dni,
+                        Date fechaDeNacimiento, String sexo, String telefono, String obraSocial) throws Excepcion{
 
         if(email == null || email.isEmpty()){
         
@@ -190,16 +193,6 @@ public class ServicioPaciente {
             throw new Excepcion("Ingrese su sexo");
         }
         
-        if(idProfesional == null || idProfesional.isEmpty()){
-        
-            throw new Excepcion("Debe asigarse un prosefional");
-        }
-        
-        if(idTurno == null || idTurno.isEmpty()){
-        
-            throw new Excepcion("Debe elegir un turno");
-        }
-        
         if(obraSocial == null){
         
             throw new Excepcion("Debe asignar una obra social");
@@ -208,5 +201,7 @@ public class ServicioPaciente {
         
         
     }
+
+
 }
 
