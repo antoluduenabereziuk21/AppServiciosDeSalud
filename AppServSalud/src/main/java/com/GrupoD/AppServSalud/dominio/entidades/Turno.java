@@ -29,7 +29,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "turno")
 public class Turno {
 
