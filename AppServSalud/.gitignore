@@ -28,7 +28,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-AppServiciosDeSalud/AppServSalud/src/main/resources/application.properties
+/src/main/resources/*.properties
 
 ### VS Code ###
 .vscode/
