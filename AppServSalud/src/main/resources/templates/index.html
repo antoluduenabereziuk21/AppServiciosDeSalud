@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaft.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="logoHouse.ico" content="width=device-width, initial-scale=1.0">
+    <title>Hospital House</title>
+    <link rel="stylesheet" th:href="@{styles/index.css}">
+</head>
+<body>
+    <header>
+        <div class="texto"></div>
+        <img th:src="@{assets/HospitalHouse.jpg}" alt="No se puede mostrar la imagen" width="230px" height="210">
+       
+        <nav th:replace="/fragment/navbar :: nav"></nav>
+       </div>
+        
+        <h1>Hospital House</h1>
+    </header>
+    <section>
+        <i><h2>Breve explicación de la clínica</h2></i>
+    </section>
+    <section>
+        <i><h2>Pienso poner opciones</h2></i>
+        <p>como turnos</p>
+        <p>novedades</p>
+    </section>
+    <footer>
+        <ul>
+            <li><a href="/Ingresar">Ingresar</a></li>
+            <li><a href="/Registrarse">Resgistrarse</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
