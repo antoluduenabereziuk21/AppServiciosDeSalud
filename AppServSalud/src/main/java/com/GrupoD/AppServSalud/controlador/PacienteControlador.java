@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
 
+
+@Slf4j
 @Controller
 @RequestMapping("/paciente")
 public class PacienteControlador {
@@ -23,16 +26,19 @@ public class PacienteControlador {
 
   @GetMapping("/registro")
   public String registroPaciente(){
-    return "formularioPaciente.html";
+    return "forms/formularioPaciente.html";
   }
   
   @PostMapping("/registro")
-  public String registroPaciente(String nombre, String apellido, String dni, String correo, 
-                              String contrasenha, String sexo, String telefono, String obraSocial, 
-                              Date fechaDeNacimiento){
+  public String registroPaciente(String nombre, String apellido, String dni, String email,
+                              String password, String sexo, String telefono, String obraSocial,
+                              String fechaNacimiento){
     try {
-      servicioPaciente.crearPaciente(correo, contrasenha, nombre, apellido,
-                              dni, fechaDeNacimiento, sexo, telefono,
+      Date fechaNac =new Date(Integer.parseInt(fechaNacimiento.split("-")[0]) ,
+                              Integer.parseInt(fechaNacimiento.split("-")[1]) ,
+                              Integer.parseInt(fechaNacimiento.split("-")[2]) );
+      servicioPaciente.crearPaciente(email, password, nombre, apellido,
+                              dni, fechaNac, sexo, telefono,
                               obraSocial);
     } catch (Exception e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
