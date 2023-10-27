@@ -38,6 +38,7 @@ public class ServicioPaciente {
                               String obraSocial /*,MultipartFile archivo, String idHistoriaClinica,
                               String idProfesional, String idTurno*/) throws Excepcion {
 
+        obraSocial = "SwissMedical";
         validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
 
         /*
@@ -58,7 +59,7 @@ public class ServicioPaciente {
         paciente.setFechaAlta(new Date());
         paciente.setRol(RolEnum.PACIENTE);
         paciente.setSexo(Sexo.valueOf(sexo));
-        paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+        paciente.setObraSocial(ObraSocialEnum.SwissMedical);
         /*
         paciente.setHistoriaClinica(historiaClinica);
         paciente.setProfesional(profesional);
