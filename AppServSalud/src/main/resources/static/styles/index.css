@@ -1,0 +1,10 @@
+footer{
+    background-color: rgb(166, 215, 166);
+    color: green;
+    }
+    nav{
+        background-color: rgb(138, 186, 138)
+    }
+    .texto{
+    display:flex;
+    }
