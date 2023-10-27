@@ -14,4 +14,5 @@ public interface PacienteRepositorio extends JpaRepository<Paciente, String>{
     @Query("SELECT p FROM Paciente p WHERE p.dni = :dni")
     Optional<Paciente> buscarPorDni(@Param("dni")String dni);
 
+
 }

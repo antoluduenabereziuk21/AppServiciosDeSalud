@@ -31,15 +31,14 @@ public class PacienteControlador {
   
   @PostMapping("/registro")
   public String registroPaciente(String nombre, String apellido, String dni, String email,
-                              String password, String sexo, String telefono, String obraSocial,
+                              String password, String sexo, String telefono,
                               String fechaNacimiento){
     try {
       Date fechaNac =new Date(Integer.parseInt(fechaNacimiento.split("-")[0]) ,
                               Integer.parseInt(fechaNacimiento.split("-")[1]) ,
                               Integer.parseInt(fechaNacimiento.split("-")[2]) );
       servicioPaciente.crearPaciente(email, password, nombre, apellido,
-                              dni, fechaNac, sexo, telefono,
-                              obraSocial);
+                              dni, fechaNac, sexo, telefono);
     } catch (Exception e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       return "formularioPaciente.html";
