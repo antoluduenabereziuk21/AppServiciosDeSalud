@@ -25,7 +25,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "historia_clinica")
+//@Table(name = "historia_clinica")
 
 public class HistoriaClinica {
     @Id

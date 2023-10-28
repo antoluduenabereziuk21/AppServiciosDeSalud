@@ -3,7 +3,7 @@ package com.GrupoD.AppServSalud.dominio.servicios;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
-import com.GrupoD.AppServSalud.excepciones.Excepcion;
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
@@ -36,7 +36,7 @@ public class ServicioPaciente {
     public void crearPaciente(String email, String contraseña, String nombre, String apellido,
                               String dni, Date fechaDeNacimiento, String sexo, String telefono,
                               String obraSocial /*,MultipartFile archivo, String idHistoriaClinica,
-                              String idProfesional, String idTurno*/) throws Excepcion {
+                              String idProfesional, String idTurno*/) throws MiExcepcion {
 
         obraSocial = "SwissMedical";
         validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
@@ -74,7 +74,7 @@ public class ServicioPaciente {
 
     @Transactional
     public void modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws Excepcion {
+            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws MiExcepcion {
 
         validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
         Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
@@ -152,51 +152,51 @@ public class ServicioPaciente {
     }
 
     public void validar(String email, String contraseña, String nombre, String apellido, String dni,
-                        Date fechaDeNacimiento, String sexo, String telefono, String obraSocial) throws Excepcion{
+                        Date fechaDeNacimiento, String sexo, String telefono, String obraSocial) throws MiExcepcion{
 
         if(email == null || email.isEmpty()){
         
-            throw new Excepcion("Ingrese un email");
+            throw new MiExcepcion("Ingrese un email");
         }
         
         if(contraseña == null || contraseña.isEmpty()){
         
-            throw new Excepcion("Ingrese una contraseña");
+            throw new MiExcepcion("Ingrese una contraseña");
         }
         
         if(nombre == null || nombre.isEmpty()){
         
-            throw new Excepcion("Ingrese su nombre");
+            throw new MiExcepcion("Ingrese su nombre");
         }
         
         if(apellido == null || apellido.isEmpty()){
         
-            throw new Excepcion("Ingrese su apellido");
+            throw new MiExcepcion("Ingrese su apellido");
         }
         
         if(dni == null || dni.isEmpty()){
         
-            throw new Excepcion("Ingrese su dni");
+            throw new MiExcepcion("Ingrese su dni");
         }
         
         if(fechaDeNacimiento == null){
         
-            throw new Excepcion("Ingrese su fecha de nacimiento");
+            throw new MiExcepcion("Ingrese su fecha de nacimiento");
         }
         
         if(telefono == null || telefono.isEmpty()){
         
-            throw new Excepcion("Ingrese un contacto");
+            throw new MiExcepcion("Ingrese un contacto");
         }
         
         if(sexo == null){
         
-            throw new Excepcion("Ingrese su sexo");
+            throw new MiExcepcion("Ingrese su sexo");
         }
         
         if(obraSocial == null){
         
-            throw new Excepcion("Debe asignar una obra social");
+            throw new MiExcepcion("Debe asignar una obra social");
         }
         
         
