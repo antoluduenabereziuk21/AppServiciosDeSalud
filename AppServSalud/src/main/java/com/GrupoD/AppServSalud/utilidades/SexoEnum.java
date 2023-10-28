@@ -1,6 +1,6 @@
 package com.GrupoD.AppServSalud.utilidades;
 
-public enum Sexo {
+public enum SexoEnum {
     MASCULINO,
     FEMENINO,
     X

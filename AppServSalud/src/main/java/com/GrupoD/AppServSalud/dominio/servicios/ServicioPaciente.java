@@ -9,7 +9,7 @@ import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
 import java.util.Optional;
 
-import com.GrupoD.AppServSalud.utilidades.Sexo;
+import com.GrupoD.AppServSalud.utilidades.SexoEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +58,7 @@ public class ServicioPaciente {
         paciente.setActivo(true);
         paciente.setFechaAlta(new Date());
         paciente.setRol(RolEnum.PACIENTE);
-        paciente.setSexo(Sexo.valueOf(sexo));
+        paciente.setSexo(SexoEnum.valueOf(sexo));
         paciente.setObraSocial(ObraSocialEnum.SwissMedical);
         /*
         paciente.setHistoriaClinica(historiaClinica);
@@ -114,7 +114,7 @@ public class ServicioPaciente {
             paciente.setTelefono(telefono);
             paciente.setActivo(true);
             paciente.setRol(RolEnum.PACIENTE);
-            paciente.setSexo(Sexo.valueOf(sexo));
+            paciente.setSexo(SexoEnum.valueOf(sexo));
             paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
             /*
             paciente.setHistoriaClinica(historiaClinica);

@@ -1,7 +1,7 @@
 package com.GrupoD.AppServSalud.dominio.entidades;
 
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
-import com.GrupoD.AppServSalud.utilidades.Sexo;
+import com.GrupoD.AppServSalud.utilidades.SexoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,7 +46,7 @@ public class Usuario {
     private RolEnum rol;
 
     @Enumerated(EnumType.STRING)
-    private Sexo sexo;
+    private SexoEnum sexo;
 
     private Boolean activo;
 
