@@ -5,6 +5,6 @@ footer{
     nav{
         background-color: rgb(138, 186, 138)
     }
-    .texto{
+    header .contenedor{
     display:flex;
     }

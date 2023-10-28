@@ -5,18 +5,20 @@
     <meta name="logoHouse.ico" content="width=device-width, initial-scale=1.0">
     <title>Hospital House</title>
     <link rel="stylesheet" th:href="@{styles/index.css}">
+    <link rel="shortcut icon" th:href="@{assets/logoHouse}">
 </head>
 <body>
     <header>
-        <div class="texto"></div>
-        <img th:src="@{assets/HospitalHouse.jpg}" alt="No se puede mostrar la imagen" width="230px" height="210">
-       
-        <nav th:replace="/fragments/navbar :: nav"></nav>
-       </div>
+        <div class="contenedor">
+            <div class="imagenHeader">
+              <img th:src="@{assets/HospitalHouse.jpg}" alt="No se puede mostrar la imagen" width="230px" height="210">
+            </div>
+          <nav th:replace="/fragments/navbar :: nav"></nav>
+        </div>
         
-        <h1>Hospital House</h1>
+        
     </header>
-
+  <h1>Hospital House</h1>
     <section>
         <i><h2>Breve explicación de la clínica</h2></i>
     </section>
@@ -26,10 +28,7 @@
         <p>novedades</p>
     </section>
     <footer>
-        <ul>
-            <li><a href="/Ingresar">Ingresar</a></li>
-            <li><a href="/Registrarse">Resgistrarse</a></li>
-        </ul>
+        <h2>haré una tabla con contactos</h2>
     </footer>
 </body>
 </html>
