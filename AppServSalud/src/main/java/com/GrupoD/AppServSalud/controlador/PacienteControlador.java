@@ -1,5 +1,6 @@
 package com.GrupoD.AppServSalud.controlador;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 
 
 @Slf4j
