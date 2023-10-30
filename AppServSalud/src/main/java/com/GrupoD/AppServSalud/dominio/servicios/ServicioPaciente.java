@@ -138,6 +138,15 @@ public class ServicioPaciente {
 
     }
     
+    public Paciente buscarPorDni(String dni){
+        
+         Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorDni(dni);
+         if (respuestaPaciente.isPresent()) {
+            return respuestaPaciente.get();
+        }
+             return null; 
+    }
+    
     public void bajaPaciente(boolean enable, String idPaciente){
     
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);

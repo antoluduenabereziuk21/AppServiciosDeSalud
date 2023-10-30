@@ -1,5 +1,6 @@
 package com.GrupoD.AppServSalud.controlador;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Slf4j
