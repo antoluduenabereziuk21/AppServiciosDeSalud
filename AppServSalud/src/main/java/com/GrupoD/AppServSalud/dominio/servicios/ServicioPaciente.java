@@ -7,6 +7,7 @@ import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import com.GrupoD.AppServSalud.utilidades.Sexo;
@@ -156,6 +157,8 @@ public class ServicioPaciente {
             Paciente paciente = respuesta.get();
             
             paciente.setActivo(enable);
+
+            pacienteRepositorio.save(paciente);
         }
         
     }
@@ -213,5 +216,20 @@ public class ServicioPaciente {
     }
 
 
+    public List<Paciente> listarPacientesActivos() {
+        return pacienteRepositorio.buscarActivos();
+    }
+
+    public List<Paciente> listarPacientesInactivos() {
+        return pacienteRepositorio.buscarInactivos();
+    }
+
+    public List<Paciente> buscarPorNombreYApellidoActvo(String nombre, String apellido){
+        return pacienteRepositorio.buscarPorNombreYApellidoActivos(nombre, apellido);
+    }
+
+    public List<Paciente> buscarPorNombreYApellidoInactivo(String nombre, String apellido){
+        return pacienteRepositorio.buscarPorNombreYApellidoInactivos(nombre, apellido);
+    }
 }
 
