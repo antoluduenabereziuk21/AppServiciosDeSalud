@@ -9,14 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
-
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import java.text.ParseException;
@@ -85,4 +81,32 @@ public class PacienteControlador {
     servicioPaciente.bajaPaciente(enable, idPaciente);
     return "redirect:/";
   }
+
+  @GetMapping("/todos")
+  public String listarPacientes(ModelMap modelo){
+    modelo.put("pacientesActivos", servicioPaciente.listarPacientesActivos());
+    modelo.put("pacientesInactivos", servicioPaciente.listarPacientesInactivos());
+    modelo.put("paciente", new Paciente());
+    return "pacientes.html";
+  }
+
+  @PostMapping("/baja")
+    public String bajaPaciente(String idPaciente){
+        servicioPaciente.bajaPaciente(false, idPaciente);
+        return "redirect:/paciente/todos";
+    }
+
+    @PostMapping("/alta")
+    public String altaPaciente(String idPaciente){
+        servicioPaciente.bajaPaciente(true, idPaciente);
+        return "redirect:/paciente/todos";
+    }
+
+    @GetMapping("/buscarPorNombreYApellido")
+    public String buscarPorNombreYApellido(@RequestParam("nombre") String nombre, @RequestParam("apellido") String apellido, ModelMap modelo){
+        modelo.put("pacientesActivos", servicioPaciente.buscarPorNombreYApellidoActvo(nombre, apellido));
+        modelo.put("pacientesInactivos", servicioPaciente.buscarPorNombreYApellidoInactivo(nombre, apellido));
+        return "pacientes.html";
+    }
+
 }
