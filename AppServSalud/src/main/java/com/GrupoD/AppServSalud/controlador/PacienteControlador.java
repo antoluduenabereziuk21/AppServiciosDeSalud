@@ -15,7 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 
 @Slf4j
@@ -34,19 +42,29 @@ public class PacienteControlador {
   @PostMapping("/registro")
   public String registroPaciente(String nombre, String apellido, String dni, String email,
                               String password, String sexo, String telefono, String obraSocial,
-                              String fechaNacimiento){
+                              String fechaNacimiento, ModelMap modelo){
     try {
-      Date fechaNac =new Date(Integer.parseInt(fechaNacimiento.split("-")[0]) ,
-                              Integer.parseInt(fechaNacimiento.split("-")[1]) ,
-                              Integer.parseInt(fechaNacimiento.split("-")[2]) );
+    
+       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateFecha = null;
+        try {
+            dateFecha = dateFormat.parse(fechaNacimiento);
+        } catch (ParseException ex) {
+            Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
       servicioPaciente.crearPaciente(email, password, nombre, apellido,
-                              dni, fechaNac, sexo, telefono,
+                              dni, dateFecha, sexo, telefono,
                               obraSocial);
-    } catch (Exception e) {
+      modelo.put("exito", "Usuario creado correctamente");
+      return "index.html";
+    } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
-      return "formularioPaciente.html";
+      modelo.put("error", e.getMessage());
+     
+      return "forms/formularioPaciente.html";
     }
-    return "redirect:/";
+   
   }
 
   @GetMapping("/modificar/{idPaciente}")
@@ -55,7 +73,7 @@ public class PacienteControlador {
     try {
       servicioPaciente.modificarPaciente(archivo, idPaciente, email, contrasenha, nombre, apellido, dni,
        fechaDeNacimiento,sexo, telefono, obraSocial, idHistoriaClinica, idProfesional, idTurno);
-    } catch (Exception e) {
+    } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       return "forms/editarPaciente.html";
     }
