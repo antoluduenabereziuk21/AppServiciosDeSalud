@@ -3,10 +3,11 @@ package com.GrupoD.AppServSalud.dominio.servicios;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
-import com.GrupoD.AppServSalud.excepciones.Excepcion;
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import com.GrupoD.AppServSalud.utilidades.Sexo;
@@ -37,9 +38,15 @@ public class ServicioPaciente {
 
     @Transactional
     public void crearPaciente(String email, String contraseña, String nombre, String apellido,
-                              String dni, Date fechaDeNacimiento, String sexo, String telefono
-                              /*,MultipartFile archivo, String idHistoriaClinica,
-                              String idProfesional, String idTurno*/) throws Excepcion {
+
+                             /* String dni, Date fechaDeNacimiento, String sexo, String telefono
+                              ,MultipartFile archivo, String idHistoriaClinica,
+                              String idProfesional, String idTurno) throws Excepcion {*/
+
+                              String dni, Date fechaDeNacimiento, String sexo, String telefono,
+                              String obraSocial /*,MultipartFile archivo, String idHistoriaClinica,
+                              String idProfesional, String idTurno*/) throws MiExcepcion {
+
 
         Validacion.validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono);
 
@@ -75,7 +82,7 @@ public class ServicioPaciente {
 
     @Transactional
     public void modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws Excepcion {
+            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws MiExcepcion {
 
         Validacion.validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono);
         Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
@@ -139,6 +146,15 @@ public class ServicioPaciente {
 
     }
     
+    public Paciente buscarPorDni(String dni){
+        
+         Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorDni(dni);
+         if (respuestaPaciente.isPresent()) {
+            return respuestaPaciente.get();
+        }
+             return null; 
+    }
+    
     public void bajaPaciente(boolean enable, String idPaciente){
     
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
@@ -148,12 +164,81 @@ public class ServicioPaciente {
             Paciente paciente = respuesta.get();
             
             paciente.setActivo(enable);
+
+            pacienteRepositorio.save(paciente);
         }
 
     }
 
 
+    public void validar(String email, String contraseña, String nombre, String apellido, String dni,
+                        Date fechaDeNacimiento, String sexo, String telefono, String obraSocial) throws MiExcepcion{
+
+        if(email == null || email.isEmpty()){
+        
+            throw new MiExcepcion("Ingrese un email");
+        }
+        
+        if(contraseña == null || contraseña.isEmpty()){
+        
+            throw new MiExcepcion("Ingrese una contraseña");
+        }
+        
+        if(nombre == null || nombre.isEmpty()){
+        
+            throw new MiExcepcion("Ingrese su nombre");
+        }
+        
+        if(apellido == null || apellido.isEmpty()){
+        
+            throw new MiExcepcion("Ingrese su apellido");
+        }
+        
+        if(dni == null || dni.isEmpty()){
+        
+            throw new MiExcepcion("Ingrese su dni");
+        }
+        
+        if(fechaDeNacimiento == null){
+        
+            throw new MiExcepcion("Ingrese su fecha de nacimiento");
+        }
+        
+        if(telefono == null || telefono.isEmpty()){
+        
+            throw new MiExcepcion("Ingrese un contacto");
+        }
+        
+        if(sexo == null){
+        
+            throw new MiExcepcion("Ingrese su sexo");
+        }
+        
+        if(obraSocial == null){
+        
+            throw new MiExcepcion("Debe asignar una obra social");
+        }
+        
+        
+        
+    }
 
 
+
+    public List<Paciente> listarPacientesActivos() {
+        return pacienteRepositorio.buscarActivos();
+    }
+
+    public List<Paciente> listarPacientesInactivos() {
+        return pacienteRepositorio.buscarInactivos();
+    }
+
+    public List<Paciente> buscarPorNombreYApellidoActvo(String nombre, String apellido){
+        return pacienteRepositorio.buscarPorNombreYApellidoActivos(nombre, apellido);
+    }
+
+    public List<Paciente> buscarPorNombreYApellidoInactivo(String nombre, String apellido){
+        return pacienteRepositorio.buscarPorNombreYApellidoInactivos(nombre, apellido);
+    }
 }
 

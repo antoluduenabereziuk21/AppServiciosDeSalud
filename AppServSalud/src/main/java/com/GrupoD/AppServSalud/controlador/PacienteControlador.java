@@ -1,5 +1,6 @@
 package com.GrupoD.AppServSalud.controlador;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,12 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 
 @Slf4j
@@ -31,19 +37,36 @@ public class PacienteControlador {
   
   @PostMapping("/registro")
   public String registroPaciente(String nombre, String apellido, String dni, String email,
+
                               String password, String sexo, String telefono,
                               String fechaNacimiento){
+
+                          // String password, String sexo, String telefono, String obraSocial,String fechaNacimiento, ModelMap modelo){
+                              
+
     try {
-      Date fechaNac =new Date(Integer.parseInt(fechaNacimiento.split("-")[0]) ,
-                              Integer.parseInt(fechaNacimiento.split("-")[1]) ,
-                              Integer.parseInt(fechaNacimiento.split("-")[2]) );
-      servicioPaciente.crearPaciente(email, password, nombre, apellido,
-                              dni, fechaNac, sexo, telefono);
-    } catch (Exception e) {
+    
+       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateFecha = null;
+        try {
+            dateFecha = dateFormat.parse(fechaNacimiento);
+        } catch (ParseException ex) {
+            Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+      servicioPaciente.crearPaciente(email, password, nombre, apellido,dni, fechaNac, sexo, telefono);
+                    //dni, dateFecha, sexo, telefono,obraSocial);Se dejan atributos comentados para que no se rompa el codigo
+                              
+      modelo.put("exito", "Usuario creado correctamente");
+      return "index.html";
+    } catch (MiExcepcion e) {
+
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
-      return "formularioPaciente.html";
+      modelo.put("error", e.getMessage());
+     
+      return "forms/formularioPaciente.html";
     }
-    return "redirect:/";
+   
   }
 
   @GetMapping("/modificar/{idPaciente}")
@@ -52,7 +75,7 @@ public class PacienteControlador {
     try {
       servicioPaciente.modificarPaciente(archivo, idPaciente, email, contrasenha, nombre, apellido, dni,
        fechaDeNacimiento,sexo, telefono, obraSocial, idHistoriaClinica, idProfesional, idTurno);
-    } catch (Exception e) {
+    } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       return "forms/editarPaciente.html";
     }
@@ -64,4 +87,32 @@ public class PacienteControlador {
     servicioPaciente.bajaPaciente(enable, idPaciente);
     return "redirect:/";
   }
+
+  @GetMapping("/todos")
+  public String listarPacientes(ModelMap modelo){
+    modelo.put("pacientesActivos", servicioPaciente.listarPacientesActivos());
+    modelo.put("pacientesInactivos", servicioPaciente.listarPacientesInactivos());
+    modelo.put("paciente", new Paciente());
+    return "pacientes.html";
+  }
+
+  @PostMapping("/baja")
+    public String bajaPaciente(String idPaciente){
+        servicioPaciente.bajaPaciente(false, idPaciente);
+        return "redirect:/paciente/todos";
+    }
+
+    @PostMapping("/alta")
+    public String altaPaciente(String idPaciente){
+        servicioPaciente.bajaPaciente(true, idPaciente);
+        return "redirect:/paciente/todos";
+    }
+
+    @GetMapping("/buscarPorNombreYApellido")
+    public String buscarPorNombreYApellido(@RequestParam("nombre") String nombre, @RequestParam("apellido") String apellido, ModelMap modelo){
+        modelo.put("pacientesActivos", servicioPaciente.buscarPorNombreYApellidoActvo(nombre, apellido));
+        modelo.put("pacientesInactivos", servicioPaciente.buscarPorNombreYApellidoInactivo(nombre, apellido));
+        return "pacientes.html";
+    }
+
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaft.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes</title>
+    <meta name="logoHouse.ico" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{styles/pacientes.css}">
+</head>
+<body>
+
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div>
+        <h3>Buscar por nombre y apellido:</h3>
+        <form  th:action="@{/paciente/buscarPorNombreYApellido}" method="get">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <button type="submit">Buscar</button>
+        </form>
+        <a href="/paciente/todos">Mostrar todos</a>
+    </div>
+
+    <h2>Listado de pacientes</h2>
+
+    <div>
+        <h3>Pacientes Activos</h3>
+        <table class="table container" >
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Obra social</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody th:if="${pacientesActivos != null || !pacientesActivos.isEmpty}" >
+                <tr th:each="paciente : ${pacientesActivos}">
+                    <td th:text="${paciente.nombre}"></td>
+                    <td th:text="${paciente.apellido}"></td>
+                    <td th:text="${paciente.dni}"></td>
+                    <td th:text="${paciente.fechaNacimiento}"></td>
+                    <td th:text="${paciente.obraSocial}"></td>
+                    <td>
+                        <form th:action="@{/paciente/baja}" method="POST">
+                            <input type="text" style="display: none" th:value="${paciente.id}" name="idPaciente">
+                            <button type="submit">Dar de baja</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody th:if="${pacientesActivos == null || pacientesActivos.isEmpty}">
+                <tr>
+                    <td colspan="6">
+                        <p>No se encuentran usuarios activos en este momento</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tabla-principal">
+        <h3>Pacientes Inactivos</h3>
+        <table class="table container" >
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Obra social</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody th:if="${pacientesInactivos != null || !pacientesInactivos.isEmpty}">
+                <tr th:each="paciente : ${pacientesInactivos}">
+                    <td th:text="${paciente.nombre}"></td>
+                    <td th:text="${paciente.apellido}"></td>
+                    <td th:text="${paciente.dni}"></td>
+                    <td th:text="${paciente.fechaNacimiento}"></td>
+                    <td th:text="${paciente.obraSocial}"></td>
+                    <td>
+                        <form th:action="@{/paciente/alta}" method="POST">
+                            <input type="text" style="display: none" th:value="${paciente.id}" name="idPaciente">
+                            <button type="submit">Dar de alta</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody th:if="${pacientesInactivos == null || pacientesInactivos.isEmpty}">
+                <tr>
+                    <td colspan="6">
+                        <p>No se encuentran usuarios inactivos en este momento</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+</body>
+</html>
