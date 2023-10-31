@@ -1,6 +1,6 @@
 package com.GrupoD.AppServSalud.utilidades;
 
-import com.GrupoD.AppServSalud.excepciones.Excepcion;
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 import java.util.Date;
 
@@ -21,39 +21,18 @@ public class Validacion {
     public static boolean esEmail(String email){
         return email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");
     }
-    public static void validar(String email, String contrasenha, String nombre, String apellido, String dni,
-                        Date fechaDeNacimiento, String sexo, String telefono) throws Excepcion {
-
-        if(email == null || email.isEmpty()){
-            throw new Excepcion("Ingrese un email");
-        }
-        if(contrasenha == null || contrasenha.isEmpty()){
-
-            throw new Excepcion("Ingrese una contraseña");
-        }
-        if(nombre == null || nombre.isEmpty()){
-
-            throw new Excepcion("Ingrese su nombre");
-        }
-        if(apellido == null || apellido.isEmpty()){
-
-            throw new Excepcion("Ingrese su apellido");
-        }
-        if(dni == null || dni.isEmpty()){
-
-            throw new Excepcion("Ingrese su dni");
-        }
-        if(fechaDeNacimiento == null){
-
-            throw new Excepcion("Ingrese su fecha de nacimiento");
-        }
-        if(telefono == null || telefono.isEmpty()){
-
-            throw new Excepcion("Ingrese un contacto");
-        }
-        if(sexo == null){
-
-            throw new Excepcion("Ingrese su sexo");
+    public static void validarStrings(String... args) throws MiExcepcion {
+        for (String arg : args) {
+            if (arg == null || arg.isEmpty()) {
+                throw new MiExcepcion("Error: Todos los campos son obligatorios");
+            }
         }
     }
+
+    public static void validarDate(Date fecha) throws MiExcepcion {
+        if (fecha == null) {
+            throw new MiExcepcion("Error: La fecha es obligatoria");
+        }
+    }
+
 }
