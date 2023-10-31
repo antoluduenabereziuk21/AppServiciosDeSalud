@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.GrupoD.AppServSalud.utilidades.Sexo;
+import com.GrupoD.AppServSalud.utilidades.Validacion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ServicioPaciente {
+
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
@@ -35,12 +38,17 @@ public class ServicioPaciente {
 
     @Transactional
     public void crearPaciente(String email, String contraseña, String nombre, String apellido,
+
+                             /* String dni, Date fechaDeNacimiento, String sexo, String telefono
+                              ,MultipartFile archivo, String idHistoriaClinica,
+                              String idProfesional, String idTurno) throws Excepcion {*/
+
                               String dni, Date fechaDeNacimiento, String sexo, String telefono,
                               String obraSocial /*,MultipartFile archivo, String idHistoriaClinica,
                               String idProfesional, String idTurno*/) throws MiExcepcion {
 
-        obraSocial = "SwissMedical";
-        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
+
+        Validacion.validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono);
 
         /*
         HistoriaClinica historiaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica).get();
@@ -50,7 +58,7 @@ public class ServicioPaciente {
         Paciente paciente = new Paciente();
 
         paciente.setEmail(email);
-        paciente.setPassword(contraseña);
+        paciente.setPassword(new BCryptPasswordEncoder().encode(contraseña));
         paciente.setNombre(nombre);
         paciente.setApellido(apellido);
         paciente.setDni(dni);
@@ -60,7 +68,6 @@ public class ServicioPaciente {
         paciente.setFechaAlta(new Date());
         paciente.setRol(RolEnum.PACIENTE);
         paciente.setSexo(Sexo.valueOf(sexo));
-        paciente.setObraSocial(ObraSocialEnum.SwissMedical);
         /*
         paciente.setHistoriaClinica(historiaClinica);
         paciente.setProfesional(profesional);
@@ -77,7 +84,7 @@ public class ServicioPaciente {
     public void modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
             String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws MiExcepcion {
 
-        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
+        Validacion.validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono);
         Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
         /*
         Optional<HistoriaClinica> respuestaHistoriaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica);
@@ -160,8 +167,9 @@ public class ServicioPaciente {
 
             pacienteRepositorio.save(paciente);
         }
-        
+
     }
+
 
     public void validar(String email, String contraseña, String nombre, String apellido, String dni,
                         Date fechaDeNacimiento, String sexo, String telefono, String obraSocial) throws MiExcepcion{
@@ -214,6 +222,7 @@ public class ServicioPaciente {
         
         
     }
+
 
 
     public List<Paciente> listarPacientesActivos() {

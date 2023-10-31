@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 
@@ -19,6 +21,7 @@ public class AppServSaludApplication {
 	@Autowired
 	private ServicioPaciente servicioPaciente;
 
+
 	/**
 	 * Metodo que se ejecuta al iniciar la aplicacion
 	 *
@@ -29,6 +32,7 @@ public class AppServSaludApplication {
 	@Bean
 	CommandLineRunner init(){
 		return args -> {
+
 			servicioPaciente.crearPaciente(
 					"Mauricio@mail.com",
 					"123456",
@@ -109,6 +113,7 @@ public class AppServSaludApplication {
 					"MASCULINO",
 					"123123",
 					"SwissMedical");
+
 		};
 	}
 

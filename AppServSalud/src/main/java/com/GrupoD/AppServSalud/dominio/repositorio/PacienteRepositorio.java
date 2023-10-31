@@ -27,4 +27,5 @@ public interface PacienteRepositorio extends JpaRepository<Paciente, String>{
     @Query("SELECT p FROM Paciente p WHERE p.activo = false")
     List<Paciente> buscarInactivos();
 
+
 }

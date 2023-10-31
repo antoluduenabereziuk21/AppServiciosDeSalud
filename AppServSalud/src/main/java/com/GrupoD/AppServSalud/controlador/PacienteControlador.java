@@ -37,8 +37,13 @@ public class PacienteControlador {
   
   @PostMapping("/registro")
   public String registroPaciente(String nombre, String apellido, String dni, String email,
-                              String password, String sexo, String telefono, String obraSocial,
-                              String fechaNacimiento, ModelMap modelo){
+
+                              String password, String sexo, String telefono,
+                              String fechaNacimiento){
+
+                          // String password, String sexo, String telefono, String obraSocial,String fechaNacimiento, ModelMap modelo){
+                              
+
     try {
     
        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,12 +54,13 @@ public class PacienteControlador {
             Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-      servicioPaciente.crearPaciente(email, password, nombre, apellido,
-                              dni, dateFecha, sexo, telefono,
-                              obraSocial);
+      servicioPaciente.crearPaciente(email, password, nombre, apellido,dni, fechaNac, sexo, telefono);
+                    //dni, dateFecha, sexo, telefono,obraSocial);Se dejan atributos comentados para que no se rompa el codigo
+                              
       modelo.put("exito", "Usuario creado correctamente");
       return "index.html";
     } catch (MiExcepcion e) {
+
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       modelo.put("error", e.getMessage());
      
