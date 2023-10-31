@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,10 +38,8 @@ public class PacienteControlador {
   
   @PostMapping("/registro")
   public String registroPaciente(String nombre, String apellido, String dni, String email,
-
-                              String password, String sexo, String telefono,
-                              String fechaNacimiento){
-
+                                 String password, String sexo, String telefono,
+                                 String fechaNacimiento, ModelMap modelo){
                           // String password, String sexo, String telefono, String obraSocial,String fechaNacimiento, ModelMap modelo){
                               
 
@@ -54,7 +53,7 @@ public class PacienteControlador {
             Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-      servicioPaciente.crearPaciente(email, password, nombre, apellido,dni, fechaNac, sexo, telefono);
+      servicioPaciente.crearPaciente(email,password,nombre,apellido,dni,dateFecha,sexo,telefono);
                     //dni, dateFecha, sexo, telefono,obraSocial);Se dejan atributos comentados para que no se rompa el codigo
                               
       modelo.put("exito", "Usuario creado correctamente");
@@ -110,8 +109,12 @@ public class PacienteControlador {
 
     @GetMapping("/buscarPorNombreYApellido")
     public String buscarPorNombreYApellido(@RequestParam("nombre") String nombre, @RequestParam("apellido") String apellido, ModelMap modelo){
-        modelo.put("pacientesActivos", servicioPaciente.buscarPorNombreYApellidoActvo(nombre, apellido));
-        modelo.put("pacientesInactivos", servicioPaciente.buscarPorNombreYApellidoInactivo(nombre, apellido));
+          try {
+              modelo.put("pacientesActivos", servicioPaciente.filtrarActivo(nombre, apellido));
+              modelo.put("pacientesInactivos", servicioPaciente.filtrarInactivo(nombre, apellido));
+          }catch (MiExcepcion e){
+              modelo.put("error", e.getMessage());
+          }
         return "pacientes.html";
     }
 

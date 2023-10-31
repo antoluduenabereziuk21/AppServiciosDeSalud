@@ -1,0 +1,13 @@
+
+footer{
+    margin-top: 100%;
+    align-items: end;
+    background-color: rgba(114, 169, 114, 0.25);
+    color: green;
+}
+
+.footer_textos {
+    display: flex;
+    margin:auto;
+    justify-content: space-between;
+}

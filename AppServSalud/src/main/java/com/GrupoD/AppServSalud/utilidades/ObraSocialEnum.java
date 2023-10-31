@@ -8,5 +8,6 @@ public enum ObraSocialEnum {
     SancorSalud,
     OSPRERA,
     UPCN,
-    OSDE;
+    OSDE,
+    NO_CARGADO;
 }
