@@ -17,5 +17,15 @@ public class PortalControlador {
         return "index.html";
     }
 
-  
+    @GetMapping("/login")
+    public String login(){
+        return "login.html";
+    }
+
+    /*Este metodo solo es para controlar que spring security este configurado correctamente*/
+    @GetMapping("/bienvenido")
+    public String bienvenido(){
+        return "bienvenido.html";
+    }
+
 }
