@@ -3,6 +3,7 @@ package com.GrupoD.AppServSalud.dominio.entidades;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import com.GrupoD.AppServSalud.utilidades.Sexo;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "usuarios")
 @DiscriminatorColumn(name = "tipo_usuario")
