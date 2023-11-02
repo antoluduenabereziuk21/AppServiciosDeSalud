@@ -52,4 +52,7 @@ public class Usuario {
 
     private Boolean activo;
 
+    @OneToOne
+    private Imagen imagen;
+
 }
