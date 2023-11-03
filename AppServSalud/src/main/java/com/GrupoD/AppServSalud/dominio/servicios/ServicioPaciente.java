@@ -36,6 +36,10 @@ public class ServicioPaciente {
     private TurnoRepositorio turnoRepositorio;
     */
 
+    public Paciente buscarPorEmail(String email){
+        return pacienteRepositorio.buscarPorEmail(email).get() ;
+    }
+    
     @Transactional
     public void crearPaciente(String email, String contrasenha, String nombre, String apellido,
                              /* String dni, Date fechaDeNacimiento, String sexo, String telefono
@@ -57,7 +61,7 @@ public class ServicioPaciente {
         */
         Paciente paciente = new Paciente();
 
-        setearParametros(email, contrasenha, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, "NO_CARGADO",paciente);
+        setearParametros(email, contrasenha, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, "PARTICULAR",paciente);
         /*
         paciente.setHistoriaClinica(historiaClinica);
         paciente.setProfesional(profesional);
@@ -71,13 +75,13 @@ public class ServicioPaciente {
     }
 
     @Transactional
-    public void modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contrasenha, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws MiExcepcion {
+    public void modificarPaciente(MultipartFile archivo, String email, String contrasenha, String nombre, String apellido,
+            String sexo, String telefono, String obraSocial) throws MiExcepcion {
+            // , String idHistoriaClinica, String idProfesional, String idTurno
+        Validacion.validarStrings(contrasenha, nombre, apellido, sexo, telefono, obraSocial);
+        
 
-        Validacion.validarStrings(email, contrasenha, nombre, apellido, dni, sexo, telefono);
-        Validacion.validarDate(fechaDeNacimiento);
-
-        Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
+        Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorEmail(email) ;
         /*
         Optional<HistoriaClinica> respuestaHistoriaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica);
         Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
@@ -105,7 +109,12 @@ public class ServicioPaciente {
 
             Paciente paciente = respuestaPaciente.get();
 
-            setearParametros(email, contrasenha, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial, paciente);
+            paciente.setPassword(contrasenha);
+            paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
+            paciente.setSexo(Sexo.valueOf(sexo));
+            paciente.setTelefono(telefono);
+            paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
             /*
             paciente.setHistoriaClinica(historiaClinica);
             paciente.setProfesional(profesional);
