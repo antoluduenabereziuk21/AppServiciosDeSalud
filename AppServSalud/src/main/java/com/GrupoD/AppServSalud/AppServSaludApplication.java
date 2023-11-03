@@ -73,10 +73,10 @@ public class AppServSaludApplication {
 					"123123");
 
 			servicioPaciente.crearPaciente(
-					"Atonio@mail.com",
+					"Antonio@mail.com",
 					"123456",
-					"Atonio",
-					"Atonio",
+					"Antonio",
+					"Antonio",
 					"44444444",new Date(),
 					"MASCULINO",
 					"123123");
