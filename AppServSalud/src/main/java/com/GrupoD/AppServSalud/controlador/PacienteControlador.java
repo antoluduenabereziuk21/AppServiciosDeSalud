@@ -1,6 +1,7 @@
 package com.GrupoD.AppServSalud.controlador;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
+import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 
@@ -35,6 +38,7 @@ public class PacienteControlador {
   public String registroPaciente(){
     return "forms/formularioPaciente.html";
   }
+  
   
   @PostMapping("/registro")
   public String registroPaciente(String nombre, String apellido, String dni, String email,
@@ -68,17 +72,38 @@ public class PacienteControlador {
    
   }
 
-  @GetMapping("/modificar/{idPaciente}")
-  public String modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contrasenha, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno, ModelMap modelo){
+
+@GetMapping("/perfil")
+public String perfil(ModelMap modelo ,HttpSession session){
+
+    Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+    modelo.put("usuario", usuario);
+    
+    return "vistaPerfil.html";
+}
+
+  @GetMapping("/modificar/{email}")
+  public String vistaModificarPaciente(@PathVariable String email, ModelMap modelo, HttpSession session){
+     Paciente paciente = servicioPaciente.buscarPorEmail(email);
+      modelo.put("paciente", paciente);
+      return "forms/editarPaciente.html";
+  }
+
+  @PostMapping("/modificar/{email}")
+  public String modificarPaciente(MultipartFile archivo, @PathVariable String email,
+          @RequestParam String nombre, @RequestParam String apellido, @RequestParam String password,
+          @RequestParam  String sexo, @RequestParam String telefono, @RequestParam String obraSocial, ModelMap modelo){
+//       String idHistoriaClinica, String idProfesional, String idTurno,
     try {
-      servicioPaciente.modificarPaciente(archivo, idPaciente, email, contrasenha, nombre, apellido, dni,
-       fechaDeNacimiento,sexo, telefono, obraSocial, idHistoriaClinica, idProfesional, idTurno);
+      servicioPaciente.modificarPaciente(archivo, email, password, nombre, apellido, sexo, telefono, obraSocial);//              idHistoriaClinica, idProfesional, idTurno);
+      modelo.put("exito", "Paciente modificado correctamente");
+       return "index.html";
     } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
+      modelo.put("error", e.getMessage());
       return "forms/editarPaciente.html";
     }
-    return "redirect:/";
+   
   }
 
   @PostMapping("/eliminar/{idPaciente}")
@@ -86,6 +111,8 @@ public class PacienteControlador {
     servicioPaciente.bajaPaciente(enable, idPaciente);
     return "redirect:/";
   }
+  
+  
 
   @GetMapping("/todos")
   public String listarPacientes(ModelMap modelo){

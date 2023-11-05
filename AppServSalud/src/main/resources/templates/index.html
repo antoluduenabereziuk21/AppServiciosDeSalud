@@ -5,8 +5,9 @@
 >
     <head th:replace="/fragments/head :: head"></head>
     <body>
-        <header th:replace="/fragments/header :: header"></header>
+        <header th:replace="/fragments/header :: header" ></header>
         <main>
+            <div class="container" role="alert">
             <div class="container-fluid m-5 contenedor">
                 <div
                     th:if="${error != null}"
@@ -33,7 +34,7 @@
                     </div>
                 </div>
             </div>
-
+        </div>
             <section class="tabla">
                 <table class="tablas">
                     <tbody>
