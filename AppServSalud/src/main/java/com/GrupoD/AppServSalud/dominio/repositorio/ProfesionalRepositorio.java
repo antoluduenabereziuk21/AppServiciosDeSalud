@@ -22,9 +22,11 @@ public interface ProfesionalRepositorio extends JpaRepository<Profesional, Strin
     
     @Query("SELECT p FROM Profesional p WHERE p.especialidad =: especialidad")
     List<Profesional> buscarPorEspecialidad(@Param("especialidad") EspecialidadEnum especialidad);
+
     
 //    @Query("SELECT p FROM Profesional p WHERE p.ubicacion  =: ubicacion")
 //    List<Profesional> buscarPorUbicacion(@Param("ubicacion") String ubicacion);
+
     
     @Query("SELECT p FROM Profesional p WHERE p.nombre =: nombre")
     List<Profesional> buscarPorNombre(@Param("nombre") String nombre);
