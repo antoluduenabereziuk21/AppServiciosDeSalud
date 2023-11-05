@@ -23,8 +23,8 @@ public interface ProfesionalRepositorio extends JpaRepository<Profesional, Strin
     @Query("SELECT p FROM Profesional p WHERE p.especialidad =: especialidad")
     List<Profesional> buscarPorEspecialidad(@Param("especialidad") EspecialidadEnum especialidad);
     
-    @Query("SELECT p FROM Profesional p WHERE p.ubicacion  =: ubicacion")
-    List<Profesional> buscarPorUbicacion(@Param("ubicacion") String ubicacion);
+//    @Query("SELECT p FROM Profesional p WHERE p.ubicacion  =: ubicacion")
+//    List<Profesional> buscarPorUbicacion(@Param("ubicacion") String ubicacion);
     
     @Query("SELECT p FROM Profesional p WHERE p.nombre =: nombre")
     List<Profesional> buscarPorNombre(@Param("nombre") String nombre);
@@ -32,9 +32,9 @@ public interface ProfesionalRepositorio extends JpaRepository<Profesional, Strin
     @Query("SELECT p FROM Profesional p WHERE p.nombre =: nombre AND p.especialidad =: especialidad")
     List<Profesional> buscarPorNombreYEspecialidad(@Param("nombre")String nombre, @Param("especialidad") EspecialidadEnum especialidad);
 
-    @Query("SELECT p FROM Profesional p WHERE p.nombre =: nombre AND p.especialidad =: especialidad AND p.ubicacion =: ubicacion")
-    List<Profesional> buscarPorNombreEspecialidadYUbucacion(@Param("nombre")String nombre,
-            @Param("especialidad")EspecialidadEnum especialidad,@Param("ubicacion") String ubicacion);
+//    @Query("SELECT p FROM Profesional p WHERE p.nombre =: nombre AND p.especialidad =: especialidad AND p.ubicacion =: ubicacion")
+//    List<Profesional> buscarPorNombreEspecialidadYUbucacion(@Param("nombre")String nombre,
+//            @Param("especialidad")EspecialidadEnum especialidad,@Param("ubicacion") String ubicacion);
 
     @Query("SELECT p FROM Profesional p WHERE p.activo = true")
     List<Profesional> buscarActivos();

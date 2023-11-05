@@ -83,25 +83,27 @@ public String perfil(ModelMap modelo ,HttpSession session){
 }
 
   @GetMapping("/modificar/{email}")
-  public String vistaModificarPaciente(@PathVariable String email, ModelMap modelo){
-      modelo.addAttribute("paciente", servicioPaciente.buscarPorEmail(email) );
+  public String vistaModificarPaciente(@PathVariable String email, ModelMap modelo, HttpSession session){
+     Paciente paciente = servicioPaciente.buscarPorEmail(email);
+      modelo.put("paciente", paciente);
       return "forms/editarPaciente.html";
   }
 
-  @PostMapping("/modificar/{idPaciente}")
+  @PostMapping("/modificar/{email}")
   public String modificarPaciente(MultipartFile archivo, @PathVariable String email,
           @RequestParam String nombre, @RequestParam String apellido, @RequestParam String password,
           @RequestParam  String sexo, @RequestParam String telefono, @RequestParam String obraSocial, ModelMap modelo){
 //       String idHistoriaClinica, String idProfesional, String idTurno,
     try {
       servicioPaciente.modificarPaciente(archivo, email, password, nombre, apellido, sexo, telefono, obraSocial);//              idHistoriaClinica, idProfesional, idTurno);
-      modelo.put("exito", "Usuario creado correctamente");
+      modelo.put("exito", "Paciente modificado correctamente");
+       return "index.html";
     } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       modelo.put("error", e.getMessage());
       return "forms/editarPaciente.html";
     }
-    return "redirect:/";
+   
   }
 
   @PostMapping("/eliminar/{idPaciente}")

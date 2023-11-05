@@ -6,7 +6,7 @@
     <head th:replace="/fragments/head :: head"></head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
-        
+        <div class="container" role="alert">
         <div class="container-fluid m-5 contenedor">
             <div
                 th:if="${error != null}"
@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <div class="container">
             <form
                 class="formulario"

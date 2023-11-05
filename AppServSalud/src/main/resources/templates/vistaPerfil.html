@@ -7,23 +7,44 @@
     <body>
         <header th:replace="/fragments/header :: header"></header>
       
-        <div class="container">   
-        <div class=”profile”>
-            <div class=”avatar”>
-                <img th:src="@{/assets/HospitalHouse.jpg}" 
-                     alt=”Avatar” 
-                     class="avatar img" 
-                >
+        <div class="container">
+            
+      
+                <article class="card-article">
+                    
+                        <header class="card-header">
+                            <img th:src="@{/assets/card-perfil.jpg}" 
+                                      alt="pattern_card"
+                                      class="portada-perfil" >
+                            <div class="avatar">
+                                <img th:src="@{/imagen/perfil/__${session.usuario.id}__}" 
+                                     alt="Avatar"
+                                     class="avatar-img" 
+                                >
+                            </div>
+                        </header>
+                        <section class="card-body">
+                               
+                                <h1 class="info-h1" > 
+                                    <span th:text="${session.usuario.nombre}" >
+
+                                    </span> 
+                                    <span th:text="${session.usuario.apellido}" >
+
+                                    </span>
+                                </h1>
+                                <p class="info-p">
+                                    Correo electrónico: 
+                                    <span th:text="${session.usuario.email}" ></span></p>
+                                <p class="info-p">Teléfono: <span th:text="${session.usuario.telefono}" ></span></p>
+                            </section>
+                        
+                  
+           
+                 </article>
+            
         </div>
-            <div class=”info”>
-                <h1 class="info h1">Nombre de usuario</h1>
-                <p class="info p">Correo electrónico: correo@example.com</p>
-                <p class="info p">Teléfono: 123-456-7890</p>
-            </div>
-        </div>
-        
-        
-      </div>   
+    
         <footer th:replace="/fragments/footer :: footer"></footer>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

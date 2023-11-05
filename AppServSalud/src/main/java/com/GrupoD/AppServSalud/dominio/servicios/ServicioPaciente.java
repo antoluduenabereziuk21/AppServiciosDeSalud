@@ -1,5 +1,6 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
@@ -25,9 +26,10 @@ public class ServicioPaciente {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
+     @Autowired
+    private ImagenServicio imagenServicio;
     /*
-    @Autowired
-    private ImagenServicio imagenServio;
+   
     @Autowired
     private HistoriaClinicaRepositorio historiaClinicaRepositorio;
     @Autowired
@@ -112,14 +114,14 @@ public class ServicioPaciente {
             paciente.setPassword(contrasenha);
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
+            if (!sexo.isEmpty() || sexo != null){
             paciente.setSexo(Sexo.valueOf(sexo));
+            }
             paciente.setTelefono(telefono);
+            if (!obraSocial.isEmpty() || obraSocial != null){
             paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
-            /*
-            paciente.setHistoriaClinica(historiaClinica);
-            paciente.setProfesional(profesional);
-            paciente.setTurno(turno);
-
+            }
+            
             String idImagen = null;
             
             if(paciente.getImagen() != null){
@@ -127,9 +129,20 @@ public class ServicioPaciente {
                 idImagen = paciente.getImagen().getId();
             }
             
-            Imagen imagen = imagenServio.actualizar(archivo, idImagen);
+            Imagen imagen = null;
+            try {
+                imagen = imagenServicio.actualizar(archivo, idImagen);
+            } catch (Exception e) {
+                
+                e.printStackTrace();
+            }
 
             paciente.setImagen(imagen);
+            /*
+            paciente.setHistoriaClinica(historiaClinica);
+            paciente.setProfesional(profesional);
+            paciente.setTurno(turno);
+
             */
             pacienteRepositorio.save(paciente);
 

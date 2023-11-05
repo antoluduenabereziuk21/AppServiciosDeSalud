@@ -6,40 +6,42 @@
     <head th:replace="/fragments/head :: head"></head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
-        <div class="container-fluid m-5 contenedor">
-            <div
-                th:if="${error != null}"
-                class="card text-white bg-danger mb-3 mensajeError"
-            >
-                <div class="card-body">
-                    <h5 class="card-title">Error!</h5>
-                    <p
-                        class="card-text"
-                        th:text="${error}"
-                    ></p>
+        <div class="container" role="alert">
+            <div class="container-fluid m-5 contenedor">
+                <div
+                    th:if="${error != null}"
+                    class="card text-white bg-danger mb-3 mensajeError"
+                >
+                    <div class="card-body">
+                        <h5 class="card-title">Error!</h5>
+                        <p
+                            class="card-text"
+                            th:text="${error}"
+                        ></p>
+                    </div>
                 </div>
-            </div>
-            <div
-                th:if="${exito != null}"
-                class="card text-white bg-success mb-3 mt-3 mensajeExito"
-            >
-                <div class="card-body">
-                    <h5 class="card-title">Exito!</h5>
-                    <p
-                        class="card-text"
-                        th:text="${exito}"
-                    ></p>
+                <div
+                    th:if="${exito != null}"
+                    class="card text-white bg-success mb-3 mt-3 mensajeExito"
+                >
+                    <div class="card-body">
+                        <h5 class="card-title">Exito!</h5>
+                        <p
+                            class="card-text"
+                            th:text="${exito}"
+                        ></p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="container">
             <form
                 class="formulario"
-                th:action="@{/paciente/modificar/__${paciente.id}__}"
+                th:action="@{/paciente/modificar/__${paciente.email}__}"
                 method="POST"
                 enctype="multipart/form-data"
             >
-                <input hidden th:value="${paciente.email}" name="email">
+                <input hidden th:value="${paciente.id}" name="id">
                 
                 <div class="text-center mb-5">
                     <h3 class="card-title"
@@ -53,7 +55,7 @@
                                 class="input-group-text"
                             >Cambiar foto de perfil </label>
                            
-                            <img th:src="@{/assets/HospitalHouse.jpg}" 
+                            <img th:src="@{/imagen/perfil/__${session.usuario.id}__}" 
                                  class="rounded float-start"
                                  width="320"
                                  height="280"
