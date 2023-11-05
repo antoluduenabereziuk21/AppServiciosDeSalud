@@ -33,11 +33,27 @@
 
                                     </span>
                                 </h1>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-7">
                                 <p class="info-p">
                                     Correo electrónico: 
                                     <span th:text="${session.usuario.email}" ></span></p>
-                                <p class="info-p">Teléfono: <span th:text="${session.usuario.telefono}" ></span></p>
-                            </section>
+                               <p class="info-p">Teléfono: 
+                                  <span th:text="${session.usuario.telefono}" ></span></p>
+                                  <p class="info-p">Fecha de Nacimiento: 
+                                    <span th:text="${session.usuario.fechaNacimiento}" ></span></p>
+                                 <p class="info-p">DNI: 
+                                    <span th:text="${session.usuario.dni}" ></span></p> 
+                                 <p class="info-p">Género: 
+                                     <span th:text="${session.usuario.sexo}" ></span></p>
+                                 <p class="info-p">Obra Social: 
+                                    <span th:text="${session.usuario.obraSocial}" ></span></p>
+
+                                    </div>
+                                </div>
+                          
+                          
+                                </section>
                         
                   
            

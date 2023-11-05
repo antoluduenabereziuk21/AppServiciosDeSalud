@@ -2,7 +2,7 @@
  
   top: 30vh;
   width: fit-content !important;
-  height: 900px;
+  height: 600px;
   margin-left: auto;
   margin-right: auto;
   background-color: #86d162;   
@@ -53,23 +53,12 @@ margin-right: 20px;
     background-color: rgb(56, 112, 10);
 }
 
+.info-1{
+  font-family: fantasy;
+}
 
+.info-p{
+    font-family: fantasy;
+    text-align: left;
 
-
-.additional-info { margin-bottom: 20px; }
-
-.additional-info h2 { margin: 0 0 10px; font-size: 20px; }
-
-.additional-info ul { list-style: none; margin: 0; padding: 0; }
-
-.additional-info li { margin-bottom: 5px; }
-
-.publications { margin-bottom: 20px; }
-
-.publications h2 { margin: 0 0 10px; font-size: 20px; }
-
-.post { margin-bottom: 20px; }
-
-.post h3 { margin: 0 0 10px; font-size: 18px; }
-
-.post p { margin: 0; font-size: 16px; }
+}
