@@ -12,6 +12,9 @@ import java.util.Optional;
 @Repository
 public interface PacienteRepositorio extends JpaRepository<Paciente, String>{
 
+    @Query("SELECT p FROM Paciente p WHERE p.email = :email")
+    Optional<Paciente> buscarPorEmail(@Param("email")String email);
+    
     @Query("SELECT p FROM Paciente p WHERE p.dni = :dni")
     Optional<Paciente> buscarPorDni(@Param("dni")String dni);
 

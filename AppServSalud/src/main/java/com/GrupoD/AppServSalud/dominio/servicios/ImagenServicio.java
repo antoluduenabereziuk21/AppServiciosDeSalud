@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
 import com.GrupoD.AppServSalud.dominio.repositorio.ImagenRepositorio;
 
+@Service
 public class ImagenServicio {
   @Autowired
   private ImagenRepositorio imagenRepositorio;

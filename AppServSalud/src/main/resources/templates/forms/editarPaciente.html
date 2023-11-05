@@ -7,42 +7,70 @@
     <body>
         <header th:replace="/fragments/header :: header"></header>
         <div class="container" role="alert">
-        <div class="container-fluid m-5 contenedor">
-            <div
-                th:if="${error != null}"
-                class="card text-white bg-danger mb-3 mensajeError"
-            >
-                <div class="card-body">
-                    <h5 class="card-title">Error!</h5>
-                    <p
-                        class="card-text"
-                        th:text="${error}"
-                    ></p>
+            <div class="container-fluid m-5 contenedor">
+                <div
+                    th:if="${error != null}"
+                    class="card text-white bg-danger mb-3 mensajeError"
+                >
+                    <div class="card-body">
+                        <h5 class="card-title">Error!</h5>
+                        <p
+                            class="card-text"
+                            th:text="${error}"
+                        ></p>
+                    </div>
                 </div>
-            </div>
-            <div
-                th:if="${exito != null}"
-                class="card text-white bg-success mb-3 mt-3 mensajeExito"
-            >
-                <div class="card-body">
-                    <h5 class="card-title">Exito!</h5>
-                    <p
-                        class="card-text"
-                        th:text="${exito}"
-                    ></p>
+                <div
+                    th:if="${exito != null}"
+                    class="card text-white bg-success mb-3 mt-3 mensajeExito"
+                >
+                    <div class="card-body">
+                        <h5 class="card-title">Exito!</h5>
+                        <p
+                            class="card-text"
+                            th:text="${exito}"
+                        ></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <div class="container">
             <form
                 class="formulario"
-                th:action="@{/paciente/registro}"
+                th:action="@{/paciente/modificar/__${paciente.email}__}"
                 method="POST"
+                enctype="multipart/form-data"
             >
+                <input hidden th:value="${paciente.id}" name="id">
+                
                 <div class="text-center mb-5">
-                    <h3 class="card-title">Registrate en Hospital House</h3>
+                    <h3 class="card-title"
+                        >Actualizar Datos</h3>
                 </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="input-group mb-3">
+                            <label
+                                for="fotoPerfil"
+                                class="input-group-text"
+                            >Cambiar foto de perfil </label>
+                           
+                            <img th:src="@{/imagen/perfil/__${session.usuario.id}__}" 
+                                 class="rounded float-start"
+                                 width="320"
+                                 height="280"
+                                 alt="fotoPerfil"> 
+                        </div>
+                        <div class="input-group mb-3">    
+                        <input type="file" 
+                               class="form-control" 
+                               name="archivo" 
+                               >
+                        </div>
+                        
+                    </div>
+                </div>       
+                
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
@@ -56,6 +84,7 @@
                                 name="nombre"
                                 placeholder="Juan"
                                 id="pacienteNombre"
+                                th:value="${paciente.nombre}"
                             >
                         </div>
                     </div>
@@ -71,41 +100,12 @@
                                 name="apellido"
                                 placeholder="Rodriguez"
                                 id="pacienteApellido"
+                                th:value="${paciente.apellido}"
                             >
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-4">
-                        <div class="input-group mb-3">
-                            <label
-                                class="input-group-text"
-                                for="pacienteDni"
-                            >N° de Documento</label>
-                            <input
-                                class="form-control"
-                                type="number"
-                                name="dni"
-                                placeholder="77888999"
-                                id="pacienteDni"
-                            >
-                        </div>
-                    </div>
-                  <div class="col-lg-4">
-                        <div class="input-group mb-3">
-                            <label
-                                class="input-group-text"
-                                for="fechaNacimiento"
-                            >Nacimiento</label>
-                            <input
-                                class="form-control"
-                                type="date"
-                                name="fechaNacimiento"
-                                id="fechaNacimiento"
-                            />
-                        </div>
-                    </div>
-                </div>
+               
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group mb-3"> 
@@ -115,7 +115,9 @@
                             >Obra Social</label>
                             <select
                                 class="form-select"
-                                id="pacienteSexo"
+                                id="pacienteObraSocial"
+                                name="obraSocial"
+                                th:value="${paciente.obraSocial}"
                             >
                                 <option selected>Elige tu obra social</option>
                                 <option value="OSPE">OSPE</option>
@@ -137,6 +139,8 @@
                             <select
                                 class="form-select"
                                 id="pacienteSexo"
+                                name="sexo"
+                                th:value="${paciente.sexo}"
                             >
                                 <option selected>Elige una opción</option>
                                 <option value="MASCULINO">Masculino</option>
@@ -147,21 +151,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3">
-                            <label
-                                for="pacienteCorreo"
-                                class="input-group-text"
-                            >Correo</label>
-                            <input
-                                type="email"
-                                class="form-control"
-                                name="email"
-                                placeholder="email@email.com"
-                                id="pacienteCorreo"
-                            >
-                        </div>
-                    </div>
+                   
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
@@ -174,6 +164,7 @@
                                 name="telefono"
                                 placeholder="1123456789"
                                 id="pacienteTelefono"
+                                th:value="${paciente.telefono}"
                             >
                         </div>
                     </div>
@@ -190,6 +181,7 @@
                                 class="form-control"
                                 name="password"
                                 placeholder="******"
+                                th:value="${paciente.password}"
                             >
                         </div>
                     </div>
@@ -207,19 +199,22 @@
                             >
                         </div>
                     </div>
-                </div>          
+                </div>        
                 <div class="row justify-content-center mt-5">
                     <div class="col-lg-4 d-grid">
                         <button
                             type="submit"
                             class="btn btn-primary botones"
-                        >Registrarme</button>
+                        >Guardar cambios</button>
                     </div>
                 </div>
+                
 
             </form>
         </div>
-
+        
+        
+        <footer th:replace="/fragments/footer :: footer"></footer>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -230,6 +225,5 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
-
     </body>
 </html>
