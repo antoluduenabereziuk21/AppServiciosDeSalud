@@ -113,6 +113,8 @@ public class PacienteControlador {
     } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       modelo.put("error", e.getMessage());
+      Paciente paciente = (Paciente) session.getAttribute("usuario");
+      modelo.put("paciente", paciente);
       return "forms/editarPaciente.html";
     }
 

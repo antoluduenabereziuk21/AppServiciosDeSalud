@@ -9,7 +9,7 @@
     </head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
-      
+        <div th:replace="/fragments/toast :: div"></div>
         <div class="container">
                 <article class="card-article">
                         <header class="card-header">
@@ -61,7 +61,6 @@
                                     </div>
                                 </div>
                         </section>
-
                 </article>
         </div>
     
@@ -76,5 +75,6 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script th:src="@{/js/toast.js}"></script>
     </body>
 </html>
