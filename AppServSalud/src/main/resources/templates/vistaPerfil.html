@@ -4,61 +4,65 @@
     xmlns:th="http://www.thymeleaft.org"
 >
     <head th:replace="/fragments/head :: head"></head>
+    <head>
+        <link rel="stylesheet" th:href="@{/styles/editarPerfil.css}">
+    </head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
       
         <div class="container">
-            
-      
                 <article class="card-article">
-                    
                         <header class="card-header">
                             <img th:src="@{/assets/card-perfil.jpg}" 
                                       alt="pattern_card"
                                       class="portada-perfil" >
                             <div class="avatar">
-                                <img th:src="@{/imagen/perfil/__${session.usuario.id}__}" 
+                                <img th:src="@{/imagen/perfil/__${usuario.id}__}"
                                      alt="Avatar"
-                                     class="avatar-img" 
-                                >
+                                     class="avatar-img"
+                                     th:if="${usuario.imagen != null}" >
+                                <img th:src="@{/assets/avatar.png}"
+                                     alt="Avatar"
+                                     class="avatar-img"
+                                     th:if="${usuario.imagen == null}" >
                             </div>
                         </header>
                         <section class="card-body">
-                               
                                 <h1 class="info-h1" > 
-                                    <span th:text="${session.usuario.nombre}" >
+                                    <span th:text="${usuario.nombre}" >
 
                                     </span> 
-                                    <span th:text="${session.usuario.apellido}" >
+                                    <span th:text="${usuario.apellido}" >
 
                                     </span>
                                 </h1>
+                                <hr>
                                 <div class="row justify-content-center">
                                     <div class="col-lg-7">
                                 <p class="info-p">
                                     Correo electrónico: 
-                                    <span th:text="${session.usuario.email}" ></span></p>
+                                    <span th:text="${usuario.email}" ></span></p>
                                <p class="info-p">Teléfono: 
-                                  <span th:text="${session.usuario.telefono}" ></span></p>
+                                  <span th:text="${usuario.telefono}" ></span></p>
                                   <p class="info-p">Fecha de Nacimiento: 
-                                    <span th:text="${session.usuario.fechaNacimiento}" ></span></p>
+                                    <span th:text="${usuario.fechaNacimiento}" ></span></p>
                                  <p class="info-p">DNI: 
-                                    <span th:text="${session.usuario.dni}" ></span></p> 
+                                    <span th:text="${usuario.dni}" ></span></p>
                                  <p class="info-p">Género: 
-                                     <span th:text="${session.usuario.sexo}" ></span></p>
-                                 <p class="info-p">Obra Social: 
-                                    <span th:text="${session.usuario.obraSocial}" ></span></p>
-
+                                     <span th:text="${usuario.sexo}" ></span></p>
+                                 <p class="info-p">Tipo de Usuario:
+                                            <span th:text="${usuario.rol.name}" ></span></p>
+                                 <p class="info-p" sec:authorize="hasRole('ROLE_PACIENTE')">Obra Social:
+                                    <span th:text="${usuario.obraSocial}" sec:authorize="hasRole('ROLE_PACIENTE')"></span></p>
+                                <p class="info-p" sec:authorize="hasRole('ROLE_MEDICO')">Obra Social:
+                                    <span th:text="${usuario.especialidad}" sec:authorize="hasRole('ROLE_MEDICO')"></span></p>
+                                <p class="info-p" sec:authorize="hasRole('ROLE_MEDICO')">Obra Social:
+                                    <span th:text="${usuario.matriculaProfesional}" sec:authorize="hasRole('ROLE_MEDICO')"></span></p>
                                     </div>
                                 </div>
-                          
-                          
-                                </section>
-                        
-                  
-           
-                 </article>
-            
+                        </section>
+
+                </article>
         </div>
     
         <footer th:replace="/fragments/footer :: footer"></footer>

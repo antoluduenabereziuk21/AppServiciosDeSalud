@@ -2,6 +2,12 @@
 <html lang="es" xmlns:th="http://www.thymeleaft.org">
 
     <head th:replace="/fragments/head :: head"></head>
+    <head>
+        <link
+                rel="stylesheet"
+                th:href="@{/styles/dashProf.css}"
+        >
+    </head>
     
     <body>
         <header th:replace="/fragments/header :: header"></header>
@@ -25,8 +31,6 @@
                 </main>
             </div>
         </div>
-
-
 
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

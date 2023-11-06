@@ -73,12 +73,16 @@
                                 <ul class="dropdown-menu">
                                     <li><a
                                             class="dropdown-item"
-                                            href="/bienvenido"
-                                    >Inicio Administracion</a></li>
+                                            href="/profesional/registro"
+                                    >Registrar Profesional</a></li>
                                     <li><a
                                             class="dropdown-item"
                                             href="/paciente/todos"
                                         >Todos Los Pacientes</a></li>
+                                    <li><a
+                                            class="dropdown-item"
+                                            href="/profesional/todos"
+                                    >Todos Los Profesionales</a></li>
                                     <li><a
                                             class="dropdown-item"
                                             href="#"
@@ -98,7 +102,15 @@
                                     href="/login"
                                 >Iniciar sesión</a>
                             </li>
-  
+                            <li
+                                    class="nav-item"
+                                    sec:authorize="hasRole('ROLE_MEDICO')"
+                            >
+                                <a
+                                        class="nav-link active"
+                                        href="/profesional/dashboard"
+                                >Panel Profesional</a>
+                            </li>
                            <li class="nav-item" sec:authorize="isAuthenticated()">
                                 <a
                                     class="nav-link dropdown-toggle active"
@@ -111,12 +123,26 @@
                
                             <ul class="dropdown-menu">
                                 <li>
-                                 <a class="nav-link active" href="/paciente/perfil">
+                                 <a class="nav-link active"
+                                    th:href="@{/paciente/perfil/__${#httpServletRequest.getRemoteUser()}__}"
+                                    sec:authorize="hasRole('ROLE_PACIENTE')"
+                                 >
                                   Ver Mi Perfil</a>
+                                    <a class="nav-link active"
+                                       th:href="@{/profesional/perfil/__${#httpServletRequest.getRemoteUser()}__}"
+                                       sec:authorize="hasRole('ROLE_MEDICO')"
+                                    >
+                                        Ver Mi Perfil</a>
+                                    <a class="nav-link active"
+                                       th:href="@{/admin/perfil/__${#httpServletRequest.getRemoteUser()}__}"
+                                       sec:authorize="hasRole('ROLE_ADMIN')"
+                                    >
+                                        Ver Mi Perfil</a>
                                 </li>
                                 <li>
                                 <a class="nav-link active" 
-                                   th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}" 
+                                   th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                   sec:authorize="hasRole('ROLE_PACIENTE')"
                                    >Editar Perfil</a>
                                 </li>
                                <li class="nav-item" sec:authorize="isAuthenticated()">
@@ -132,6 +158,7 @@
                                 </form>
                                </li>
                              </ul>
+
                            </li>
                         </ul>
                     </div>
