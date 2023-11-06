@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,10 @@ public class AdminServicio {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    public Admin buscarPorEmail(String email){
+        return adminRepositorio.buscarPorEmail(email).get();
+    }
     
     @Transactional
     public void crearAdmin(String email, String password, String nombre, String apellido, String role){
@@ -33,7 +38,14 @@ public class AdminServicio {
         } catch (MiExcepcion ex) {
             Logger.getLogger(AdminServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        usuarioServicio.createAdminUser(email,password,nombre,apellido,role);
+        Admin admin = new Admin();
+        admin.setEmail(email);
+        admin.setPassword(new BCryptPasswordEncoder().encode(password));
+        admin.setNombre(nombre);
+        admin.setApellido(apellido);
+        admin.setRol(RolEnum.valueOf(role));
+        admin.setActivo(true);
+        adminRepositorio.save(admin);
     }
    
     @Transactional

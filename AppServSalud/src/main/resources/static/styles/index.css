@@ -6,6 +6,22 @@ body {
     background-attachment: fixed;
 }
 
+.progress-bar {
+    transition: width 1s linear;
+}
+
+.toast-exito, .toast-error {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    border-radius: 10px;
+    margin: 10px;
+    z-index: 9999;
+    display: flex;
+    gap: 20px;
+    transition: all 1s ease;
+}
+
 .tablas {
     background-color: rgb(23, 104, 38);
     text-align: left;

@@ -4,17 +4,13 @@
         xmlns:th="http://www.thymeleaft.org"
 >
 <head th:replace="/fragments/head :: head"></head>
-<head>
-    <title>Pacientes</title>
-    <link rel="stylesheet" th:href="@{/styles/pacientes.css}">
-</head>
 <body>
 <header th:replace="/fragments/header :: header"></header>
-<main class="container">
+<main>
     <div class="buscador">
         <h3>Filtar por dato:</h3>
         <form
-                th:action="@{/paciente/filtrarPacientes}"
+                th:action="@{/profesional/filtrar}"
                 method="get"
         >
             <input
@@ -43,53 +39,51 @@
             >
             <button type="submit">Buscar</button>
         </form>
-        <a href="/paciente/todos">Mostrar todos</a>
+        <a href="/profesional/todos">Mostrar todos</a>
     </div>
 
-    <h2>Listado de pacientes</h2>
-    <hr>
+    <h2>Listado de Profesionales</h2>
+
     <div>
-        <h3>Pacientes Activos</h3>
+        <h3>Profesionales Activos</h3>
         <table class="table container">
             <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>DNI</th>
-                <th>email</th>
-                <th>Obra social</th>
-                <th>telefono</th>
+                <th>Matricula</th>
+                <th>Especialidad</th>
                 <th>Acciones</th>
             </tr>
             </thead>
-            <tbody th:if="${pacientesActivos != null || !pacientesActivos.isEmpty}">
-            <tr th:each="paciente : ${pacientesActivos}">
-                <td th:text="${paciente.nombre}"></td>
-                <td th:text="${paciente.apellido}"></td>
-                <td th:text="${paciente.dni}"></td>
-                <td th:text="${paciente.email}"></td>
-                <td th:text="${paciente.obraSocial}"></td>
-                <td th:text="${paciente.telefono}"></td>
+            <tbody th:if="${profesionalesActivos != null || !profesionalesActivos.isEmpty}">
+            <tr th:each="profesional : ${profesionalesActivos}">
+                <td th:text="${profesional.nombre}"></td>
+                <td th:text="${profesional.apellido}"></td>
+                <td th:text="${profesional.dni}"></td>
+                <td th:text="${profesional.matriculaProfesional}"></td>
+                <td th:text="${profesional.especialidad}"></td>
                 <td>
                     <form
-                            th:action="@{/paciente/baja}"
+                            th:action="@{/profesional/baja}"
                             method="POST"
                     >
                         <input
                                 type="text"
                                 style="display: none"
-                                th:value="${paciente.id}"
-                                name="idPaciente"
+                                th:value="${profesional.id}"
+                                name="idProfesional"
                         >
                         <button type="submit">Dar de baja</button>
                     </form>
                 </td>
             </tr>
             </tbody>
-            <tbody th:if="${pacientesActivos == null || pacientesActivos.isEmpty}">
+            <tbody th:if="${profesionalesActivos == null || profesionalesActivos.isEmpty}">
             <tr>
                 <td colspan="6">
-                    <p>No se encuentran usuarios activos en este momento</p>
+                    <p>No se encuentran Profesionales activos en este momento</p>
                 </td>
             </tr>
             </tbody>
@@ -97,47 +91,45 @@
     </div>
 
     <div class="tabla-principal">
-        <h3>Pacientes Inactivos</h3>
+        <h3>Profesionales Inactivos</h3>
         <table class="table container">
             <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>DNI</th>
-                <th>Email</th>
-                <th>Obra social</th>
-                <th>telefono</th>
+                <th>Matricula</th>
+                <th>Especialidad</th>
                 <th>Acciones</th>
             </tr>
             </thead>
-            <tbody th:if="${pacientesInactivos != null || !pacientesInactivos.isEmpty}">
-            <tr th:each="paciente : ${pacientesInactivos}">
-                <td th:text="${paciente.nombre}"></td>
-                <td th:text="${paciente.apellido}"></td>
-                <td th:text="${paciente.dni}"></td>
-                <td th:text="${paciente.email}"></td>
-                <td th:text="${paciente.obraSocial}"></td>
-                <td th:text="${paciente.telefono}"></td>
+            <tbody th:if="${profesionalesInactivos != null || !profesionalesInactivos.isEmpty}">
+            <tr th:each="profesional : ${profesionalesInactivos}">
+                <td th:text="${profesional.nombre}"></td>
+                <td th:text="${profesional.apellido}"></td>
+                <td th:text="${profesional.dni}"></td>
+                <td th:text="${profesional.matriculaProfesional}"></td>
+                <td th:text="${profesional.especialidad}"></td>
                 <td>
                     <form
-                            th:action="@{/paciente/alta}"
+                            th:action="@{/profesional/alta}"
                             method="POST"
                     >
                         <input
                                 type="text"
                                 style="display: none"
-                                th:value="${paciente.id}"
-                                name="idPaciente"
+                                th:value="${profesional.id}"
+                                name="idProfesional"
                         >
                         <button type="submit">Dar de alta</button>
                     </form>
                 </td>
             </tr>
             </tbody>
-            <tbody th:if="${pacientesInactivos == null || pacientesInactivos.isEmpty}">
+            <tbody th:if="${profesionalesInactivos == null || profesionalesInactivos.isEmpty}">
             <tr>
                 <td colspan="6">
-                    <p>No se encuentran usuarios inactivos en este momento</p>
+                    <p>No se encuentran Profesionales inactivos en este momento</p>
                 </td>
             </tr>
             </tbody>

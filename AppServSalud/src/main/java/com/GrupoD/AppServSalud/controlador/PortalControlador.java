@@ -5,15 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
 
-
     @GetMapping("/")
     public String index() {
-
         return "index.html";
     }
 
@@ -22,10 +19,14 @@ public class PortalControlador {
         return "login.html";
     }
 
-    /*Este metodo solo es para controlar que spring security este configurado correctamente
-    @GetMapping("/bienvenido")
-    public String bienvenido(){
-        return "bienvenido.html";
-    }*/
+    @GetMapping("/error_403")
+    public String error403(){
+        return "error_403.html";
+    }
+
+    @GetMapping("/error_404")
+    public String error404(){
+        return "error_404.html";
+    }
 
 }

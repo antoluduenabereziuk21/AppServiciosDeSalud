@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminRepositorio extends JpaRepository<Admin, String> {
 
+    @Query("SELECT a FROM Admin a WHERE a.email = :email")
+    Optional<Admin> buscarPorEmail(@Param("email") String email);
+
     //modificar estaba mal escrito
    /* @Query("Update a FROM Admin a WHERE a.email = :email AND a.contrasenha = :contrasenha AND a.nombre = :nombre AND a.apellido = :apellido AND a.role = :role")
     void modficarDatosAdmin(@Param("email") String email, @Param("contrasenha") String contrasenha, @Param("nombre") String nombre, @Param("apellido") String apellido, @Param("role") RolEnum role);

@@ -9,10 +9,12 @@ import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.GrupoD.AppServSalud.utilidades.Sexo;
 import com.GrupoD.AppServSalud.utilidades.Validacion;
+import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -77,10 +79,10 @@ public class ServicioPaciente {
     }
 
     @Transactional
-    public void modificarPaciente(MultipartFile archivo, String email, String contrasenha, String nombre, String apellido,
+    public void modificarPaciente(MultipartFile archivo, String email, String nombre, String apellido,
             String sexo, String telefono, String obraSocial) throws MiExcepcion {
             // , String idHistoriaClinica, String idProfesional, String idTurno
-        Validacion.validarStrings(contrasenha, nombre, apellido, sexo, telefono, obraSocial);
+        Validacion.validarStrings(nombre, apellido, sexo, telefono, obraSocial);
         
 
         Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorEmail(email) ;
@@ -111,33 +113,34 @@ public class ServicioPaciente {
 
             Paciente paciente = respuestaPaciente.get();
 
-            paciente.setPassword(contrasenha);
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
-            if (!sexo.isEmpty() || sexo != null){
-            paciente.setSexo(Sexo.valueOf(sexo));
+            if (!sexo.isEmpty() || sexo != null) {
+                paciente.setSexo(Sexo.valueOf(sexo));
             }
             paciente.setTelefono(telefono);
-            if (!obraSocial.isEmpty() || obraSocial != null){
-            paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
-            }
-            
-            String idImagen = null;
-            
-            if(paciente.getImagen() != null){
-            
-                idImagen = paciente.getImagen().getId();
-            }
-            
-            Imagen imagen = null;
-            try {
-                imagen = imagenServicio.actualizar(archivo, idImagen);
-            } catch (Exception e) {
-                
-                e.printStackTrace();
+            if (!obraSocial.isEmpty() || obraSocial != null) {
+                paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
             }
 
-            paciente.setImagen(imagen);
+            if (!archivo.isEmpty()){
+                String idImagen = null;
+
+                if (paciente.getImagen() != null) {
+
+                    idImagen = paciente.getImagen().getId();
+                }
+
+                Imagen imagen = null;
+
+                try {
+                    imagen = imagenServicio.actualizar(archivo, idImagen);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                paciente.setImagen(imagen);
+            }
             /*
             paciente.setHistoriaClinica(historiaClinica);
             paciente.setProfesional(profesional);
@@ -188,71 +191,26 @@ public class ServicioPaciente {
 
     }
 
-    public List<Paciente> listarPacientesActivos() {
-        return pacienteRepositorio.listar(true);
+    public List<Paciente> listarPacientes(boolean activo) {
+        return pacienteRepositorio.listar(activo);
     }
 
-    public List<Paciente> listarPacientesInactivos() {
-        return pacienteRepositorio.listar(false);
+    public List<Paciente> filtrarPacientes(FiltroUsuario usuario) {
+        return pacienteRepositorio.buscarPorFiltro(usuario);
     }
 
-    public List<Paciente> filtrarActivo(String... args) throws MiExcepcion {
+    public void cambiarContrasenha(String email, String newPassword) {
 
-        if ( args[0].isEmpty() &&  args[1].isEmpty() ){
-                throw new MiExcepcion("Debe ingresar al menos un parametro de busqueda");
-        }
+            Optional<Paciente> respuesta = pacienteRepositorio.buscarPorEmail(email);
 
-        if (!args[0].isEmpty() && (args[1] == null || args[1].isEmpty())){
-                return buscarPorNombreActivo(args[0]);
-        }
+            if(respuesta.isPresent()){
 
-        if (args[0].isEmpty() && args[1] != null && !args[1].isEmpty()){
-                return buscarPorApellidoActivo(args[1]);
-        }
+                Paciente paciente = respuesta.get();
 
-        return buscarPorNombreYApellidoActivo(args[0], args[1]);
+                paciente.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+
+                pacienteRepositorio.save(paciente);
+            }
     }
-
-    public List<Paciente> filtrarInactivo(String... args) throws MiExcepcion{
-
-        if ( (args[0] == null && args[0].isEmpty()) && (args[1] == null || args[1].isEmpty()) ){
-            throw new MiExcepcion("Debe ingresar al menos un parametro de busqueda");
-        }
-
-        if ( (args[0] != null && !args[0].isEmpty()) && (args[1] == null || args[1].isEmpty()) ){
-                return buscarPorNombreInactivo(args[0]);
-        }
-
-        if ( (args[0] == null || args[0].isEmpty()) && (args[1] != null && !args[1].isEmpty()) ){
-                return buscarPorApellidoInactivo(args[1]);
-        }
-
-        return buscarPorNombreYApellidoInactivo(args[0], args[1]);
-    }
-
-    private List<Paciente> buscarPorNombreYApellidoActivo(String nombre, String apellido){
-        return pacienteRepositorio.buscarPorNombreYApellido(nombre, apellido, true);
-    }
-
-    private List<Paciente> buscarPorNombreYApellidoInactivo(String nombre, String apellido){
-        return pacienteRepositorio.buscarPorNombreYApellido(nombre, apellido, false);
-    }
-
-    private List<Paciente> buscarPorNombreActivo(String nombre){
-        return pacienteRepositorio.buscarPorNombre(nombre, true);
-    }
-
-    private List<Paciente> buscarPorNombreInactivo(String nombre){
-        return pacienteRepositorio.buscarPorNombre(nombre, false);
-    }
-
-    private List<Paciente> buscarPorApellidoActivo(String apellido){
-        return pacienteRepositorio.buscarPorApellido(apellido, true);
-    }
-
-    private List<Paciente> buscarPorApellidoInactivo(String apellido){
-        return pacienteRepositorio.buscarPorApellido(apellido, false);
-    }
-
 }
 

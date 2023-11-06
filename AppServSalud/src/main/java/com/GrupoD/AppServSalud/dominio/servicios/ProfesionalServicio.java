@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
+import com.GrupoD.AppServSalud.utilidades.*;
+import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,9 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
-import com.GrupoD.AppServSalud.utilidades.RolEnum;
-import com.GrupoD.AppServSalud.utilidades.Sexo;
-import com.GrupoD.AppServSalud.utilidades.Validacion;
 
 @Service
 public class ProfesionalServicio {
@@ -25,15 +25,18 @@ public class ProfesionalServicio {
   @Transactional
   public void crearProfesional(String nombre, String apellido, String dni,
                                 Date fechaDeNacimiento, String email,
-                                String sexo, String telefono, String password) throws MiExcepcion{
+                                String sexo, String telefono, String password,
+                               String matriculaProfesional, String especialidad) throws MiExcepcion{
 
-    Validacion.validarStrings(nombre, apellido, dni, email, sexo, telefono, password);
+    Validacion.validarStrings(nombre, apellido, dni, email, sexo, telefono, password,matriculaProfesional,especialidad);
     Validacion.validarDate(fechaDeNacimiento);
 
     Profesional profesional = new Profesional();
 
     profesional.setNombre(nombre);
     profesional.setApellido(apellido);
+    profesional.setMatriculaProfesional(matriculaProfesional);
+    profesional.setEspecialidad(EspecialidadEnum.valueOf(especialidad));
     profesional.setDni(dni);
     profesional.setFechaNacimiento(fechaDeNacimiento);
     profesional.setFechaAlta(new Date());
@@ -87,8 +90,8 @@ public class ProfesionalServicio {
     }
   }
 
-  public List<Profesional> listarProfesionales() {
-    return profesionalRepositorio.findAll();
+  public List<Profesional> listarProfesionales(boolean activo) {
+    return profesionalRepositorio.listarTodos(activo);
   }
 
   public Profesional buscarPorId(String idProfesional){
@@ -98,5 +101,13 @@ public class ProfesionalServicio {
     }
     return null;
   }
+
+    public Profesional buscarPorEmail(String email) {
+        return profesionalRepositorio.buscarPorEmail(email).get();
+    }
+
+    public List<Profesional> filtrarUsuarios(FiltroUsuario usuario){
+        return profesionalRepositorio.buscarPorFiltro(usuario);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.GrupoD.AppServSalud;
 
+import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 
@@ -19,11 +19,16 @@ public class AppServSaludApplication {
 		SpringApplication.run(AppServSaludApplication.class, args);
 	}
 
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Autowired
 	private ServicioPaciente servicioPaciente;
 
 	@Autowired
-	private UsuarioServicio usuarioServicio;
+	private AdminServicio adminServicio;
 
 
 	/**
@@ -37,7 +42,7 @@ public class AppServSaludApplication {
 	CommandLineRunner init(){
 		return args -> {
 
-			usuarioServicio.createAdminUser(
+			adminServicio.crearAdmin(
 					"admin@mail.com",
 					"admin",
 					"Admin",
