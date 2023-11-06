@@ -15,14 +15,14 @@ import org.springframework.stereotype.Repository;
 public interface AdminRepositorio extends JpaRepository<Admin, String> {
 
     //modificar estaba mal escrito
-    @Query("Update a FROM Admin a WHERE a.email = :email AND a.contrasenha = :contrasenha AND a.nombre = :nombre AND a.apellido = :apellido AND a.role = :role")
+   /* @Query("Update a FROM Admin a WHERE a.email = :email AND a.contrasenha = :contrasenha AND a.nombre = :nombre AND a.apellido = :apellido AND a.role = :role")
     void modficarDatosAdmin(@Param("email") String email, @Param("contrasenha") String contrasenha, @Param("nombre") String nombre, @Param("apellido") String apellido, @Param("role") RolEnum role);
 
     @Query("SELECT a FROM Admin a WHERE a.activo = true")
     List<Admin> listarAdministradoresActivos();
 
     @Query("SELECT a FROM Admin a WHERE a.activo = false")
-    List<Admin> listarAdministradoresInactivos();
+    List<Admin> listarAdministradoresInactivos();*/
    // Falta el que modifica el estado del admin. 
 
 }

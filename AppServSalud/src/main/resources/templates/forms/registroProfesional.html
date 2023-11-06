@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaft.org">
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaft.org"
+>
 
-    <head  th:replace="/fragments/head :: head">
-    <head>
-        <link rel="stylesheet" th:href="@{/styles/profesional.css}">
-    </head>
+    <head th:replace="/fragments/head :: head">
+        <head>
+            <link
+                rel="stylesheet"
+                th:href="@{/styles/profesional.css}"
+            >
+        </head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
 
@@ -15,56 +21,107 @@
             >
                 <div class="card-body">
                     <h5 class="card-title">Error!</h5>
-                    <p class="card-text" th:text="${error}"></p>
+                    <p
+                        class="card-text"
+                        th:text="${error}"
+                    ></p>
                 </div>
             </div>
-            <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+            <div
+                th:if="${exito != null}"
+                class="card text-white bg-success mb-3 mt-3 mensajeExito"
+            >
                 <div class="card-body">
                     <h5 class="card-title">Exito!</h5>
-                    <p class="card-text" th:text="${exito}"></p>
+                    <p
+                        class="card-text"
+                        th:text="${exito}"
+                    ></p>
                 </div>
             </div>
         </div>
         <div class="container">
-            <form class="formulario" th:action="@{/profesional/registro}" method="POST">
+            <form
+                class="formulario"
+                th:action="@{/profesional/registro}"
+                method="POST"
+            >
                 <div class="text-center mb-5">
                     <h3 class="card-title">Se profesional en Hospital House</h3>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
-                            <label for="profesionalNombre" class="input-group-text">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" placeholder="Juan"
-                             id="profesionalNombre">
+                            <label
+                                for="profesionalNombre"
+                                class="input-group-text"
+                            >Nombre</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="nombre"
+                                placeholder="Juan"
+                                id="profesionalNombre"
+                            >
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
-                            <label for="profesionalApellido" class="input-group-text">Apellido</label>
-                            <input type="text" class="form-control" name="apellido"
-                             placeholder="Rodriguez" id="profesionalApellido">
+                            <label
+                                for="profesionalApellido"
+                                class="input-group-text"
+                            >Apellido</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="apellido"
+                                placeholder="Rodriguez"
+                                id="profesionalApellido"
+                            >
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-4">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="profesionalDni">N° de Documento</label>
-                            <input class="form-control" type="number" name="dni"
-                                placeholder="77888999"id="profesionalDni">
+                            <label
+                                class="input-group-text"
+                                for="profesionalDni"
+                            >N° de Documento</label>
+                            <input
+                                class="form-control"
+                                type="number"
+                                name="dni"
+                                placeholder="77888999"
+                                id="profesionalDni"
+                            >
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="fechaNacimiento">Nacimiento</label>
-                            <input class="form-control" type="date"
-                                name="fechaNacimiento" id="fechaNacimiento"/>
+                            <label
+                                class="input-group-text"
+                                for="fechaDeNacimiento"
+                            >Nacimiento</label>
+                            <input
+                                class="form-control"
+                                type="date"
+                                name="fechaDeNacimiento"
+                                id="fechaNacimiento"
+                            />
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="profesionalSexo">Sexo</label>
-                            <select class="form-select" id="profesionalSexo">
+                            <label
+                                class="input-group-text"
+                                for="profesionalSexo"
+                            >Sexo</label>
+                            <select
+                                class="form-select"
+                                id="profesionalSexo"
+                                name="sexo"
+                            >
                                 <option selected>Elige una opción</option>
                                 <option value="MASCULINO">Masculino</option>
                                 <option value="FEMENINO">Femenino</option>
@@ -76,47 +133,91 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
-                            <label for="profesionalCorreo" class="input-group-text">Correo</label>
-                            <input type="email" class="form-control" name="email"
-                                placeholder="email@email.com" id="profesionalCorreo">
+                            <label
+                                for="profesionalCorreo"
+                                class="input-group-text"
+                            >Correo</label>
+                            <input
+                                type="email"
+                                class="form-control"
+                                name="email"
+                                placeholder="email@email.com"
+                                id="profesionalCorreo"
+                            >
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="profesionalTelefono">N° de Telefono</label>
-                            <input type="number" class="form-control" name="telefono"
-                                placeholder="1123456789" id="profesionalTelefono">
+                            <label
+                                class="input-group-text"
+                                for="profesionalTelefono"
+                            >N° de Telefono</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="telefono"
+                                placeholder="1123456789"
+                                id="profesionalTelefono"
+                            >
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group my-3">
-                            <label for="password" class="input-group-text">Contraseña</label>
-                            <input type="password" class="form-control" name="password"
-                                placeholder="******">
+                            <label
+                                for="password"
+                                class="input-group-text"
+                            >Contraseña</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                name="password"
+                                placeholder="******"
+                            >
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="input-group my-3">
-                            <label for="password" class="input-group-text">Repetir Contraseña</label>
-                            <input type="password" class="form-control" name="password2"
-                                placeholder="******">
+                            <label
+                                for="password"
+                                class="input-group-text"
+                            >Repetir Contraseña</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                name="password2"
+                                placeholder="******"
+                            >
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="profesionalMatricula">N° de Matrícula</label>
-                            <input type="number" class="form-control" name="matricula"
-                                   placeholder="0123456789" id="profesionalMatricula">
+                            <label
+                                class="input-group-text"
+                                for="profesionalMatricula"
+                            >N° de Matrícula</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="matricula"
+                                placeholder="0123456789"
+                                id="profesionalMatricula"
+                            >
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="especialidad">Especialidad</label>
-                            <select class="form-select" id="especialidad">
+                            <label
+                                class="input-group-text"
+                                for="especialidad"
+                            >Especialidad</label>
+                            <select
+                                class="form-select"
+                                id="especialidad"
+                            >
                                 <option selected>Elige una opción</option>
                                 <option value="Clinica">Clínica</option>
                                 <option value="Cardiologia">Cardiologia</option>
@@ -129,7 +230,9 @@
                 <div class="row justify-content-center mt-5">
                     <div class="col-lg-4 d-grid">
                         <button
-                            type="submit" class="btn btn-primary botones">Registrar</button>
+                            type="submit"
+                            class="btn btn-primary botones"
+                        >Registrar</button>
                     </div>
                 </div>
             </form>

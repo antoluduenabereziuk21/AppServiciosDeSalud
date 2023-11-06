@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.GrupoD.AppServSalud.dominio.servicios;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Admin;
+import com.GrupoD.AppServSalud.dominio.repositorio.AdminRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import com.GrupoD.AppServSalud.utilidades.Validacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author antolube20
- */
 @Service
 public class AdminServicio {
    
@@ -32,24 +27,24 @@ public class AdminServicio {
     private UsuarioServicio usuarioServicio;
     
     @Transactional
-    public void crearAdmin(String email, String contrasenha, String nombre, String apellido, String role){
+    public void crearAdmin(String email, String password, String nombre, String apellido, String role){
         try {
-            Validacion.validarStrings(nombre, apellido, email, contrasenha);
+            Validacion.validarStrings(nombre, apellido, email, password);
         } catch (MiExcepcion ex) {
             Logger.getLogger(AdminServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        usuarioServicio.createAdminUser(email,contrasenha,nombre,apellido,role);
+        usuarioServicio.createAdminUser(email,password,nombre,apellido,role);
     }
    
     @Transactional
 
-    public void modficarDatosAdmin(String idAdmin,String email, String contrasenha, String nombre, String apellido, String role){
-        Validacion.validarStrings(nombre, apellido, email, contrasenha);
+    public void modficarDatosAdmin(String idAdmin,String email, String password, String nombre, String apellido, String role) throws MiExcepcion{
+        Validacion.validarStrings(nombre, apellido, email, password);
         Optional<Admin> respuestaAdmin= adminRepositorio.findById(idAdmin);
         if (respuestaAdmin.isPresent()){
             Admin admin = respuestaAdmin.get();
             admin.setEmail(email);
-            admin.setContresenha(email);
+            admin.setPassword(password);
             admin.setNombre(nombre);
             admin.setRol(RolEnum.valueOf(role));
 
@@ -75,6 +70,7 @@ public class AdminServicio {
     public List<Admin> listarAdministradores(){
         return adminRepositorio.findAll();
     }
+    /*
     @Transactional(readOnly = true)
     public List<Admin> listarAdministradoresActivos(){
         return adminRepositorio.buscarActivos();
@@ -82,6 +78,6 @@ public class AdminServicio {
     @Transactional(readOnly = true)
     public List<Admin> listarAdministradoresActivos(){
         return adminRepositorio.buscarInctivos();
-    }
+    }*/
    
 }

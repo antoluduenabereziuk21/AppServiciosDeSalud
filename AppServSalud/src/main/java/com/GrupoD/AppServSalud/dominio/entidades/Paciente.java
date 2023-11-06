@@ -14,7 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor 
 @Entity
-@Table(name="pacientes")
 @DiscriminatorValue("paciente")
 public class Paciente extends Usuario {
 
