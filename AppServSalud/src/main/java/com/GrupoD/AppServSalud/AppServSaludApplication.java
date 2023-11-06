@@ -1,6 +1,7 @@
 package com.GrupoD.AppServSalud;
 
 import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AppServSaludApplication {
 	@Autowired
 	private AdminServicio adminServicio;
 
+	@Autowired
+	private ProfesionalServicio profesionalServicio;
+
 
 	/**
 	 * Metodo que se ejecuta al iniciar la aplicacion
@@ -41,6 +45,19 @@ public class AppServSaludApplication {
 	@Bean
 	CommandLineRunner init(){
 		return args -> {
+
+			profesionalServicio.crearProfesional(
+					"medico",
+					"ginecologo",
+					"12333212",
+					new Date(),
+					"ginecologo@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122211",
+					"GINECOLOGIA"
+			);
 
 			adminServicio.crearAdmin(
 					"admin@mail.com",
