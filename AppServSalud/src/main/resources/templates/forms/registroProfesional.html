@@ -3,10 +3,17 @@
     lang="es"
     xmlns:th="http://www.thymeleaft.org"
 >
-    <head th:replace="/fragments/head :: head"></head>
+
+    <head th:replace="/fragments/head :: head">
+        <head>
+            <link
+                rel="stylesheet"
+                th:href="@{/styles/profesional.css}"
+            >
+        </head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
-        <div class="container" role="alert">
+
         <div class="container-fluid m-5 contenedor">
             <div
                 th:if="${error != null}"
@@ -33,21 +40,20 @@
                 </div>
             </div>
         </div>
-    </div>
         <div class="container">
             <form
                 class="formulario"
-                th:action="@{/paciente/registro}"
+                th:action="@{/profesional/registro}"
                 method="POST"
             >
                 <div class="text-center mb-5">
-                    <h3 class="card-title">Registrate en Hospital House</h3>
+                    <h3 class="card-title">Se profesional en Hospital House</h3>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
-                                for="pacienteNombre"
+                                for="profesionalNombre"
                                 class="input-group-text"
                             >Nombre</label>
                             <input
@@ -55,14 +61,14 @@
                                 class="form-control"
                                 name="nombre"
                                 placeholder="Juan"
-                                id="pacienteNombre"
+                                id="profesionalNombre"
                             >
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
-                                for="pacienteApellido"
+                                for="profesionalApellido"
                                 class="input-group-text"
                             >Apellido</label>
                             <input
@@ -70,7 +76,7 @@
                                 class="form-control"
                                 name="apellido"
                                 placeholder="Rodriguez"
-                                id="pacienteApellido"
+                                id="profesionalApellido"
                             >
                         </div>
                     </div>
@@ -80,63 +86,40 @@
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
-                                for="pacienteDni"
+                                for="profesionalDni"
                             >N° de Documento</label>
                             <input
                                 class="form-control"
                                 type="number"
                                 name="dni"
                                 placeholder="77888999"
-                                id="pacienteDni"
+                                id="profesionalDni"
                             >
-                        </div>
-                    </div>
-                  <div class="col-lg-4">
-                        <div class="input-group mb-3">
-                            <label
-                                class="input-group-text"
-                                for="fechaNacimiento"
-                            >Nacimiento</label>
-                            <input
-                                class="form-control"
-                                type="date"
-                                name="fechaNacimiento"
-                                id="fechaNacimiento"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3"> 
-                           <label
-                                class="input-group-text"
-                                for="obraSocial"
-                            >Obra Social</label>
-                            <select
-                                class="form-select"
-                                id="pacienteSexo"
-                            >
-                                <option selected>Elige tu obra social</option>
-                                <option value="OSPE">OSPE</option>
-                                <option value="SWISS_MEDICAL">SwissMedical</option>
-                                <option value="SANCORSALUD">SancorSalud</option>
-                                <option value="OSPRERA">OSPRERA</option>
-                                <option value="UPCN">UPCN</option>
-                                <option value="OSDE">OSDE</option>
-                                <option value="PARTICULAR">Particular</option>
-                            </select>   
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
-                                for="pacienteSexo"
+                                for="fechaDeNacimiento"
+                            >Nacimiento</label>
+                            <input
+                                class="form-control"
+                                type="date"
+                                name="fechaDeNacimiento"
+                                id="fechaNacimiento"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="profesionalSexo"
                             >Sexo</label>
                             <select
                                 class="form-select"
-                                id="pacienteSexo"
+                                id="profesionalSexo"
                                 name="sexo"
                             >
                                 <option selected>Elige una opción</option>
@@ -151,7 +134,7 @@
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
-                                for="pacienteCorreo"
+                                for="profesionalCorreo"
                                 class="input-group-text"
                             >Correo</label>
                             <input
@@ -159,7 +142,7 @@
                                 class="form-control"
                                 name="email"
                                 placeholder="email@email.com"
-                                id="pacienteCorreo"
+                                id="profesionalCorreo"
                             >
                         </div>
                     </div>
@@ -167,14 +150,14 @@
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
-                                for="pacienteTelefono"
+                                for="profesionalTelefono"
                             >N° de Telefono</label>
                             <input
                                 type="number"
                                 class="form-control"
                                 name="telefono"
                                 placeholder="1123456789"
-                                id="pacienteTelefono"
+                                id="profesionalTelefono"
                             >
                         </div>
                     </div>
@@ -208,16 +191,51 @@
                             >
                         </div>
                     </div>
-                </div>          
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="profesionalMatricula"
+                            >N° de Matrícula</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="matriculaProfesional"
+                                placeholder="0123456789"
+                                id="profesionalMatricula"
+                            >
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="especialidad"
+                            >Especialidad</label>
+                            <select
+                                class="form-select"
+                                id="especialidad"
+                                name="especialidad"
+                            >
+                                <option selected>Elige una opción</option>
+                                <option value="CLINICA">Clínica</option>
+                                <option value="CARDIOLOGIA">Cardiologia</option>
+                                <option value="GINECOLOGIA">Ginecologia</option>
+                                <option value="PEDIATRIA">Pediatria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row justify-content-center mt-5">
                     <div class="col-lg-4 d-grid">
                         <button
                             type="submit"
                             class="btn btn-primary botones"
-                        >Registrarme</button>
+                        >Registrar</button>
                     </div>
                 </div>
-
             </form>
         </div>
 

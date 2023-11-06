@@ -1,12 +1,13 @@
 package com.GrupoD.AppServSalud.utilidades;
 
 public enum ObraSocialEnum {
-    NoPosee,
+    
     OSECAC,
     OSPE,
-    SwissMedical,
-    SancorSalud,
+    SWISS_MEDICAL,
+    SANCORSALUD,
     OSPRERA,
     UPCN,
-    OSDE;
+    OSDE,
+    PARTICULAR;
 }

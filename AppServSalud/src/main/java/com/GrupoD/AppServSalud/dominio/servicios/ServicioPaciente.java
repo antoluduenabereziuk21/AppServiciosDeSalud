@@ -1,5 +1,6 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
@@ -8,10 +9,14 @@ import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.GrupoD.AppServSalud.utilidades.Sexo;
+import com.GrupoD.AppServSalud.utilidades.Validacion;
+import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,11 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ServicioPaciente {
 
+
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
+     @Autowired
+    private ImagenServicio imagenServicio;
     /*
-    @Autowired
-    private ImagenServicio imagenServio;
+   
     @Autowired
     private HistoriaClinicaRepositorio historiaClinicaRepositorio;
     @Autowired
@@ -33,14 +40,23 @@ public class ServicioPaciente {
     private TurnoRepositorio turnoRepositorio;
     */
 
+    public Paciente buscarPorEmail(String email){
+        return pacienteRepositorio.buscarPorEmail(email).get() ;
+    }
+    
     @Transactional
-    public void crearPaciente(String email, String contraseña, String nombre, String apellido,
-                              String dni, Date fechaDeNacimiento, String sexo, String telefono,
-                              String obraSocial /*,MultipartFile archivo, String idHistoriaClinica,
+    public void crearPaciente(String email, String contrasenha, String nombre, String apellido,
+                             /* String dni, Date fechaDeNacimiento, String sexo, String telefono
+                              ,MultipartFile archivo, String idHistoriaClinica,
+                              String idProfesional, String idTurno) throws Excepcion {*/
+
+                              String dni, Date fechaDeNacimiento, String sexo, String telefono
+                              /*,MultipartFile archivo, String idHistoriaClinica,
                               String idProfesional, String idTurno*/) throws MiExcepcion {
 
-        obraSocial = "SwissMedical";
-        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
+
+        Validacion.validarStrings(email, contrasenha, nombre, apellido, dni, sexo, telefono);
+        Validacion.validarDate(fechaDeNacimiento);
 
         /*
         HistoriaClinica historiaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica).get();
@@ -49,18 +65,7 @@ public class ServicioPaciente {
         */
         Paciente paciente = new Paciente();
 
-        paciente.setEmail(email);
-        paciente.setPassword(contraseña);
-        paciente.setNombre(nombre);
-        paciente.setApellido(apellido);
-        paciente.setDni(dni);
-        paciente.setFechaNacimiento(fechaDeNacimiento);
-        paciente.setTelefono(telefono);
-        paciente.setActivo(true);
-        paciente.setFechaAlta(new Date());
-        paciente.setRol(RolEnum.PACIENTE);
-        paciente.setSexo(Sexo.valueOf(sexo));
-        paciente.setObraSocial(ObraSocialEnum.SwissMedical);
+        setearParametros(email, contrasenha, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, "PARTICULAR",paciente);
         /*
         paciente.setHistoriaClinica(historiaClinica);
         paciente.setProfesional(profesional);
@@ -74,11 +79,13 @@ public class ServicioPaciente {
     }
 
     @Transactional
-    public void modificarPaciente(MultipartFile archivo, String idPaciente, String email, String contraseña, String nombre, String apellido, String dni, Date fechaDeNacimiento,
-            String sexo, String telefono, String obraSocial, String idHistoriaClinica, String idProfesional, String idTurno) throws MiExcepcion {
+    public void modificarPaciente(MultipartFile archivo, String email, String nombre, String apellido,
+            String sexo, String telefono, String obraSocial) throws MiExcepcion {
+            // , String idHistoriaClinica, String idProfesional, String idTurno
+        Validacion.validarStrings(nombre, apellido, sexo, telefono, obraSocial);
+        
 
-        validar(email, contraseña, nombre, apellido, dni, fechaDeNacimiento, sexo, telefono, obraSocial);
-        Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
+        Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorEmail(email) ;
         /*
         Optional<HistoriaClinica> respuestaHistoriaClinica = historiaClinicaRepositorio.findById(idHistoriaClinica);
         Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
@@ -106,39 +113,60 @@ public class ServicioPaciente {
 
             Paciente paciente = respuestaPaciente.get();
 
-            paciente.setEmail(email);
-            paciente.setPassword(contraseña);
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
-            paciente.setDni(dni);
-            paciente.setFechaNacimiento(fechaDeNacimiento);
+            if (!sexo.isEmpty() || sexo != null) {
+                paciente.setSexo(Sexo.valueOf(sexo));
+            }
             paciente.setTelefono(telefono);
-            paciente.setActivo(true);
-            paciente.setRol(RolEnum.PACIENTE);
-            paciente.setSexo(Sexo.valueOf(sexo));
-            paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+            if (!obraSocial.isEmpty() || obraSocial != null) {
+                paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+            }
+
+            if (!archivo.isEmpty()){
+                String idImagen = null;
+
+                if (paciente.getImagen() != null) {
+
+                    idImagen = paciente.getImagen().getId();
+                }
+
+                Imagen imagen = null;
+
+                try {
+                    imagen = imagenServicio.actualizar(archivo, idImagen);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                paciente.setImagen(imagen);
+            }
             /*
             paciente.setHistoriaClinica(historiaClinica);
             paciente.setProfesional(profesional);
             paciente.setTurno(turno);
 
-            String idImagen = null;
-            
-            if(paciente.getImagen() != null){
-            
-                idImagen = paciente.getImagen().getId();
-            }
-            
-            Imagen imagen = imagenServio.actualizar(archivo, idImagen);
-
-            paciente.setImagen(imagen);
             */
             pacienteRepositorio.save(paciente);
 
         }
 
     }
-    
+
+    private void setearParametros(String email, String contrasenha, String nombre, String apellido, String dni, Date fechaDeNacimiento, String sexo, String telefono, String obraSocial, Paciente paciente) {
+        paciente.setEmail(email);
+        paciente.setPassword(new BCryptPasswordEncoder().encode(contrasenha));
+        paciente.setNombre(nombre);
+        paciente.setApellido(apellido);
+        paciente.setDni(dni);
+        paciente.setFechaNacimiento(fechaDeNacimiento);
+        paciente.setTelefono(telefono);
+        paciente.setActivo(true);
+        paciente.setRol(RolEnum.PACIENTE);
+        paciente.setSexo(Sexo.valueOf(sexo));
+        paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+    }
+
     public Paciente buscarPorDni(String dni){
         
          Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorDni(dni);
@@ -160,76 +188,29 @@ public class ServicioPaciente {
 
             pacienteRepositorio.save(paciente);
         }
-        
+
     }
 
-    public void validar(String email, String contraseña, String nombre, String apellido, String dni,
-                        Date fechaDeNacimiento, String sexo, String telefono, String obraSocial) throws MiExcepcion{
-
-        if(email == null || email.isEmpty()){
-        
-            throw new MiExcepcion("Ingrese un email");
-        }
-        
-        if(contraseña == null || contraseña.isEmpty()){
-        
-            throw new MiExcepcion("Ingrese una contraseña");
-        }
-        
-        if(nombre == null || nombre.isEmpty()){
-        
-            throw new MiExcepcion("Ingrese su nombre");
-        }
-        
-        if(apellido == null || apellido.isEmpty()){
-        
-            throw new MiExcepcion("Ingrese su apellido");
-        }
-        
-        if(dni == null || dni.isEmpty()){
-        
-            throw new MiExcepcion("Ingrese su dni");
-        }
-        
-        if(fechaDeNacimiento == null){
-        
-            throw new MiExcepcion("Ingrese su fecha de nacimiento");
-        }
-        
-        if(telefono == null || telefono.isEmpty()){
-        
-            throw new MiExcepcion("Ingrese un contacto");
-        }
-        
-        if(sexo == null){
-        
-            throw new MiExcepcion("Ingrese su sexo");
-        }
-        
-        if(obraSocial == null){
-        
-            throw new MiExcepcion("Debe asignar una obra social");
-        }
-        
-        
-        
+    public List<Paciente> listarPacientes(boolean activo) {
+        return pacienteRepositorio.listar(activo);
     }
 
-
-    public List<Paciente> listarPacientesActivos() {
-        return pacienteRepositorio.buscarActivos();
+    public List<Paciente> filtrarPacientes(FiltroUsuario usuario) {
+        return pacienteRepositorio.buscarPorFiltro(usuario);
     }
 
-    public List<Paciente> listarPacientesInactivos() {
-        return pacienteRepositorio.buscarInactivos();
-    }
+    public void cambiarContrasenha(String email, String newPassword) {
 
-    public List<Paciente> buscarPorNombreYApellidoActvo(String nombre, String apellido){
-        return pacienteRepositorio.buscarPorNombreYApellidoActivos(nombre, apellido);
-    }
+            Optional<Paciente> respuesta = pacienteRepositorio.buscarPorEmail(email);
 
-    public List<Paciente> buscarPorNombreYApellidoInactivo(String nombre, String apellido){
-        return pacienteRepositorio.buscarPorNombreYApellidoInactivos(nombre, apellido);
+            if(respuesta.isPresent()){
+
+                Paciente paciente = respuesta.get();
+
+                paciente.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+
+                pacienteRepositorio.save(paciente);
+            }
     }
 }
 

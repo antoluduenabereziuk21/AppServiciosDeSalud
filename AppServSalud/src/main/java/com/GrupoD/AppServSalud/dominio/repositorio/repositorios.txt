@@ -1,1 +1,0 @@
-paquete para los repositorios JPA

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaft.org">
+
+    <head th:replace="/fragments/head :: head"></head>
+    <head>
+        <link
+                rel="stylesheet"
+                th:href="@{/styles/dashProf.css}"
+        >
+    </head>
+    
+    <body>
+        <header th:replace="/fragments/header :: header"></header>
+        <i><h1>Bienvenido</h1></i>
+
+        <div class="containes-fluid">
+            <div class="row">
+                <div class="col-4 barraLateral col-12 col-sm-auto">
+                    <nav class="menu">
+                        <a href="#"><i class="fas fa-home"></i><span>Perfil</span></a>
+                        <a href="#"><i class="fas fa-home"></i><span>Calendario</span></a>
+                        <a href="#"><i class="fas fa-home"></i><span>Turnos</span></a>
+                    </nav>
+                </div>
+                <main class="columna principal">
+                    <div class="row justify-content-center align-content-center text-center">
+                        <div class="columna col-lg-6">
+                            <h4>Acá va el formulario </h4>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+
+    </body>
+</html>

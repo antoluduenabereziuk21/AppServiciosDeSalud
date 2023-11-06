@@ -1,24 +1,35 @@
 package com.GrupoD.AppServSalud.dominio.entidades;
 
+import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
+import com.GrupoD.AppServSalud.utilidades.ObraSocialEnum;
+import javax.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "profesionales")
-public class Profesional {
+public class Profesional extends Usuario{
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy = "uuid2")
-    private String id;
+        
+    @Column(unique = true)
+    private String matriculaProfesional;
+    
+    @Enumerated(EnumType.STRING)
+    private EspecialidadEnum especialidad;
+    
+    private String descripcion;
+    
+    //@OneToMany
+    //private List<Oferta> oferta;
+    
+    @Enumerated(EnumType.STRING)
+    private ObraSocialEnum obrasSociales;
 }

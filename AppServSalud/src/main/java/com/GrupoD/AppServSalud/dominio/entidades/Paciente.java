@@ -12,9 +12,8 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor 
 @Entity
-@Table(name="pacientes")
 @DiscriminatorValue("paciente")
 public class Paciente extends Usuario {
 

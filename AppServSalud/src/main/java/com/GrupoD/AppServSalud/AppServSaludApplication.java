@@ -1,11 +1,15 @@
 package com.GrupoD.AppServSalud;
 
+import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Date;
 
@@ -16,8 +20,20 @@ public class AppServSaludApplication {
 		SpringApplication.run(AppServSaludApplication.class, args);
 	}
 
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Autowired
 	private ServicioPaciente servicioPaciente;
+
+	@Autowired
+	private AdminServicio adminServicio;
+
+	@Autowired
+	private ProfesionalServicio profesionalServicio;
+
 
 	/**
 	 * Metodo que se ejecuta al iniciar la aplicacion
@@ -29,6 +45,27 @@ public class AppServSaludApplication {
 	@Bean
 	CommandLineRunner init(){
 		return args -> {
+
+			profesionalServicio.crearProfesional(
+					"medico",
+					"ginecologo",
+					"12333212",
+					new Date(),
+					"ginecologo@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122211",
+					"GINECOLOGIA"
+			);
+
+			adminServicio.crearAdmin(
+					"admin@mail.com",
+					"admin",
+					"Admin",
+					"User",
+					"ADMIN");
+
 			servicioPaciente.crearPaciente(
 					"Mauricio@mail.com",
 					"123456",
@@ -37,8 +74,7 @@ public class AppServSaludApplication {
 					"11111111",
 					new Date(),
 					"MASCULINO",
-					"123123",
-					"SwissMedical");
+					"123123");
 
 			servicioPaciente.crearPaciente(
 					"Ayelen@mail.com",
@@ -47,8 +83,7 @@ public class AppServSaludApplication {
 					"Ayelen",
 					"22222222",new Date(),
 					"FEMENINO",
-					"3333333",
-					"SwissMedical");
+					"3333333");
 
 			servicioPaciente.crearPaciente(
 					"Maria@mail.com",
@@ -57,18 +92,16 @@ public class AppServSaludApplication {
 					"Maria",
 					"33333333",new Date(),
 					"FEMENINO",
-					"123123",
-					"SwissMedical");
+					"123123");
 
 			servicioPaciente.crearPaciente(
-					"Atonio@mail.com",
+					"Antonio@mail.com",
 					"123456",
-					"Atonio",
-					"Atonio",
+					"Antonio",
+					"Antonio",
 					"44444444",new Date(),
 					"MASCULINO",
-					"123123",
-					"SwissMedical");
+					"123123");
 
 			servicioPaciente.crearPaciente(
 					"Araceli@mail.com",
@@ -77,8 +110,7 @@ public class AppServSaludApplication {
 					"Araceli",
 					"55555555",new Date(),
 					"FEMENINO",
-					"123123",
-					"SwissMedical");
+					"123123");
 
 			servicioPaciente.crearPaciente(
 					"Lucas@mail.com",
@@ -87,8 +119,7 @@ public class AppServSaludApplication {
 					"Lucas",
 					"66666666",new Date(),
 					"MASCULINO",
-					"123123",
-					"SwissMedical");
+					"123123");
 
 			servicioPaciente.crearPaciente(
 					"Ramiro@mail.com",
@@ -97,8 +128,7 @@ public class AppServSaludApplication {
 					"Ramiro",
 					"77777777",new Date(),
 					"MASCULINO",
-					"123123",
-					"SwissMedical");
+					"123123");
 
 			servicioPaciente.crearPaciente(
 					"Leandro@mail.com",
@@ -107,8 +137,8 @@ public class AppServSaludApplication {
 					"Leandro",
 					"88888888",new Date(),
 					"MASCULINO",
-					"123123",
-					"SwissMedical");
+					"123123");
+
 		};
 	}
 

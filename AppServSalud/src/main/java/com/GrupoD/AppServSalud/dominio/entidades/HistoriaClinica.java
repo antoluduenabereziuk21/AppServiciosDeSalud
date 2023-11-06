@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.GrupoD.AppServSalud.dominio.entidades;
 
 import javax.persistence.*;
@@ -14,18 +10,12 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
-
-/**
- *
- * @author antolube20
- */
 @Entity
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "historia_clinica")
 
 public class HistoriaClinica {
     @Id

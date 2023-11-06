@@ -1,50 +1,64 @@
-footer{
-    background-color: rgb(166, 215, 166);
-    color: green;
-    }
-    nav{
-        background-color: rgb(138, 186, 138)
-    }
-    header .contenedor{
-    display:flex;
-    }
-    body{
-        min-height: auto;
-        background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.jpg);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-attachment: fixed;
-    }
-    .tablas{
-        background-color: rgb(23, 104, 38);
-        text-align: left;
-        width: 70%;
-        margin: 0.2%;
-        ;
-    }
-    .tablas > th,td{
-        border: solid green;
-        font-size: 28px;
-        margin: 5%
-    }
-    .tabla{
-        background-color: rgb(23, 104, 38);
-    }
-    .perfil{
-        width: 70%;
-        text-align: 50%;
-    }
-    .perfil > th,td{
-        border-collapse: collapse;
-    }
+body {
+    min-height: auto;
+    background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
 
-    footer{
-        margin-top: 100%;
-        align-items: end;
-        background-color: rgba(114, 169, 114, 0.25)
-    }
-    .footer_textos {
-        display: flex;
-        margin:auto;
-        justify-content: space-between;
-    }
+.progress-bar {
+    transition: width 1s linear;
+}
+
+.toast-exito, .toast-error {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    border-radius: 10px;
+    margin: 10px;
+    z-index: 9999;
+    display: flex;
+    gap: 20px;
+    transition: all 1s ease;
+}
+
+.tablas {
+    background-color: rgb(23, 104, 38);
+    text-align: left;
+    width: 70%;
+    margin: 0.2%;
+    ;
+}
+
+.tablas th,
+.tablas td {
+    border: solid green;
+    font-size: 28px;
+    margin: 5%
+}
+
+.tabla {
+    background-color: rgb(23, 104, 38);
+}
+
+.perfil {
+    width: 70%;
+    text-align: 50%;
+}
+
+.perfil th,
+.perfil td {
+    border-collapse: collapse;
+}
+
+footer {
+    margin-top: 100%;
+    align-items: end;
+    background-color: rgba(114, 169, 114, 0.25)
+}
+
+.footer_textos {
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+}
