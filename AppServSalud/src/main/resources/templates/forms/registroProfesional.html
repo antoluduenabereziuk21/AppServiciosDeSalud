@@ -14,32 +14,7 @@
     <body>
         <header th:replace="/fragments/header :: header"></header>
 
-        <div class="container-fluid m-5 contenedor">
-            <div
-                th:if="${error != null}"
-                class="card text-white bg-danger mb-3 mensajeError"
-            >
-                <div class="card-body">
-                    <h5 class="card-title">Error!</h5>
-                    <p
-                        class="card-text"
-                        th:text="${error}"
-                    ></p>
-                </div>
-            </div>
-            <div
-                th:if="${exito != null}"
-                class="card text-white bg-success mb-3 mt-3 mensajeExito"
-            >
-                <div class="card-body">
-                    <h5 class="card-title">Exito!</h5>
-                    <p
-                        class="card-text"
-                        th:text="${exito}"
-                    ></p>
-                </div>
-            </div>
-        </div>
+        <div th:replace="/fragments/toast :: div"></div>
         <div class="container">
             <form
                 class="formulario"
@@ -249,6 +224,6 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
-
+        <script th:src="@{/js/toast.js}"></script>
     </body>
 </html>
