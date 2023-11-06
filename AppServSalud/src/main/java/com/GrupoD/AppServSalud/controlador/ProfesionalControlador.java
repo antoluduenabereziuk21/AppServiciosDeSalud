@@ -28,7 +28,7 @@ public class ProfesionalControlador {
 
   @GetMapping("/dashboard")
   public String homeProfesional() {
-    return "forms/dashboardProfesional.html";
+    return "dashboardProfesional.html";
   }
 
   @GetMapping("/registro")
