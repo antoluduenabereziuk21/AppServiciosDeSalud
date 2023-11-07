@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.utilidades.*;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +14,34 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
+import com.GrupoD.AppServSalud.dominio.repositorio.UsuarioRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 @Service
 public class ProfesionalServicio {
+
   @Autowired
   private ProfesionalRepositorio profesionalRepositorio;
 
+  @Autowired
+  private UsuarioRepositorio usuarioRepositorio;
+
   @Transactional
   public void crearProfesional(String nombre, String apellido, String dni,
-                                Date fechaDeNacimiento, String email,
-                                String sexo, String telefono, String password,
-                               String matriculaProfesional, String especialidad) throws MiExcepcion{
+      Date fechaDeNacimiento, String email,
+      String sexo, String telefono, String password,
+      String matriculaProfesional, String especialidad) throws MiExcepcion {
 
-    Validacion.validarStrings(nombre, apellido, dni, email, sexo, telefono, password,matriculaProfesional,especialidad);
+    if (usuarioRepositorio.buscarPorEmail(email).isPresent()) {
+      throw new MiExcepcion("El email ya se encuentra registrado");
+    }
+
+    if(usuarioRepositorio.buscarPorDni(dni).isPresent()){
+      throw new MiExcepcion("El DNI ya se encuentra registrado");
+    }
+
+    Validacion.validarStrings(nombre, apellido, dni, email, sexo, telefono, password, matriculaProfesional,
+        especialidad);
     Validacion.validarDate(fechaDeNacimiento);
 
     Profesional profesional = new Profesional();
@@ -51,10 +64,10 @@ public class ProfesionalServicio {
   }
 
   @Transactional
-  public void modificarProfesional(MultipartFile archivo, String idProfesional, String nombre, 
-                                    String apellido, String dni, Date fechaDeNacimiento, String email, 
-                                    String sexo, String telefono, String password) throws MiExcepcion {
-    
+  public void modificarProfesional(MultipartFile archivo, String idProfesional, String nombre,
+      String apellido, String dni, Date fechaDeNacimiento, String email,
+      String sexo, String telefono, String password) throws MiExcepcion {
+
     Validacion.validarStrings(nombre, apellido, dni, email, sexo, telefono, password);
     Validacion.validarDate(fechaDeNacimiento);
 
@@ -94,20 +107,21 @@ public class ProfesionalServicio {
     return profesionalRepositorio.listarTodos(activo);
   }
 
-  public Profesional buscarPorId(String idProfesional){
+  public Profesional buscarPorId(String idProfesional) {
     Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
     if (respuestaProfesional.isPresent()) {
-      return profesionalRepositorio.findById(idProfesional).get(); 
+      return profesionalRepositorio.findById(idProfesional).get();
     }
     return null;
   }
 
-    public Profesional buscarPorEmail(String email) {
-        return profesionalRepositorio.buscarPorEmail(email).get();
-    }
+  public Profesional buscarPorEmail(String email) {
+    return profesionalRepositorio.buscarPorEmail(email).get();
+  }
 
-    public List<Profesional> filtrarUsuarios(FiltroUsuario usuario){
-        return profesionalRepositorio.buscarPorFiltro(usuario);
-    }
+  public List<Profesional> filtrarUsuarios(FiltroUsuario usuario) {
+    return profesionalRepositorio.buscarPorFiltro(usuario);
+  }
+  
 
 }

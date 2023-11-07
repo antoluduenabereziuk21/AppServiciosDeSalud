@@ -3,7 +3,6 @@ package com.GrupoD.AppServSalud;
 import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
-import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -67,7 +66,7 @@ public class AppServSaludApplication {
 					"ADMIN");
 
 			servicioPaciente.crearPaciente(
-					"Mauricio@mail.com",
+					"mauricio1990arg@gmail.com",
 					"123456",
 					"Mauricio",
 					"Mauricio",

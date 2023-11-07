@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,7 +54,7 @@ public class ProfesionalControlador {
       profesionalServicio.crearProfesional(nombre, apellido, dni, fechaNacimiento, email, sexo, telefono, password, matriculaProfesional, especialidad);
       modelo.put("exito", "Usuario Profesional creado correctamente");
 
-      return "dashboardProfesional.html";
+      return "forms/registroProfesional.html";
 
     } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
