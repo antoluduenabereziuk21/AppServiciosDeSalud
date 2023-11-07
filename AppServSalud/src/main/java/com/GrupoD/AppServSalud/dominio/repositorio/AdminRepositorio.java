@@ -1,8 +1,6 @@
 package com.GrupoD.AppServSalud.dominio.repositorio;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Admin;
-import com.GrupoD.AppServSalud.utilidades.RolEnum;
-import java.util.List;
 import java.util.Optional;
 //import java.util.Optional;
 

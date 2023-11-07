@@ -23,10 +23,6 @@ public class AdminServicio {
     @Autowired
     private AdminRepositorio adminRepositorio;
 
-
-    @Autowired
-    private UsuarioServicio usuarioServicio;
-
     public Admin buscarPorEmail(String email){
         return adminRepositorio.buscarPorEmail(email).get();
     }
