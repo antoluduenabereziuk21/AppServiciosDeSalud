@@ -18,17 +18,17 @@
         <div class="container">
             <form
                 class="formulario"
-                th:action="@{/admin/modificar}"
+                th:action="@{/admin/modPaciente}"
                 method="POST"
             >
                 <div class="text-center mb-5">
-                    <h3 class="card-title">EDITAR PERFIL</h3>
+                    <h3 class="card-title">EDITAR PACIENTE</h3>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
-                                for="adminNombre"
+                                for="pacienteNombre"
                                 class="input-group-text"
                             >Nombre</label>
                             <input
@@ -36,15 +36,15 @@
                                 class="form-control"
                                 name="nombre"
                                 placeholder="Juan"
-                                id="adminNombre"
-                                th:value="${admin.nombre}"
+                                id="pacienteNombre"
+                                th:value="${paciente.nombre}"
                             >
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
-                                for="adminApellido"
+                                for="pacienteApellido"
                                 class="input-group-text"
                             >Apellido</label>
                             <input
@@ -52,8 +52,8 @@
                                 class="form-control"
                                 name="apellido"
                                 placeholder="Rodriguez"
-                                id="adminApellido"
-                                th:value="${admin.apellido}"
+                                id="pacienteApellido"
+                                th:value="${paciente.apellido}"
                             >
                         </div>
                     </div>
@@ -63,15 +63,15 @@
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
-                                for="adminDni"
+                                for="pacienteDni"
                             >N° de Documento</label>
                             <input
                                 class="form-control"
                                 type="number"
                                 name="dni"
                                 placeholder="77888999"
-                                id="adminDni"
-                                th:value="${admin.dni}"
+                                id="pacienteDni"
+                                th:value="${paciente.dni}"
                             >
                         </div>
                     </div>
@@ -86,6 +86,7 @@
                                 type="date"
                                 name="fechaDeNacimiento"
                                 id="fechaNacimiento"
+                                th:value="${paciente.fechaNacimiento}"
                             />
                         </div>
                     </div>
@@ -100,10 +101,9 @@
                                 id="profesionalSexo"
                                 name="sexo"
                             >
-                                <option selected>Elige una opción</option>
-                                <option value="MASCULINO">Masculino</option>
-                                <option value="FEMENINO">Femenino</option>
-                                <option value="X">X</option>
+                                <option th:selected="${paciente.sexo.name == 'MASCULINO'}" value="MASCULINO">Masculino</option>
+                                <option th:selected="${paciente.sexo.name == 'FEMENINO'}" value="FEMENINO">Femenino</option>
+                                <option th:selected="${paciente.sexo.name == 'X'}" value="X">X</option>
                             </select>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                     <div class="col-lg-5">
                         <div class="input-group mb-3">
                             <label
-                                for="adminCorreo"
+                                for="pacienteCorreo"
                                 class="input-group-text"
                             >Correo</label>
                             <input
@@ -120,8 +120,8 @@
                                 class="form-control"
                                 name="email"
                                 placeholder="email@email.com"
-                                id="adminCorreo"
-                                th:value="${admin.email}"
+                                id="pacienteCorreo"
+                                th:value="${paciente.email}"
                             >
                         </div>
                     </div>
@@ -129,15 +129,15 @@
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
-                                for="adminTelefono"
+                                for="pacienteTelefono"
                             >N° de Telefono</label>
                             <input
                                 type="number"
                                 class="form-control"
                                 name="telefono"
                                 placeholder="1123456789"
-                                id="adminTelefono"
-                                th:value="${admin.telefono}"
+                                id="pacienteTelefono"
+                                th:value="${paciente.telefono}"
                             >
                         </div>
                     </div>
@@ -169,6 +169,29 @@
                                 name="password2"
                                 placeholder="******"
                             >
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="input-group mb-3"> 
+                        <label
+                                class="input-group-text"
+                                for="obraSocial"
+                            >Obra Social</label>
+                            <select
+                                    id="obraSocial"
+                                    class="form-select"
+                                    name="obraSocial"
+                            >
+                                <option th:selected="${paciente.obraSocial.name == 'OSPE'}" value="OSPE"> OSPE</option>
+                                <option th:selected="${paciente.obraSocial.name == 'SWISS_MEDICAL'}" value="SWISS_MEDICAL">SwissMedical</option>
+                                <option th:selected="${paciente.obraSocial.name == 'SANCORSALUD'}" value="SANCORSALUD">SancorSalud</option>
+                                <option th:selected="${paciente.obraSocial.name == 'OSPRERA'}" value="OSPRERA">OSPRERA</option>
+                                <option th:selected="${paciente.obraSocial.name == 'UPCN'}" value="UPCN">UPCN</option>
+                                <option th:selected="${paciente.obraSocial.name == 'OSDE'}" value="OSDE">OSDE</option>
+                                <option th:selected="${paciente.obraSocial.name == 'PARTICULAR'}" value="PARTICULAR">Particular</option>
+                            </select>   
                         </div>
                     </div>
                 </div>
