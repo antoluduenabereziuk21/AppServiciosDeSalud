@@ -3,6 +3,7 @@ package com.GrupoD.AppServSalud.dominio.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
@@ -11,6 +12,7 @@ import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.JwtUtils;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Service
@@ -24,6 +26,9 @@ public class MailService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public void sendMail(String email) throws MiExcepcion {
 
@@ -63,14 +68,11 @@ public class MailService {
         }
         
         String email = jwtUtils.getEmail(token);
-        log.warn("Email: " + email);
 
-        usuarioRepositorio.buscarPorEmail(email)
+        Usuario usuario = usuarioRepositorio.buscarPorEmail(email)
                 .orElseThrow(() -> new MiExcepcion("No existe un usuario con ese email"));
-        
-        Usuario usuario = usuarioRepositorio.buscarPorEmail(email).get();
 
-        usuario.setPassword(password);
+        usuario.setPassword(passwordEncoder.encode(password));
 
         usuarioRepositorio.save(usuario);
     }

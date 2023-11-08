@@ -4,9 +4,7 @@ document.getElementById("enviar").disabled = true;
 
 localStorage.setItem("token", token);
 
-document.getElementById("token").value = token;
-
-const form = document.getElementById("form");
+document.getElementById("token").value = localStorage.getItem("token");
 
 function validarPassword() {
     const password = document.getElementById("password").value;
