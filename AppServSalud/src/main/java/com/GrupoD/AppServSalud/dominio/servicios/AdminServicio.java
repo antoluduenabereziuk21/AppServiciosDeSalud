@@ -1,8 +1,11 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Admin;
+import com.GrupoD.AppServSalud.dominio.entidades.Permiso;
 import com.GrupoD.AppServSalud.dominio.repositorio.AdminRepositorio;
+import com.GrupoD.AppServSalud.dominio.repositorio.PermisoRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.GrupoD.AppServSalud.utilidades.PermisosEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import com.GrupoD.AppServSalud.utilidades.Validacion;
 import java.util.logging.Level;
@@ -23,17 +27,24 @@ public class AdminServicio {
     @Autowired
     private AdminRepositorio adminRepositorio;
 
+    @Autowired
+    private PermisoRepositorio permisoRepositorio;
+
     public Admin buscarPorEmail(String email){
         return adminRepositorio.buscarPorEmail(email).get();
     }
     
     @Transactional
-    public void crearAdmin(String email, String password, String nombre, String apellido, String role){
+    public void crearAdmin(String email, String password, String nombre, String apellido, String role,List<String> permisos){
         try {
             Validacion.validarStrings(nombre, apellido, email, password);
         } catch (MiExcepcion ex) {
             Logger.getLogger(AdminServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        List<Permiso> permisosAdmin = permisos.stream().map(
+            permiso -> permisoRepositorio.findByPermiso(PermisosEnum.valueOf(permiso)).get()
+        ).toList();
         Admin admin = new Admin();
         admin.setEmail(email);
         admin.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -41,12 +52,17 @@ public class AdminServicio {
         admin.setApellido(apellido);
         admin.setRol(RolEnum.valueOf(role));
         admin.setActivo(true);
+        admin.setPermisos(permisosAdmin);
         adminRepositorio.save(admin);
     }
    
     @Transactional
+    public void modficarDatosAdmin(String idAdmin,String email, String password, String nombre, String apellido, String role,List<String> permisos) throws MiExcepcion{
 
-    public void modficarDatosAdmin(String idAdmin,String email, String password, String nombre, String apellido, String role) throws MiExcepcion{
+        List<Permiso> permisosAdmin = permisos.stream().map(
+            permiso -> permisoRepositorio.findByPermiso(PermisosEnum.valueOf(permiso)).get()
+        ).toList();
+
         Validacion.validarStrings(nombre, apellido, email, password);
         Optional<Admin> respuestaAdmin= adminRepositorio.findById(idAdmin);
         if (respuestaAdmin.isPresent()){
@@ -55,8 +71,8 @@ public class AdminServicio {
             admin.setPassword(password);
             admin.setNombre(nombre);
             admin.setRol(RolEnum.valueOf(role));
-
-             adminRepositorio.save(admin);
+            admin.setPermisos(permisosAdmin);
+            adminRepositorio.save(admin);
         }
 
     }

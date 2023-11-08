@@ -11,10 +11,7 @@ import com.GrupoD.AppServSalud.dominio.repositorio.UsuarioRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.JwtUtils;
 
-import lombok.extern.slf4j.Slf4j;
 
-
-@Slf4j
 @Service
 public class MailService {
 

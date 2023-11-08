@@ -39,9 +39,9 @@ public class ProfesionalControlador {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/registro")
   public String registroProfesional(String nombre, String apellido, String dni,
-                                  String fechaDeNacimiento, String email,
-                                  String sexo, String telefono, String password,
-                                   String matriculaProfesional, String especialidad, ModelMap modelo) {
+      String fechaDeNacimiento, String email,
+      String sexo, String telefono, String password,
+      String matriculaProfesional, String especialidad, ModelMap modelo) {
 
     try {
       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,7 +51,8 @@ public class ProfesionalControlador {
       } catch (ParseException ex) {
         Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
       }
-      profesionalServicio.crearProfesional(nombre, apellido, dni, fechaNacimiento, email, sexo, telefono, password, matriculaProfesional, especialidad);
+      profesionalServicio.crearProfesional(nombre, apellido, dni, fechaNacimiento, email, sexo, telefono, password,
+          matriculaProfesional, especialidad);
       modelo.put("exito", "Usuario Profesional creado correctamente");
 
       return "forms/registroProfesional.html";
@@ -67,7 +68,7 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_MEDICO')")
   @GetMapping("/perfil/{email}")
-  public String perfil(ModelMap modelo ,@PathVariable String email){
+  public String perfil(ModelMap modelo, @PathVariable String email) {
     Profesional profesional = profesionalServicio.buscarPorEmail(email);
     modelo.put("usuario", profesional);
     return "vistaPerfil.html";
@@ -75,7 +76,7 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_MEDICO', 'ROLE_ADMIN')")
   @GetMapping("/modificar/{idProfesional}")
-  public String modificarProfesional(@PathVariable String idProfesional, ModelMap modelo){
+  public String modificarProfesional(@PathVariable String idProfesional, ModelMap modelo) {
     Profesional profesional = profesionalServicio.buscarPorId(idProfesional);
     modelo.put("profesional", profesional);
     return "forms/editarProfesional.html";
@@ -83,11 +84,12 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_MEDICO', 'ROLE_ADMIN')")
   @PostMapping("/modificar/{idProfesional}")
-  public String modificarProfesional(MultipartFile archivo, @PathVariable String idProfesional, String nombre, 
-                                    String apellido, String dni, Date fechaDeNacimiento, String email, 
-                                    String sexo, String telefono, String password){
+  public String modificarProfesional(MultipartFile archivo, @PathVariable String idProfesional, String nombre,
+      String apellido, String dni, Date fechaDeNacimiento, String email,
+      String sexo, String telefono, String password) {
     try {
-      profesionalServicio.modificarProfesional(archivo, idProfesional, nombre, apellido, dni, fechaDeNacimiento, email, sexo, telefono, password);
+      profesionalServicio.modificarProfesional(archivo, idProfesional, nombre, apellido, dni, fechaDeNacimiento, email,
+          sexo, telefono, password);
     } catch (MiExcepcion e) {
       Logger.getLogger(ProfesionalControlador.class.getName()).log(Level.SEVERE, null, e);
       return "forms/editarProfesional.html";
@@ -97,14 +99,14 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/eliminar/{idProfesional}")
-  public String eliminarProfesional(boolean enable, String idProfesional){
+  public String eliminarProfesional(boolean enable, String idProfesional) {
     profesionalServicio.bajaProfesional(enable, idProfesional);
     return "redirect:/";
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/todos")
-  public String listarPacientes(ModelMap modelo){
+  public String listarPacientes(ModelMap modelo) {
     modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
     modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
     return "profesionales.html";
@@ -112,25 +114,27 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/baja")
-  public String bajaPaciente(String idProfesional){
+  public String bajaPaciente(String idProfesional) {
     profesionalServicio.bajaProfesional(false, idProfesional);
     return "redirect:/profesional/todos";
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/alta")
-  public String altaPaciente(String idProfesional){
-      profesionalServicio.bajaProfesional(true, idProfesional);
-      return "redirect:/profesional/todos";
+  public String altaPaciente(String idProfesional) {
+    profesionalServicio.bajaProfesional(true, idProfesional);
+    return "redirect:/profesional/todos";
   }
 
   @GetMapping("/filtrar")
-    public String filtrarProfesionales(@RequestParam("nombre") String nombre, @RequestParam("apellido")
-                    String apellido, @RequestParam("email") String email, @RequestParam("dni") String dni,
-                    ModelMap modelo){
-        modelo.put("profesionalesActivos", profesionalServicio.filtrarUsuarios(new FiltroUsuario(nombre, apellido, dni, email,true)));
-        modelo.put("profesionalesInactivos", profesionalServicio.filtrarUsuarios(new FiltroUsuario(nombre, apellido, dni, email,false)));
-        return "profesionales.html";
-    }
+  public String filtrarProfesionales(@RequestParam("nombre") String nombre, @RequestParam("apellido") String apellido,
+      @RequestParam("email") String email, @RequestParam("dni") String dni,
+      ModelMap modelo) {
+    modelo.put("profesionalesActivos",
+        profesionalServicio.filtrarUsuarios(new FiltroUsuario(nombre, apellido, dni, email, true)));
+    modelo.put("profesionalesInactivos",
+        profesionalServicio.filtrarUsuarios(new FiltroUsuario(nombre, apellido, dni, email, false)));
+    return "profesionales.html";
+  }
 
 }

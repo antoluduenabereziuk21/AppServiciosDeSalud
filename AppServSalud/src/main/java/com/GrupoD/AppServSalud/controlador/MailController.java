@@ -44,7 +44,6 @@ public class MailController {
     @PostMapping("/recuperarCuenta")
     public String recuperarCuenta(String token, String password,String password2, ModelMap modelo) {
         try {
-            System.out.println("ejecumtando...");
             mailService.restoreAccount(token, password,password2);
             modelo.put("exito", "Se ha cambiado la contraseña con exito");
         } catch (MiExcepcion e) {

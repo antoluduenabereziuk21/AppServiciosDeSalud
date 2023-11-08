@@ -71,7 +71,9 @@
                                     Administracion
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a
+                                    <li
+                                    sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')"
+                                    ><a
                                             class="dropdown-item"
                                             href="/profesional/registro"
                                     >Registrar Profesional</a></li>
