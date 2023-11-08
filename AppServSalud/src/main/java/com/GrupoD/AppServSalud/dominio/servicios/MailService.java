@@ -64,6 +64,9 @@ public class MailService {
         
         String email = jwtUtils.getEmail(token);
         log.warn("Email: " + email);
+
+        usuarioRepositorio.buscarPorEmail(email)
+                .orElseThrow(() -> new MiExcepcion("No existe un usuario con ese email"));
         
         Usuario usuario = usuarioRepositorio.buscarPorEmail(email).get();
 
