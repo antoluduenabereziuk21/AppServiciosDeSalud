@@ -5,7 +5,6 @@
  */
 package com.GrupoD.AppServSalud.dominio.repositorio;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import java.util.List;
