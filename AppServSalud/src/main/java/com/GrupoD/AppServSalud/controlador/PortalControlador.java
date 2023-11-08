@@ -29,4 +29,12 @@ public class PortalControlador {
         return "error_404.html";
     }
 
+    @GetMapping("/infoTurnos")
+    public String infoTurno(){return "infoTurnos.html";}
+
+    @GetMapping("/especialidades")
+    public String especialidades(){return "especialidades.html";}
+    @GetMapping("/tarjetaProfesional")
+    public String tarjetaProfesional(){return "tarjetaProfesional.html";}
+
 }

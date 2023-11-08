@@ -9,11 +9,21 @@
 <header th:replace="/fragments/header :: header"></header>
 <main>
     <div th:replace="/fragments/toast :: div"></div>
+    <section class="contenedor-video">
+        <div id="video_overlays">
+            <div class="info-home row">
+                <h1> ¿En qué podemos ayudarte? </h1>
+                <div th:replace="/fragments/buscador :: div"></div>
+            </div>
+        </div>
+        <video autoplay="" muted="" loop="" poster="https://www.sanatorioallende.com/wp-content/themes/sanatorio/images/home/sanatorio.png">
+            <source src="https://www.sanatorioallende.com/wp-content/themes/sanatorio/videos/home-video-nuevo.mp4" type="video/mp4">
+        </video>
 
-   <div th:replace="/fragments/buscador :: div"></div>
-
+    </section>
 </main>
-<div class="container justify-content-center align-items-center">
+
+<div class="container justify-content-center align-items-center mt-5">
 
     <div class="card mb-3">
         <div class="row g-0">
@@ -24,7 +34,9 @@
                 <div class="card-body justify-content-center align-items-center" >
                     <h5 class="card-title">TURNOS</h5>
                     <p class="card-text">Mirá cómo programar tus consultas presenciales o virtuales.</p>
-                    <button class="btn btn-primary">Ver Mas</button>
+                    <button class="btn btn-primary"><a class="nav-link active"
+                        aria-current="page"
+                        href="/infoTurnos">Ver Mas</a></button>
                 </div>
             </div>
         </div>
@@ -38,7 +50,9 @@
                 <div class="card-body justify-content-center align-items-center" >
                     <h5 class="card-title">ESPECIALIDADES MÉDICAS</h5>
                     <p class="card-text">Conocé todas las especialidades que tenemos para ofrecerte. Y nuestros Profesionales</p>
-                    <button class="btn btn-primary">Ver</button>
+                    <button class="btn btn-primary"><a class="nav-link active"
+                                                       aria-current="page"
+                                                       href="/especialidades">Ver Mas</a></button>
                 </div>
             </div>
         </div>
@@ -57,7 +71,9 @@
                     <h6>GESTIÓN DE TURNOS</h6>
                     <p class="card-text">Desde aquí podrás programar consultas médicas para vos y tu familia,
                         consultar tus turnos asignados y ver los resultados de tus estudios.</p>
-                    <button class="btn btn-primary">Ir A Mi Portal</button>
+                    <button class="btn btn-primary"><a class="nav-link active"
+                                                       aria-current="page"
+                                                       href="/login">A Mi Portal</a></button>
                 </div>
             </div>
         </div>

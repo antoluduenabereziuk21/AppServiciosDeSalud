@@ -1,0 +1,23 @@
+.container {
+    width: 1170px;
+
+  }
+.container h1 {
+  margin-top: 60px;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 1.26px;
+  line-height: 48px;
+  font-family: 'museo-sans';
+  text-align: left;
+  color: #EE7734;
+
+}
+h5{
+      color: #EE7734;
+}
+.custom-img {
+    max-width: 100%;
+    height: auto;
+}
+
