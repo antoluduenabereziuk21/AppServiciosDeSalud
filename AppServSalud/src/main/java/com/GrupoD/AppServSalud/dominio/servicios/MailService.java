@@ -1,7 +1,5 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,7 +10,9 @@ import com.GrupoD.AppServSalud.dominio.repositorio.UsuarioRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.JwtUtils;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MailService {
 
@@ -52,17 +52,19 @@ public class MailService {
         return jwtUtils.validateToken(token);
     }
 
-    public void restoreAccount(String token, String password) throws MiExcepcion {
+    public void restoreAccount(String token, String password,String password2) throws MiExcepcion {
+
+        if(!password.equals(password2)) {
+            throw new MiExcepcion("Las contraseñas no coinciden");
+        }
 
         if (!validateToken(token)) {
             throw new MiExcepcion("El token no es valido");
         }
-
+        
         String email = jwtUtils.getEmail(token);
-
-        usuarioRepositorio.buscarPorEmail(email)
-                .orElseThrow(() -> new MiExcepcion("No existe un usuario con ese email"));
-
+        log.warn("Email: " + email);
+        
         Usuario usuario = usuarioRepositorio.buscarPorEmail(email).get();
 
         usuario.setPassword(password);
