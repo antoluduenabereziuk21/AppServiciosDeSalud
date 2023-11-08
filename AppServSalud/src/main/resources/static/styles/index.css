@@ -52,9 +52,10 @@ body {
 }
 
 footer {
-    margin-top: 100%;
-    align-items: end;
-    background-color: rgba(114, 169, 114, 0.25)
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(114, 169, 114, 0.25);
 }
 
 .footer_textos {

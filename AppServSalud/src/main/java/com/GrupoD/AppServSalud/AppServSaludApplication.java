@@ -94,7 +94,7 @@ public class AppServSaludApplication {
 					"123123");
 
 			servicioPaciente.crearPaciente(
-					"Antonio@mail.com",
+					"antonio@mail.com",
 					"123456",
 					"Antonio",
 					"Antonio",
