@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
+import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
 import com.GrupoD.AppServSalud.utilidades.*;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,9 @@ import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 public class ProfesionalServicio {
   @Autowired
   private ProfesionalRepositorio profesionalRepositorio;
+
+  @Autowired
+  private ImagenServicio imagenServicio;
 
   @Transactional
   public void crearProfesional(String nombre, String apellido, String dni,
@@ -51,29 +54,40 @@ public class ProfesionalServicio {
   }
 
   @Transactional
-  public void modificarProfesional(MultipartFile archivo, String idProfesional, String nombre, 
-                                    String apellido, String dni, Date fechaDeNacimiento, String email, 
-                                    String sexo, String telefono, String password) throws MiExcepcion {
+  public void modificarProfesional(MultipartFile archivo, String email, String nombre, 
+                                    String apellido, String sexo, String telefono) throws MiExcepcion {
     
-    Validacion.validarStrings(nombre, apellido, dni, email, sexo, telefono, password);
-    Validacion.validarDate(fechaDeNacimiento);
+    //Validacion.validarStrings(nombre, apellido, email, sexo, telefono);
 
-    Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
+    Optional<Profesional> respuestaProfesional = profesionalRepositorio.buscarPorEmail(email);
 
     if (respuestaProfesional.isPresent()) {
       Profesional profesional = respuestaProfesional.get();
-
+      
       profesional.setNombre(nombre);
       profesional.setApellido(apellido);
-      profesional.setDni(dni);
-      profesional.setFechaNacimiento(fechaDeNacimiento);
-      profesional.setFechaAlta(new Date());
-      profesional.setEmail(email);
       profesional.setSexo(Sexo.valueOf(sexo));
       profesional.setTelefono(telefono);
-      profesional.setPassword(new BCryptPasswordEncoder().encode(password));
-      profesional.setActivo(true);
-      profesional.setRol(RolEnum.MEDICO);
+      
+      if (!archivo.isEmpty()){
+                String idImagen = null;
+
+                if (profesional.getImagen() != null) {
+
+                    idImagen = profesional.getImagen().getId();
+                }
+
+                Imagen imagen = null;
+
+                try {
+                    imagen = imagenServicio.actualizar(archivo, idImagen);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                profesional.setImagen(imagen);
+            }
+
 
       profesionalRepositorio.save(profesional);
     }

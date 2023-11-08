@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -74,21 +73,21 @@ public class ProfesionalControlador {
     return "vistaPerfil.html";
   }
 
-  @PreAuthorize("hasRole('ROLE_MEDICO', 'ROLE_ADMIN')")
-  @GetMapping("/modificar/{idProfesional}")
-  public String modificarProfesional(@PathVariable String idProfesional, ModelMap modelo){
-    Profesional profesional = profesionalServicio.buscarPorId(idProfesional);
+  @PreAuthorize("hasRole('ROLE_MEDICO')")
+  @GetMapping("/modificar/{email}")
+  public String modificarProfesional(@PathVariable String email, ModelMap modelo){
+    Profesional profesional = profesionalServicio.buscarPorEmail(email);
     modelo.put("profesional", profesional);
     return "forms/editarProfesional.html";
   }
 
-  @PreAuthorize("hasRole('ROLE_MEDICO', 'ROLE_ADMIN')")
-  @PostMapping("/modificar/{idProfesional}")
-  public String modificarProfesional(MultipartFile archivo, @PathVariable String idProfesional, String nombre, 
-                                    String apellido, String dni, Date fechaDeNacimiento, String email, 
+  @PreAuthorize("hasRole('ROLE_MEDICO')")
+  @PostMapping("/modificar/{email}")
+  public String modificarProfesional(MultipartFile archivo, @PathVariable String email, String nombre, 
+                                    String apellido, String dni, Date fechaDeNacimiento,
                                     String sexo, String telefono, String password){
     try {
-      profesionalServicio.modificarProfesional(archivo, idProfesional, nombre, apellido, dni, fechaDeNacimiento, email, sexo, telefono, password);
+      profesionalServicio.modificarProfesional(archivo, email, nombre, apellido, sexo, telefono);
     } catch (MiExcepcion e) {
       Logger.getLogger(ProfesionalControlador.class.getName()).log(Level.SEVERE, null, e);
       return "forms/editarProfesional.html";
@@ -105,7 +104,7 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/todos")
-  public String listarPacientes(ModelMap modelo){
+  public String listarProfesionales(ModelMap modelo){
     modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
     modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
     return "profesionales.html";
