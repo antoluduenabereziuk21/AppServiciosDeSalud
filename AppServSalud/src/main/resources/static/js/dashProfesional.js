@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     let paciente = data.paciente;
-
+                    // manejar los datos del paciente para mostrarlos en la vista del fragment
                     console.log("datos",data);
                     document.getElementById('pacienteNombre').innerText = paciente.nombre;
                     document.getElementById('pacienteDni').innerText = paciente.dni;
