@@ -15,13 +15,14 @@ public class MailController {
 
     @Autowired
     private MailService mailService;
-    
+
 
     @GetMapping("/recuperarCuenta")
     public String recuperarCuenta(String email,ModelMap modelo) {
         
         try {
             mailService.sendMail(email);
+            mailService.sendMailCalificacion(email);
             modelo.put("exito", "Se ha enviado un correo a su casilla de email");
         } catch (MiExcepcion e) {
             modelo.put("error", e.getMessage());
@@ -51,5 +52,5 @@ public class MailController {
         }
         return "login.html";
     }
-
+    
 }
