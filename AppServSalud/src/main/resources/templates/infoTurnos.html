@@ -81,7 +81,11 @@
                         <p><strong><span class="" data-color-group="turquoise">Horarios:</span></strong> Lunes a viernes de 8 a 20 hs.</p>
                         <p><strong><span class="" data-color-group="turquoise">Email:</span> </strong>atencionalpacientecerro@sanatorioallende.com</p>
                         <hr>
-                        <p style="text-align: center">Ver el listado de <strong>Obras Sociales</strong> y <strong>Prepagas</strong> haciendo clic <a href="#" target="_blank" rel="noopener"><strong>AQUÍ</strong></a></p>
+                        <p style="text-align: center">Ver el listado de <strong>Obras Sociales</strong> y <strong>Prepagas</strong> haciendo clic
+                            <button type="button" class="btn text-primary" data-bs-toggle="modal" data-bs-target="#obrasSociales">
+                                <strong>AQUÍ</strong>
+                              </button>
+                        </p>
                         <p style="text-align: center">Ver el listado de <b>Especialidad Médicas</b>&nbsp;haciendo clic <a href="#"><strong>AQUÍ</strong></a></p>
                         <hr>
                         <p>&nbsp;</p>
@@ -92,6 +96,19 @@
         </div>
 </div>
 
+  <div class="modal fade" id="obrasSociales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Listado de Obras Sociales</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+      </div>
+    </div>
+  </div>
 <footer th:replace="/fragments/footer :: footer"></footer>
 <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

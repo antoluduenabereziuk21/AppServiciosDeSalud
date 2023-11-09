@@ -64,4 +64,7 @@ public class Usuario {
     @OneToOne
     private Imagen imagen;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Notificacion> notificaciones;
+
 }
