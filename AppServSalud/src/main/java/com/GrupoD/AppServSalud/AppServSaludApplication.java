@@ -48,7 +48,7 @@ public class AppServSaludApplication {
 			profesionalServicio.crearProfesional(
 					"medico",
 					"ginecologo",
-					"12333212",
+					"12345678",
 					new Date(),
 					"ginecologo@mail.com",
 					"X",
@@ -56,6 +56,52 @@ public class AppServSaludApplication {
 					"123456",
 					"MP-122211",
 					"GINECOLOGIA"
+
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"ginecologo",
+					"78451223",
+					new Date(),
+					"ginecologo1@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122215",
+					"GINECOLOGIA"
+
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"Cardiologo",
+					"87654321",
+					new Date(),
+					"cardiologo@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122212",
+					"CARDIOLOGIA"
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"Clinico",
+					"45454545",
+					new Date(),
+					"clinico@mail.com",
+					"X",
+					"45454545",
+					"123456",
+					"MP-122213",
+					"CLINICA"
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"Pediatra",
+					"68686868",
+					new Date(),
+					"pediatra@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122214",
+					"PEDIATRIA"
 			);
 
 			adminServicio.crearAdmin(

@@ -20,4 +20,31 @@ h5{
     max-width: 100%;
     height: auto;
 }
+.text-container {
+  max-height: 150px; /* Establece la altura máxima que desees */
+  overflow: hidden;
+  position: relative;
+}
 
+.limited-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.full-text {
+  display: none;
+}
+
+.card:hover .text-container {
+  max-height: 100%; /* Establece una altura alta para mostrar todo el texto */
+}
+
+.card:hover .limited-text {
+  display: none;
+}
+
+.card:hover .full-text {
+  display: block;
+}
