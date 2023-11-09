@@ -1,7 +1,7 @@
 .card-article{
   top: 30vh;
   width: fit-content !important;
-  height: 700px !important;
+  height: 800px !important;
   margin-left: auto;
   margin-right: auto;
   background-color: #86d162;   
@@ -23,7 +23,7 @@
     height: 120px;
     text-align: center;
 }
-.card-body{
+.card-body-perfil{
     position: relative;
     top: 160px;
     width: 100%;
