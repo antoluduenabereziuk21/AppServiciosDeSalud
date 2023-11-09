@@ -6,9 +6,15 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -86,14 +92,19 @@ public class ProfesionalControlador {
   @PreAuthorize("hasRole('ROLE_MEDICO')")
   @PostMapping("/modificar/{email}")
   public String modificarProfesional(MultipartFile archivo, @PathVariable String email, String nombre, 
-                                    String apellido,String sexo, String telefono, String descripcion){
+                                    String apellido,String sexo, String telefono, String descripcion,
+                                    ModelMap modelo){
     try {
       profesionalServicio.modificarProfesional(archivo, email, nombre, apellido, sexo, telefono,descripcion );
+      modelo.put("exito","Datos modificados exitosamente");
+      modelo.put("usuario",profesionalServicio.buscarPorEmail(email));
+      return "vistaPerfil.html";
     } catch (MiExcepcion e) {
-      Logger.getLogger(ProfesionalControlador.class.getName()).log(Level.SEVERE, null, e);
+      modelo.put("error",e.getMessage());
+      modelo.put("profesional",profesionalServicio.buscarPorEmail(email));
       return "forms/editarProfesional.html";
     }
-    return "redirect:/profesional/dashboard";
+    
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN', 'ROLE_MEDICO')")
@@ -123,6 +134,17 @@ public class ProfesionalControlador {
   public String altaPaciente(String idProfesional) {
     profesionalServicio.bajaProfesional(true, idProfesional);
     return "redirect:/profesional/todos";
+  }
+
+  @GetMapping("/darBaja/{iProfesional}")
+  public String barseDeBaja(@PathVariable String iProfesional,ModelMap modelo,HttpServletRequest request, HttpServletResponse response){
+    profesionalServicio.bajaProfesional(false, iProfesional);
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null) {
+        new SecurityContextLogoutHandler().logout(request, response, auth);
+    }
+    modelo.put("exito", "Usuario dado de baja");
+    return "login.html";
   }
 
   @GetMapping("/filtrar")

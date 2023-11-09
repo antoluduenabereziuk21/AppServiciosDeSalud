@@ -98,10 +98,11 @@
                                     </label>
                                     <textarea type="text" 
                                               class="form-control" 
-                                              name="descripcion" i
-                                              d="exampleFormControlTextarea1" 
+                                              name="descripcion" 
+                                              id="exampleFormControlTextarea1" 
                                               rows="3"
-                                              th:value="${profesional.descripcion}"></textarea>
+                                              th:value="${profesional.descripcion}"
+                                              th:text="${profesional.descripcion}"></textarea>
                                 </div>
                     
                     
@@ -109,18 +110,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Subir</button>
                     </div>
-                    <form
-                            th:action="@{/profesional/baja}"
-                            method="POST"
-                    >
-                        <input
-                                type="text"
-                                style="display: none"
-                                th:value="${profesional.id}"
-                                name="idProfesional"
-                        >
-                        <button type="submit">Dar de baja</button>
-                    </form>
+                    <a th:href="@{/profesional/darBaja/__${profesional.id}__}" class="btn btn-secondary">Darse de baja</a>
                 </div>
             </div>
         </form>

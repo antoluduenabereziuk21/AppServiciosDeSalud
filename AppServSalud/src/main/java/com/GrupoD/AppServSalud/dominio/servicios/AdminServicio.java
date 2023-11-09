@@ -6,6 +6,7 @@ import com.GrupoD.AppServSalud.dominio.repositorio.AdminRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.PermisoRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.GrupoD.AppServSalud.utilidades.PermisosEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
+import com.GrupoD.AppServSalud.utilidades.Sexo;
 import com.GrupoD.AppServSalud.utilidades.Validacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,14 +38,15 @@ public class AdminServicio {
     }
     
     @Transactional
-    public void crearAdmin(String email, String password, String nombre, String apellido, String role,List<String> permisos){
+    public void crearAdmin(String email, String password, String nombre, String apellido, 
+                                String sexo,String[] permisos) throws MiExcepcion{
         try {
             Validacion.validarStrings(nombre, apellido, email, password);
         } catch (MiExcepcion ex) {
             Logger.getLogger(AdminServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        List<Permiso> permisosAdmin = permisos.stream().map(
+        List<Permiso> permisosAdmin = Arrays.stream(permisos).map(
             permiso -> permisoRepositorio.findByPermiso(PermisosEnum.valueOf(permiso)).get()
         ).collect(Collectors.toList());
         Admin admin = new Admin();
@@ -51,7 +54,8 @@ public class AdminServicio {
         admin.setPassword(new BCryptPasswordEncoder().encode(password));
         admin.setNombre(nombre);
         admin.setApellido(apellido);
-        admin.setRol(RolEnum.valueOf(role));
+        admin.setRol(RolEnum.valueOf("ADMIN"));
+        admin.setSexo(Sexo.valueOf(sexo));
         admin.setActivo(true);
         admin.setPermisos(permisosAdmin);
         adminRepositorio.save(admin);

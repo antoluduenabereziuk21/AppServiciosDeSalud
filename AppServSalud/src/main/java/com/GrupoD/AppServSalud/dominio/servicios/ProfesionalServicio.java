@@ -72,7 +72,7 @@ public class ProfesionalServicio {
   public void modificarProfesional(MultipartFile archivo, String email, String nombre, 
                                     String apellido, String sexo, String telefono, String descripcion) throws MiExcepcion {
     
-    //Validacion.validarStrings(nombre, apellido, email, sexo, telefono);
+    Validacion.validarStrings(nombre, apellido, email, sexo, telefono,descripcion);
 
     Optional<Profesional> respuestaProfesional = profesionalRepositorio.buscarPorEmail(email);
 

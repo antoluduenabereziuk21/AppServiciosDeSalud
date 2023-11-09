@@ -1,10 +1,13 @@
 package com.GrupoD.AppServSalud.dominio.entidades;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,4 +32,7 @@ public class Permiso {
 
     @Enumerated(EnumType.STRING)
     private PermisosEnum permiso;
+
+    @ManyToMany(mappedBy = "permisos")
+    private List<Usuario> usuarios;
 }

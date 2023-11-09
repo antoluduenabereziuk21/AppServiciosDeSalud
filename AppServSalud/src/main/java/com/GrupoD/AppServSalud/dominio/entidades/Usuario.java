@@ -44,8 +44,13 @@ public class Usuario {
     private Date fechaAlta;
 
     private String telefono;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "usuarios_permisos",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "permiso_id")
+    )
     private List<Permiso> permisos;
 
     @Enumerated(EnumType.STRING)

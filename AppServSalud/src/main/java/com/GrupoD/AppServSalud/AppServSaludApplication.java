@@ -86,8 +86,8 @@ public class AppServSaludApplication {
 					"123456", 
 					"Super ADMIN",
 					"Ranger", 
-					"ADMIN",
-					Arrays.asList(
+					"MASCULINO",
+					new String[]{
 						"ADD_PROFESIONAL",
 						"EDIT_PROFESIONAL",
 						"DELETE_PROFESIONAL",
@@ -101,7 +101,7 @@ public class AppServSaludApplication {
 						"EDIT_ADMIN",
 						"DELETE_ADMIN",
 						"EDIT_PERMISIONS"
-					));
+						});
 
 			log.info("admin guardado en la base de datos");
 
