@@ -23,11 +23,14 @@ import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 public class ProfesionalServicio {
 
   @Autowired
+  private UsuarioRepositorio usuarioRepositorio;
+  
+  @Autowired
   private ProfesionalRepositorio profesionalRepositorio;
 
   @Autowired
   private ImagenServicio imagenServicio;
-
+  
   @Transactional
   public void crearProfesional(String nombre, String apellido, String dni,
       Date fechaDeNacimiento, String email,
@@ -67,7 +70,7 @@ public class ProfesionalServicio {
 
   @Transactional
   public void modificarProfesional(MultipartFile archivo, String email, String nombre, 
-                                    String apellido, String sexo, String telefono) throws MiExcepcion {
+                                    String apellido, String sexo, String telefono, String descripcion) throws MiExcepcion {
     
     //Validacion.validarStrings(nombre, apellido, email, sexo, telefono);
 
@@ -80,7 +83,7 @@ public class ProfesionalServicio {
       profesional.setApellido(apellido);
       profesional.setSexo(Sexo.valueOf(sexo));
       profesional.setTelefono(telefono);
-      
+      profesional.setDescripcion(descripcion);
       if (!archivo.isEmpty()){
                 String idImagen = null;
 

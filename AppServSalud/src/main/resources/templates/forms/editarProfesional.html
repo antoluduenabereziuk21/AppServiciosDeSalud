@@ -15,6 +15,9 @@
         <form class="formulario" th:action="@{/profesional/modificar/__${profesional.email}__}" method="POST"
             enctype="multipart/form-data">
             <input hidden th:value="${profesional.id}" name="id">
+            <div class="text-center mb-5">
+                <h3 class="card-title">Editar perfil</h3>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-lg-5">
                     <div class="input-group mb-3">
@@ -87,11 +90,37 @@
                             th:value="${profesional.telefono}"
                         >
                     </div>
-
+                     <div class="mb-3">
+                                    <label for="exampleInputDescripcion" class="form-label">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;"><b>Descripcion de su especialidad</b></font>
+                                        </font>
+                                    </label>
+                                    <textarea type="text" 
+                                              class="form-control" 
+                                              name="descripcion" i
+                                              d="exampleFormControlTextarea1" 
+                                              rows="3"
+                                              th:value="${profesional.descripcion}"></textarea>
+                                </div>
+                    
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Subir</button>
                     </div>
+                    <form
+                            th:action="@{/profesional/baja}"
+                            method="POST"
+                    >
+                        <input
+                                type="text"
+                                style="display: none"
+                                th:value="${profesional.id}"
+                                name="idProfesional"
+                        >
+                        <button type="submit">Dar de baja</button>
+                    </form>
                 </div>
             </div>
         </form>

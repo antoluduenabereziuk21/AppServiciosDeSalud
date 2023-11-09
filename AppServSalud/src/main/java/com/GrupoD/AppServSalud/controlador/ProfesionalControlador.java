@@ -86,10 +86,9 @@ public class ProfesionalControlador {
   @PreAuthorize("hasRole('ROLE_MEDICO')")
   @PostMapping("/modificar/{email}")
   public String modificarProfesional(MultipartFile archivo, @PathVariable String email, String nombre, 
-                                    String apellido, String dni, Date fechaDeNacimiento,
-                                    String sexo, String telefono, String password){
+                                    String apellido,String sexo, String telefono, String descripcion){
     try {
-      profesionalServicio.modificarProfesional(archivo, email, nombre, apellido, sexo, telefono);
+      profesionalServicio.modificarProfesional(archivo, email, nombre, apellido, sexo, telefono,descripcion );
     } catch (MiExcepcion e) {
       Logger.getLogger(ProfesionalControlador.class.getName()).log(Level.SEVERE, null, e);
       return "forms/editarProfesional.html";
@@ -97,7 +96,7 @@ public class ProfesionalControlador {
     return "redirect:/profesional/dashboard";
   }
 
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('ROLE_ADMIN', 'ROLE_MEDICO')")
   @PostMapping("/eliminar/{idProfesional}")
   public String eliminarProfesional(boolean enable, String idProfesional) {
     profesionalServicio.bajaProfesional(enable, idProfesional);

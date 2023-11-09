@@ -20,6 +20,7 @@ import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import com.GrupoD.AppServSalud.utilidades.Validacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminServicio {
@@ -44,7 +45,7 @@ public class AdminServicio {
 
         List<Permiso> permisosAdmin = permisos.stream().map(
             permiso -> permisoRepositorio.findByPermiso(PermisosEnum.valueOf(permiso)).get()
-        ).toList();
+        ).collect(Collectors.toList());
         Admin admin = new Admin();
         admin.setEmail(email);
         admin.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -61,7 +62,7 @@ public class AdminServicio {
 
         List<Permiso> permisosAdmin = permisos.stream().map(
             permiso -> permisoRepositorio.findByPermiso(PermisosEnum.valueOf(permiso)).get()
-        ).toList();
+        ).collect(Collectors.toList());
 
         Validacion.validarStrings(nombre, apellido, email, password);
         Optional<Admin> respuestaAdmin= adminRepositorio.findById(idAdmin);
