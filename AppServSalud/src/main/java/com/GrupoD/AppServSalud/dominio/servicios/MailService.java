@@ -47,7 +47,7 @@ public class MailService {
         mailSender.send(mailMessage);
 
     }
-
+    
     public boolean validateToken(String token) {
         return jwtUtils.validateToken(token);
     }
@@ -68,6 +68,30 @@ public class MailService {
         usuario.setPassword(password);
 
         usuarioRepositorio.save(usuario);
+    }
+    
+    public void sendMailCalificacion(String email) throws MiExcepcion {
+
+        usuarioRepositorio.buscarPorEmail(email)
+                .orElseThrow(() -> new MiExcepcion("No existe un usuario con ese email"));
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        mailMessage.setFrom("anonimo@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Calificacion del profesional");
+        String body = "Encuesta, \n\n" +
+                "Encuesta de safisfacion y mejora contunia. \n\n" +
+                "Estimado paciente, mediante las siguiente encuesta queremos conocer su valoracion acerca de nuestro servicios. \n\n" +
+                "Sus respuestas nos van a permitir analizar acciones en pos de mejorar su satisfacion. \n\n"+
+                "Haz click en el siguiente enlace para calificar al profesional: \n\n" +
+                "http://localhost:8080/calificar="+ jwtUtils.generateTokenCalificacion(email)+ "\n\n" +
+                "Saludos, \n\n" +
+                "El equipo de AppServSalud";
+        mailMessage.setText(body);
+
+        mailSender.send(mailMessage);
+
     }
     
 
