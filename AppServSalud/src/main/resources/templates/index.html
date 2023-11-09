@@ -9,36 +9,76 @@
 <header th:replace="/fragments/header :: header"></header>
 <main>
     <div th:replace="/fragments/toast :: div"></div>
+    <section class="contenedor-video">
+        <div id="video_overlays">
+            <div class="info-home row">
+                <h1> ¿En qué podemos ayudarte? </h1>
+                <div th:replace="/fragments/buscador :: div"></div>
+            </div>
+        </div>
+        <video autoplay="" muted="" loop="" poster="https://www.sanatorioallende.com/wp-content/themes/sanatorio/images/home/sanatorio.png">
+            <source src="https://www.sanatorioallende.com/wp-content/themes/sanatorio/videos/home-video-nuevo.mp4" type="video/mp4">
+        </video>
 
-    <section class="tabla">
-        <table class="tablas">
-            <tbody>
-            <tr>
-                <th style="color: aliceblue;">¿Quiénes somos?</th>
-                <th style="color: aliceblue;">Turnos</th>
-                <th style="color: aliceblue;">Guardias</th>
-            </tr>
-            </tbody>
-        </table>
     </section>
-
-    <center>
-        <section>
-            <p></p>
-            <table class="perfil">
-                <tbody>
-                <tr>
-                    <th>Mi perfil</th>
-                    <th>Telemedicina</th>
-                    <th>Laboratorio</th>
-                    <th>Diagnóstico por imágenes</th>
-                </tr>
-                </tbody>
-            </table>
-        </section>
-
-    </center>
 </main>
+
+<div class="container justify-content-center align-items-center mt-5">
+
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img th:src="@{/assets/profSalud.jpg}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8" style=" background-color:rgba(255, 140, 0, 1)">
+                <div class="card-body justify-content-center align-items-center" >
+                    <h5 class="card-title">TURNOS</h5>
+                    <p class="card-text">Mirá cómo programar tus consultas presenciales o virtuales.</p>
+                    <button class="btn btn-primary"><a class="nav-link active"
+                        aria-current="page"
+                        href="/infoTurnos">Ver Mas</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img th:src="@{/assets/profSalud.jpg}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8" style="background-color: #20c997">
+                <div class="card-body justify-content-center align-items-center" >
+                    <h5 class="card-title">ESPECIALIDADES MÉDICAS</h5>
+                    <p class="card-text">Conocé todas las especialidades que tenemos para ofrecerte. Y nuestros Profesionales</p>
+                    <button class="btn btn-primary"><a class="nav-link active"
+                                                       aria-current="page"
+                                                       href="/especialidades">Ver Mas</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container justify-content-center align-items-center">
+    <div class="card mb-3 mt-5">
+        <div class="row g-0">
+            <div class="col-md-6">
+                <img th:src="@{/assets/turnosProfesionales.jpg}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-6" style="background-color: rgba(114, 169, 114, 0.25)">
+                <div class="card-body justify-content-center align-items-center" >
+                    <h5 class="card-title">Portal de Paciente</h5>
+                    <h6>GESTIÓN DE TURNOS</h6>
+                    <p class="card-text">Desde aquí podrás programar consultas médicas para vos y tu familia,
+                        consultar tus turnos asignados y ver los resultados de tus estudios.</p>
+                    <button class="btn btn-primary"><a class="nav-link active"
+                                                       aria-current="page"
+                                                       href="/login">A Mi Portal</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <footer th:replace="/fragments/footer :: footer"></footer>
 <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -50,6 +90,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"
 ></script>
+<script src="https://kit.fontawesome.com/6959f9ca80.js" crossorigin="anonymous"></script>
 <script th:src="@{/js/toast.js}"></script>
+<script th:src="@{/js/motorBusqueda.js}"></script>
 </body>
 </html>

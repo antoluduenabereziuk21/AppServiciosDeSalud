@@ -31,7 +31,7 @@ public class UsuarioServicio implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Optional<Usuario> userOptional = usuarioRepositorio.buscarPorEmail(email);
-        if(userOptional.isPresent()) {
+        if (userOptional.isPresent()) {
             Usuario user = userOptional.get();
 
             if (!user.getActivo()) {
@@ -43,11 +43,16 @@ public class UsuarioServicio implements UserDetailsService {
             GrantedAuthority autorizacion = new SimpleGrantedAuthority("ROLE_" + user.getRol().name());
             autorizaciones.add(autorizacion);
 
+            if (user.getPermisos() != null && !user.getPermisos().isEmpty()) {
+                user.getPermisos().forEach(
+                        permiso -> autorizaciones.add(new SimpleGrantedAuthority("ROLE_"+permiso.getPermiso().name())));
+            }
+            System.out.println("Permisos" + autorizaciones);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuario", user);
-            session.setAttribute("nombre",user.getNombre());
+            session.setAttribute("nombre", user.getNombre());
             session.setAttribute("role", "ROLE_" + user.getRol().name());
 
             return new User(user.getEmail(), user.getPassword(), autorizaciones);
@@ -55,7 +60,8 @@ public class UsuarioServicio implements UserDetailsService {
         return null;
     }
 
-    public void createAdminUser(String email, String contrasenha, String nombre, String apellido, String role){
+    public void createSuperAdminUser(String email, String contrasenha, String nombre, String apellido, String role) {
+
         Usuario usuario = Usuario.builder()
                 .email(email)
                 .password(new BCryptPasswordEncoder().encode(contrasenha))
@@ -64,6 +70,7 @@ public class UsuarioServicio implements UserDetailsService {
                 .rol(RolEnum.valueOf(role))
                 .activo(true)
                 .build();
+                
         usuarioRepositorio.save(usuario);
     }
 

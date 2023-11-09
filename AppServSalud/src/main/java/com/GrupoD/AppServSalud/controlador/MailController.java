@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.GrupoD.AppServSalud.dominio.servicios.MailService;
@@ -44,9 +43,9 @@ public class MailController {
     }
 
     @PostMapping("/recuperarCuenta")
-    public String restoreAccount(String token, String password, ModelMap modelo) {
+    public String recuperarCuenta(String token, String password,String password2, ModelMap modelo) {
         try {
-            mailService.restoreAccount(token, password);
+            mailService.restoreAccount(token, password,password2);
             modelo.put("exito", "Se ha cambiado la contraseña con exito");
         } catch (MiExcepcion e) {
             modelo.put("error", e.getMessage());

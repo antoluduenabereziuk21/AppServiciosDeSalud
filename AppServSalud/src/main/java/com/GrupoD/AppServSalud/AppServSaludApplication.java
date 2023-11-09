@@ -1,8 +1,14 @@
 package com.GrupoD.AppServSalud;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Permiso;
+import com.GrupoD.AppServSalud.dominio.repositorio.PermisoRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+import com.GrupoD.AppServSalud.utilidades.PermisosEnum;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,8 +16,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Arrays;
 import java.util.Date;
 
+@Slf4j
 @SpringBootApplication
 public class AppServSaludApplication {
 
@@ -33,6 +41,9 @@ public class AppServSaludApplication {
 	@Autowired
 	private ProfesionalServicio profesionalServicio;
 
+	@Autowired
+	private PermisoRepositorio permisoRepositorio;
+
 
 	/**
 	 * Metodo que se ejecuta al iniciar la aplicacion
@@ -45,10 +56,19 @@ public class AppServSaludApplication {
 	CommandLineRunner init(){
 		return args -> {
 
+			Arrays.stream(PermisosEnum.values()).forEach(permisoEnum -> {
+				if (!permisoRepositorio.findByPermiso(permisoEnum).isPresent()) {
+					Permiso permiso = Permiso.builder().permiso(permisoEnum).build();
+					permisoRepositorio.save(permiso);
+				}
+			});
+			
+			log.info("Permisos guardados en la base de datos");
+
 			profesionalServicio.crearProfesional(
 					"medico",
 					"ginecologo",
-					"12333212",
+					"12345678",
 					new Date(),
 					"ginecologo@mail.com",
 					"X",
@@ -56,14 +76,80 @@ public class AppServSaludApplication {
 					"123456",
 					"MP-122211",
 					"GINECOLOGIA"
+
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"ginecologo",
+					"78451223",
+					new Date(),
+					"ginecologo1@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122215",
+					"GINECOLOGIA"
+
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"Cardiologo",
+					"87654321",
+					new Date(),
+					"cardiologo@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122212",
+					"CARDIOLOGIA"
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"Clinico",
+					"45454545",
+					new Date(),
+					"clinico@mail.com",
+					"X",
+					"45454545",
+					"123456",
+					"MP-122213",
+					"CLINICA"
+			);profesionalServicio.crearProfesional(
+					"medico",
+					"Pediatra",
+					"68686868",
+					new Date(),
+					"pediatra@mail.com",
+					"X",
+					"12333322",
+					"123456",
+					"MP-122214",
+					"PEDIATRIA"
 			);
 
+			log.info("profesional guardado en la base de datos");
+
+
 			adminServicio.crearAdmin(
-					"admin@mail.com",
-					"admin",
-					"Admin",
-					"User",
-					"ADMIN");
+					"superadmin@admin.com",
+					"123456", 
+					"Super ADMIN",
+					"Ranger", 
+					"MASCULINO",
+					new String[]{
+						"ADD_PROFESIONAL",
+						"EDIT_PROFESIONAL",
+						"DELETE_PROFESIONAL",
+						"ADD_TURN",
+						"EDIT_TURN",
+						"DELETE_TURN",
+						"ADD_MEDIC",
+						"EDIT_MEDIC",
+						"DELETE_MEDIC",
+						"ADD_ADMIN",
+						"EDIT_ADMIN",
+						"DELETE_ADMIN",
+						"EDIT_PERMISIONS"
+						});
+
+			log.info("admin guardado en la base de datos");
 
 			servicioPaciente.crearPaciente(
 					"mauricio1990arg@gmail.com",
@@ -94,7 +180,7 @@ public class AppServSaludApplication {
 					"123123");
 
 			servicioPaciente.crearPaciente(
-					"Antonio@mail.com",
+					"antonio@mail.com",
 					"123456",
 					"Antonio",
 					"Antonio",
@@ -137,7 +223,7 @@ public class AppServSaludApplication {
 					"88888888",new Date(),
 					"MASCULINO",
 					"123123");
-
+			
 		};
 	}
 

@@ -16,23 +16,6 @@
         </div>
         <div class="d-flex">
             <div>
-                <form
-                    class="d-flex mt-2"
-                    role="search"
-                >
-                    <input
-                        class="form-control"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                    >
-                    <button
-                        class="btn btn-outline-primary"
-                        type="submit"
-                    >Buscar</button>
-                </form>
-            </div>
-            <div>
                 <nav
                     class="navbar navbar-expand-lg"
                     data-bs-theme="light"
@@ -71,10 +54,17 @@
                                     Administracion
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a
+                                    <li
+                                    sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')"
+                                    ><a
                                             class="dropdown-item"
                                             href="/profesional/registro"
                                     >Registrar Profesional</a></li>
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="/admin/registro"
+                                    >Crear administrador</a></li>
                                     <li><a
                                             class="dropdown-item"
                                             href="/paciente/todos"
@@ -143,6 +133,10 @@
                                 <a class="nav-link active" 
                                    th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}"
                                    sec:authorize="hasRole('ROLE_PACIENTE')"
+                                   >Editar Perfil</a>
+                                   <a class="nav-link active" 
+                                   th:href="@{/profesional/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                   sec:authorize="hasRole('ROLE_MEDICO')"
                                    >Editar Perfil</a>
                                 </li>
                                <li class="nav-item" sec:authorize="isAuthenticated()">
