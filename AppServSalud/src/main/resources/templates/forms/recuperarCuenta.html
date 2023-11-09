@@ -8,12 +8,51 @@
     <div th:replace="/fragments/toast :: div"></div>
     <h3>Recuperacion de contraseña</h3>
 
-    <form th:action="@{/recuperarCuenta}" id="form">
+    <form th:action="@{/recuperarCuenta}" method="post" class="container mt-5">
 
-        <input type="password" placeholder="******" id="password" name="password" />
-        <input type="password" placeholder="******" id="password2" name="password2" />
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="input-group mb-3">
+                    <label
+                        for="password"
+                        class="input-group-text"
+                    >Contraseña</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        name="password"
+                        placeholder="******"
+                        id="password"
+                    >
+                </div>
+            </div>
+            <p></p>
+            <div class="col-lg-5">
+                <div class="input-group mb-3">
+                    <label
+                        for="password2"
+                        class="input-group-text"
+                    >Repetir Contraseña</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        name="password2"
+                        placeholder="******"
+                        id="password2"
+                    >
+                </div>
+            </div>
+        </div>
         <input type="hidden" id="token" name="token" />
-        <input type="submit" value="Enviar" id="enviar" />
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-4 d-grid">
+                <button
+                    type="submit"
+                    class="btn btn-primary botones"
+                    id="enviar"
+                >Enviar</button>
+            </div>
+        </div>
 
     </form>
 

@@ -1,10 +1,9 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
@@ -24,6 +23,9 @@ public class MailService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public void sendMail(String email) throws MiExcepcion {
 
@@ -52,20 +54,22 @@ public class MailService {
         return jwtUtils.validateToken(token);
     }
 
-    public void restoreAccount(String token, String password) throws MiExcepcion {
+    public void restoreAccount(String token, String password,String password2) throws MiExcepcion {
+
+        if(!password.equals(password2)) {
+            throw new MiExcepcion("Las contraseñas no coinciden");
+        }
 
         if (!validateToken(token)) {
             throw new MiExcepcion("El token no es valido");
         }
-
+        
         String email = jwtUtils.getEmail(token);
 
-        usuarioRepositorio.buscarPorEmail(email)
+        Usuario usuario = usuarioRepositorio.buscarPorEmail(email)
                 .orElseThrow(() -> new MiExcepcion("No existe un usuario con ese email"));
 
-        Usuario usuario = usuarioRepositorio.buscarPorEmail(email).get();
-
-        usuario.setPassword(password);
+        usuario.setPassword(passwordEncoder.encode(password));
 
         usuarioRepositorio.save(usuario);
     }

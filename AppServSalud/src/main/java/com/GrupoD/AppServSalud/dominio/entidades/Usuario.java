@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class Usuario {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(unique = true,length = 45)
+    @Column(unique = true, length = 45)
     private String email;
 
     private String password;
@@ -33,7 +34,7 @@ public class Usuario {
 
     private String apellido;
 
-    @Column(unique = true,length = 8)
+    @Column(unique = true, length = 8)
     private String dni;
 
     @Temporal(TemporalType.DATE)
@@ -43,6 +44,14 @@ public class Usuario {
     private Date fechaAlta;
 
     private String telefono;
+    
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "usuarios_permisos",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "permiso_id")
+    )
+    private List<Permiso> permisos;
 
     @Enumerated(EnumType.STRING)
     private RolEnum rol;
