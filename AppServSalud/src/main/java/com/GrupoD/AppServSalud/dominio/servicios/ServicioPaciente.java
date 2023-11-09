@@ -212,5 +212,13 @@ public class ServicioPaciente {
                 pacienteRepositorio.save(paciente);
             }
     }
+
+    public Paciente findById(String id) {
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
+    }
 }
 

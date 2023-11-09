@@ -1,0 +1,88 @@
+<div
+  class="col-sm-12"
+  th:fragment="principal"
+>
+  <div
+    id="dash-titulo"
+    class="mt-2 mb-2"
+  >
+    <h5>Dashboard</h5>
+  </div>
+
+  <div class="container bg-primary rounded-3 px-5 p-2">
+    <p class="text-white fw-bold fs-4 m-0">
+      Bienvenido, <span
+        class="text-capitalize"
+        th:text="${profesional.nombre}"
+      ></span>
+    </p>
+    <p class="text-white m-0">Tenga un buen día</p>
+  </div>
+  <div
+    id="dash-titulo"
+    class="mt-2 mb-2"
+  >
+    <h5>Ofertas</h5>
+  </div>
+  <div class="d-flex">
+    <div class="container d-flex rounded-3 mt-2 overflow-auto col-sm-9 pb-3 pt-1">
+    <!-- ITERAR para mostrar las ofertas -->
+      <div class="card col-sm-4 mx-2">
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA2 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA3 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA3 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA3 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+    </div>
+    <div class="card col-sm-3 d-grid p-2 bg-transparent border-0">
+      <button
+        class="btn btn-light mt-1"
+        href="#"
+      >añadir +</button>
+    </div>
+  </div>
+  <!-- AGREGAR CONDICION PARA QUE SE MUESTRE UNO U OTRO -->
+  <div>
+    <div
+      class="container d-flex rounded-3 justify-content-evenly mt-2"
+      style="border: 1px dashed violet; padding: 0;"
+    >
+      <div class="card col-sm-7 px-2 bg-warning fw-bold">Sin ofertas disponibles</div>
+      <div class="card px-3 fw-bold text-center">+ <br> Agregar nueva oferta</div>
+    </div>
+  </div>
+</div>

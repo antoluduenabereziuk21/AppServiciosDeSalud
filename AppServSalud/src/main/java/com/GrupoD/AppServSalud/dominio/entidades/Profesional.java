@@ -27,9 +27,6 @@ public class Profesional extends Usuario{
     
     private String descripcion;
     
-    //@OneToMany
-    //private List<Oferta> oferta;
-    
     @Enumerated(EnumType.STRING)
     private ObraSocialEnum obrasSociales;
 }

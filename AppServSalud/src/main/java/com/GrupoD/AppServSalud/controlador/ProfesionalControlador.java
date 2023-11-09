@@ -10,6 +10,8 @@ import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 @Controller
@@ -26,8 +29,17 @@ public class ProfesionalControlador {
   @Autowired
   ProfesionalServicio profesionalServicio;
 
+  @Autowired
+  ServicioPaciente servicioPaciente;
+
   @GetMapping("/dashboard")
-  public String homeProfesional() {
+  public String homeProfesional(ModelMap modelo) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Profesional profesional = profesionalServicio.buscarPorEmail(userDetails.getUsername());
+    //TODO: retornar pacientes, turnos  y ofertas relacionados al profesional
+    modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
+    modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
+    modelo.put("profesional", profesional);
     return "dashboardProfesional.html";
   }
 

@@ -3,6 +3,8 @@ package com.GrupoD.AppServSalud.controlador;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,6 +12,7 @@ import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -179,4 +182,20 @@ public class PacienteControlador {
 
         return "forms/editarPaciente.html";
     }
+
+    @GetMapping("/detalles/{id}")
+    @ResponseBody
+    public ResponseEntity<?> obtenerDetallesPaciente(@PathVariable String id) {
+    // Lógica para obtener detalles del paciente con el ID proporcionado
+    // Puedes devolver los detalles como un objeto JSON
+    Paciente paciente = servicioPaciente.findById(id);
+    // Ejemplo de respuesta con un objeto JSON
+        Map<String, Object> detalles = new HashMap<>();
+        detalles.put("id", id);
+        detalles.put("paciente", paciente);
+    // Agrega más detalles según sea necesario
+
+    return ResponseEntity.ok(detalles);
+  }
+
 }
