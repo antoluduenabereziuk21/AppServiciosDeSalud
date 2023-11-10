@@ -1,6 +1,5 @@
 function showFragment(fragmentName) {
-    const fragments = ['principalFragment', 'pacientesFragment', 'turnosFragment', 'misDatosFragment'];
-
+    const fragments = ['principalFragment', 'pacientesFragment', 'turnosFragment', 'misDatosFragment' , 'detallePacienteFragment'];
     fragments.forEach(fragmentId => {
         const fragment = document.getElementById(fragmentId);
         if (fragmentId === `${fragmentName}Fragment`) {
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log("datos",data);
                     document.getElementById('pacienteNombre').innerText = paciente.nombre;
                     document.getElementById('pacienteDni').innerText = paciente.dni;
-                    detallePacienteFragment.classList.remove('d-none');
+
 
                 })
                 .catch(error => console.error('Error:', error));
