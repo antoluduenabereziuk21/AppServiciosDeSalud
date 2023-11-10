@@ -118,7 +118,7 @@
                             <p class="card-text"  >Tipo de consulta: 
                                 <span th:text="${oferta.tipo}"></span>
                             </p>
-                            <p class="card-text"  >Ubicacion: 
+                            <p class="card-text" th:if="${oferta.tipo == PRESENCIAL}" > Ubicacion: 
                                 <span th:text="${oferta.ubicacion}"></span>
                             </p>
                             <p class="card-text"  >Detalle de la oferta:
