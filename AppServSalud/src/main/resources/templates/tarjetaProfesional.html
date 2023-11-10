@@ -65,8 +65,10 @@
 
                 <!-- Verifica si el usuario está autenticado -->
                 <div th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a th:href="@{/tarjetaProfesional/oferta}" class="btn btn-primary"
-                       onclick="console.log('Solicitar Turno clicado con autorizacion')">Solicitar Turno</a>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTurnos"
+                    onclick="console.log('Solicitar Turno clicado desde excepcion debo lanzar el modal')">
+                    Solicitar Turno
+                    </button>   
                 </div>
 
                 <!-- Si el usuario no está autenticado, muestra el modal -->
@@ -91,6 +93,20 @@
             </div>
             <div class="modal-body">
                 <a th:href="@{/login}" class="btn btn-primary">login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTurnos" tabindex="-1" aria-labelledby="modalIniciarSesionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Turnos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
             </div>
         </div>
     </div>
