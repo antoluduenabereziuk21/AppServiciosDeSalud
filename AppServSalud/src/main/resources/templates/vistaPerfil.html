@@ -1,103 +1,163 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaft.org">
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaft.org"
+>
 
-<head th:replace="/fragments/head :: head"></head>
+    <head th:replace="/fragments/head :: head"></head>
 
-<head>
-    <link rel="stylesheet" th:href="@{/styles/editarPerfil.css}">
-</head>
-
-<body>
-    <header th:replace="/fragments/header :: header"></header>
-    <div th:replace="/fragments/toast :: div"></div>
-    <div class="container">
-        <article class="card-article">
-            <header class="card-header">
-                <img th:src="@{/assets/card-perfil.jpg}" alt="pattern_card" class="portada-perfil">
-                <div class="avatar">
-                    <img th:src="@{/imagen/perfil/__${usuario.id}__}" alt="Avatar" class="avatar-img"
-                        th:if="${usuario.imagen != null}">
-                    <img th:src="@{/assets/avatar.png}" alt="Avatar" class="avatar-img"
-                        th:if="${usuario.imagen == null}">
-                </div>
-            </header>
-            <section class="card-body">
-                <h1 class="info-h1">
-                    <span th:text="${usuario.nombre}">
-
-                    </span>
-                    <span th:text="${usuario.apellido}">
-
-                    </span>
-                </h1>
-                <hr>
-                <div class="row justify-content-center">
-                    <div class="col-lg-7">
-                        <p class="info-p">
-                            Correo electrónico:
-                            <span th:text="${usuario.email}"></span>
-                        </p>
-                        <p class="info-p">Teléfono:
-                            <span th:text="${usuario.telefono}"></span>
-                        </p>
-                        <p class="info-p">Fecha de Nacimiento:
-                            <span th:text="${usuario.fechaNacimiento}"></span>
-                        </p>
-                        <p class="info-p">DNI:
-                            <span th:text="${usuario.dni}"></span>
-                        </p>
-                        <p class="info-p">Género:
-                            <span th:text="${usuario.sexo}"></span>
-                        </p>
-                        <p class="info-p">Tipo de Usuario:
-                            <span th:text="${usuario.rol.name}"></span>
-                        </p>
-                        <p class="info-p" sec:authorize="hasRole('ROLE_PACIENTE')">Obra Social:
-                            <span th:text="${usuario.obraSocial}" sec:authorize="hasRole('ROLE_PACIENTE')"></span>
-                        </p>
-                        <p class="info-p" sec:authorize="hasRole('ROLE_MEDICO')">Especialidad:
-                            <span th:text="${usuario.especialidad}" sec:authorize="hasRole('ROLE_MEDICO')"></span>
-                        </p>
-                        <p class="info-p" sec:authorize="hasRole('ROLE_MEDICO')">Matricula:
-                            <span th:text="${usuario.matriculaProfesional}"
-                                sec:authorize="hasRole('ROLE_MEDICO')"></span>
-                        </p>
-                        <p class="info-p" sec:authorize="hasRole('ROLE_MEDICO')">Descripcion:
-                            <span th:text="${usuario.descripcion}" sec:authorize="hasRole('ROLE_MEDICO')"></span>
-                        </p>
+    <body>
+        <header th:replace="/fragments/header :: header"></header>
+        <div th:replace="/fragments/toast :: div"></div>
+        <div class="container d-flex flex-column align-items-center mt-3">
+            <div
+                class="card"
+                style="background-color: #86d162; max-width: 500px;"
+            >
+                <img
+                    th:src="@{/assets/card-perfil.jpg}"
+                    alt="pattern_card"
+                    class="card-img-top"
+                >
+                <div class="card-header position-absolute mx-5 px-5 bg-transparent" style="border-bottom: none;">
+                    <div class="avatar text-center mt-5 bt-5">
+                        <img
+                            th:src="@{/imagen/perfil/__${usuario.id}__}"
+                            alt="Avatar"
+                            class="avatar rounded-circle col-sm-7"
+                            th:if="${usuario.imagen != null}"
+                        >
+                        <img
+                            th:src="@{/assets/avatar.png}"
+                            alt="Avatar"
+                            class="avatar rounded-circle col-sm-7"
+                            th:if="${usuario.imagen == null}"
+                        >
                     </div>
                 </div>
-            </section>
-        </article>
-    </div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Notificaciones
-    </button>
+                <article class="card-article mt-5">
+                    <section class="card-body mt-3 text-center">
+                        <h3>
+                            <span th:text="${usuario.nombre}"></span>
+                            <span th:text="${usuario.apellido}"></span>
+                        </h3>
+                        <hr>
+                        <div>
+                            <div>
+                                <p class="info-p">
+                                    Correo electrónico:
+                                    <span th:text="${usuario.email}"></span>
+                                </p>
+                                <p class="info-p">Teléfono:
+                                    <span th:text="${usuario.telefono}"></span>
+                                </p>
+                                <p class="info-p">Fecha de Nacimiento:
+                                    <span th:text="${usuario.fechaNacimiento}"></span>
+                                </p>
+                                <p class="info-p">DNI:
+                                    <span th:text="${usuario.dni}"></span>
+                                </p>
+                                <p class="info-p">Género:
+                                    <span th:text="${usuario.sexo}"></span>
+                                </p>
+                                <p class="info-p">Tipo de Usuario:
+                                    <span th:text="${usuario.rol.name}"></span>
+                                </p>
+                                <p
+                                    class="info-p"
+                                    sec:authorize="hasRole('ROLE_PACIENTE')"
+                                >Obra Social:
+                                    <span
+                                        th:text="${usuario.obraSocial}"
+                                        sec:authorize="hasRole('ROLE_PACIENTE')"
+                                    ></span>
+                                </p>
+                                <p
+                                    class="info-p"
+                                    sec:authorize="hasRole('ROLE_MEDICO')"
+                                >Especialidad:
+                                    <span
+                                        th:text="${usuario.especialidad}"
+                                        sec:authorize="hasRole('ROLE_MEDICO')"
+                                    ></span>
+                                </p>
+                                <p
+                                    class="info-p"
+                                    sec:authorize="hasRole('ROLE_MEDICO')"
+                                >Matricula:
+                                    <span
+                                        th:text="${usuario.matriculaProfesional}"
+                                        sec:authorize="hasRole('ROLE_MEDICO')"
+                                    ></span>
+                                </p>
+                                <p
+                                    class="info-p"
+                                    sec:authorize="hasRole('ROLE_MEDICO')"
+                                >Descripcion:
+                                    <span
+                                        th:text="${usuario.descripcion}"
+                                        sec:authorize="hasRole('ROLE_MEDICO')"
+                                    ></span>
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </article>
+            </div>
+        </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Notificaciones</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul th:each="notificacion : ${usuario.notificaciones}">
-                        <li th:text="${notificacion.mensaje}"></li>
-                    </ul>
+        <!-- Button trigger modal -->
+        <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+        >
+            Notificaciones
+        </button>
+
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1
+                            class="modal-title fs-5"
+                            id="exampleModalLabel"
+                        >Notificaciones</h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul th:each="notificacion : ${usuario.notificaciones}">
+                            <li th:text="${notificacion.mensaje}"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
         <footer th:replace="/fragments/footer :: footer"></footer>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"
+        ></script>
         <script th:src="@{/js/toast.js}"></script>
-</body>
+    </body>
 
 </html>

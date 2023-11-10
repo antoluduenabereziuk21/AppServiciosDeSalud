@@ -1,13 +1,13 @@
 .stars {
-            display: inline-block;
-        }
+    display: inline-block;
+}
 
-        .fa-star {
-            font-size: 24px;
-            color: gold;
-            cursor: pointer;
-        }
+.fa-star {
+    font-size: 24px;
+    color: gold;
+    cursor: pointer;
+}
 
-        .fa-star.checked {
-            color: orange;
-        }
+.fa-star.checked {
+    color: orange;
+}

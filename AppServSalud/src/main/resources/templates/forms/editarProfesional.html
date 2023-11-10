@@ -15,171 +15,167 @@
 
     <body>
         <header th:replace="/fragments/header :: header"></header>
-
-        <div th:replace="/fragments/toast :: div"></div>
-        <div class="container">
-            <div class="text-center mb-5">
-                <h3 class="card-title">Editar perfil</h3>
-            </div>
-            <form
-                th:fragment="editarProfesional"
-                th:action="@{/profesional/modificar/__${profesional.email}__}"
-                method="POST"
-                enctype="multipart/form-data"
-            >
-                <input
-                    hidden
-                    th:value="${profesional.id}"
-                    name="id"
+        <main class="mt-5 mb-5">
+            <div th:replace="/fragments/toast :: div"></div>
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h3 class="card-title">Editar perfil</h3>
+                </div>
+                <form
+                    th:fragment="editarProfesional"
+                    th:action="@{/profesional/modificar/__${profesional.email}__}"
+                    method="POST"
+                    enctype="multipart/form-data"
                 >
-                <div class="row justify-content-center">
-                    <div class="col-sm-3">
-                        <div class="avatar rounded-circle overflow-hidden">
-                            <img
-                                th:src="@{/imagen/perfil/__${profesional.id}__}"
-                                class="avatar"
-                                alt="fotoPerfil"
-                                th:if="${profesional.imagen != null}"
-                            >
-                            <img
-                                th:src="@{/assets/avatar.png}"
-                                class="avatar"
-                                alt="fotoPerfil"
-                                th:if="${profesional.imagen == null}"
-                            >
-                        </div>
-                        <label
-                            for="fotoPerfil"
-                            class="rounded-2 bg-white p-2 btn"
-                        >Cambiar foto</label>
-                        <input
-                            id="fotoPerfil"
-                            type="file"
-                            class="form-control-file"
-                            name="archivo"
-                            hidden
-                        >
-                    </div>
-
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="input-group mb-3">
-                            <label
-                                for="pacienteNombre"
-                                class="input-group-text"
-                            >Nombre</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="nombre"
-                                placeholder="Juan"
-                                id="pacienteNombre"
-                                th:value="${profesional.nombre}"
-                            >
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="input-group mb-3">
-                            <label
-                                for="pacienteApellido"
-                                class="input-group-text"
-                            >Apellido</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="apellido"
-                                placeholder="Rodriguez"
-                                id="pacienteApellido"
-                                th:value="${profesional.apellido}"
-                            >
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="input-group mb-3 mt-3s">
-                    <label
-                        class="input-group-text"
-                        for="pacienteSexo"
-                    >Sexo</label>
-                    <select
-                        class="form-select"
-                        id="pacienteSexo"
-                        name="sexo"
-                    >
-                        <option
-                            th:selected="${profesional.sexo.name == 'MASCULINO'}"
-                            value="MASCULINO"
-                        >Masculino</option>
-                        <option
-                            th:selected="${profesional.sexo.name == 'FEMENINO'}"
-                            value="FEMENINO"
-                        >Femenino</option>
-                        <option
-                            th:selected="${profesional.sexo.name == 'X'}"
-                            value="X"
-                        >X</option>
-                    </select>
-                </div>
-                <div class="input-group mb-3">
-                    <label
-                        class="input-group-text"
-                        for="pacienteTelefono"
-                    >N° de Telefono</label>
                     <input
-                        type="number"
-                        class="form-control"
-                        name="telefono"
-                        placeholder="1123456789"
-                        id="pacienteTelefono"
-                        th:value="${profesional.telefono}"
+                        hidden
+                        th:value="${profesional.id}"
+                        name="id"
                     >
-                </div>
-                <div class="mb-3">
-                    <label
-                        for="exampleInputDescripcion"
-                        class="form-label"
-                    >
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;"><b>Descripcion de su especialidad</b></font>
-                        </font>
-                    </label>
-                    <textarea
-                        type="text"
-                        class="form-control"
-                        name="descripcion"
-                        id="exampleFormControlTextarea1"
-                        rows="3"
-                        th:value="${profesional.descripcion}"
-                        th:text="${profesional.descripcion}"
-                    ></textarea>
-                </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3 mb-3">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex m-3 justify-content-center">
+                                    <img
+                                        th:src="@{/imagen/perfil/__${profesional.id}__}"
+                                        alt="Avatar"
+                                        class="rounded-circle col-sm-7"
+                                        th:if="${profesional.imagen != null}"
+                                    >
+                                    <img
+                                        th:src="@{/assets/avatar.png}"
+                                        alt="Avatar"
+                                        class="rounded-circle col-sm-7"
+                                        th:if="${profesional.imagen == null}"
+                                    >
+                                </div>
+                                <label
+                                    for="fotoPerfil"
+                                    class="rounded-2 bg-white p-1 btn"
+                                >Cambiar foto</label>
+                                <input
+                                    id="fotoPerfil"
+                                    type="file"
+                                    class="form-control-file"
+                                    name="archivo"
+                                    hidden
+                                >
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="input-group mb-3">
+                                <label
+                                    for="pacienteNombre"
+                                    class="input-group-text"
+                                >Nombre</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="nombre"
+                                    placeholder="Juan"
+                                    id="pacienteNombre"
+                                    th:value="${profesional.nombre}"
+                                >
+                            </div>
+                            <div class="input-group mb-3">
+                                <label
+                                    for="pacienteApellido"
+                                    class="input-group-text"
+                                >Apellido</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="apellido"
+                                    placeholder="Rodriguez"
+                                    id="pacienteApellido"
+                                    th:value="${profesional.apellido}"
+                                >
+                            </div>
+                            <div class="input-group mb-3 mt-3s">
+                                <label
+                                    class="input-group-text"
+                                    for="pacienteSexo"
+                                >Sexo</label>
+                                <select
+                                    class="form-select"
+                                    id="pacienteSexo"
+                                    name="sexo"
+                                >
+                                    <option
+                                        th:selected="${profesional.sexo.name == 'MASCULINO'}"
+                                        value="MASCULINO"
+                                    >Masculino</option>
+                                    <option
+                                        th:selected="${profesional.sexo.name == 'FEMENINO'}"
+                                        value="FEMENINO"
+                                    >Femenino</option>
+                                    <option
+                                        th:selected="${profesional.sexo.name == 'X'}"
+                                        value="X"
+                                    >X</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label
+                                    class="input-group-text"
+                                    for="pacienteTelefono"
+                                >N° de Telefono</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="telefono"
+                                    placeholder="1123456789"
+                                    id="pacienteTelefono"
+                                    th:value="${profesional.telefono}"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-8 text-center mb-3">
+                            <div class="input-group">
+                                <label
+                                    for="exampleInputDescripcion"
+                                    class="input-group-text"
+                                >
+                                    <b>Descripcion</b>
+                                </label>
+                                <textarea
+                                    type="text"
+                                    class="form-control"
+                                    name="descripcion"
+                                    id="exampleInputDescripcion"
+                                    th:value="${profesional.descripcion}"
+                                    th:text="${profesional.descripcion}"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-8 text-end mb-3">
+                            <div>
+                                <button
+                                    type="reset"
+                                    class="btn btn-secondary"
+                                >Cancelar</button>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >Guardar Cambios</button>
+                            </div>
 
+                        </div>
+                        <div class="col-sm-8 text-end mb-3">
+                            <a
+                                th:href="@{/profesional/darBaja/__${profesional.id}__}"
+                                class="text-danger fw-bold mt-3"
+                            >Darse de baja</a>
+                        </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                    >Cancelar</button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >Subir</button>
-                </div>
-                <a
-                    th:href="@{/profesional/darBaja/__${profesional.id}__}"
-                    class="btn btn-secondary"
-                >Darse de baja</a>
-
-            </form>
-        </div>
-
-
-
-
+                </form>
+            </div>
+        </main>
         <footer th:replace="/fragments/footer :: footer"></footer>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
