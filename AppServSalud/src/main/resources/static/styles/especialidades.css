@@ -48,3 +48,23 @@ h5{
 .card:hover .full-text {
   display: block;
 }
+
+
+.modal-general{
+  width: 90vw !important;
+  margin-left: 5%;
+}
+
+.modal-dialog{
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.card{
+  width: 100% !important;
+}
+
+.personalizado{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

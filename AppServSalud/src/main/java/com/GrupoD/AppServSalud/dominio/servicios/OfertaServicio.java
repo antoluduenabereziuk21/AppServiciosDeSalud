@@ -1,9 +1,13 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
+import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
+import com.GrupoD.AppServSalud.dominio.entidades.Turno;
 import com.GrupoD.AppServSalud.dominio.repositorio.OfertaRepositorio;
+import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
+import com.GrupoD.AppServSalud.dominio.repositorio.TurnoRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
@@ -22,8 +26,15 @@ public class OfertaServicio {
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
+
     @Autowired
     private OfertaRepositorio ofertaRepositorio;
+
+    @Autowired
+    private PacienteRepositorio pacienteRepositorio;
+
+    @Autowired
+    private TurnoRepositorio turnoRepositorio;
 
     public void crearOferta(String tipoConsulta, String detalleOferta, String fechaConsulta,
             String horarioOferta, String ubicacionOferta, Double precioOferta, String idProfesional)
@@ -93,4 +104,37 @@ public class OfertaServicio {
         }
 
     }
+
+    public void reservarOferta(String idOferta, String idPaciente) throws MiExcepcion{
+
+        Validacion.validarStrings(idOferta, idPaciente);
+
+        Oferta oferta = ofertaRepositorio.findById(idOferta)
+            .orElseThrow(() -> new MiExcepcion("No se encontro ninguna oferta"));
+        
+        Paciente paciente = pacienteRepositorio.findById(idPaciente)
+            .orElseThrow(() -> new MiExcepcion("No se encontro ningun paciente"));
+
+        Profesional profesional = profesionalRepositorio.findById(oferta.getProfesional().getId())
+            .orElseThrow(() -> new MiExcepcion("No se encontro ningun profesional"));
+
+        Turno turno = new Turno();
+
+        turno.setFechaAlta(new Date());
+        turno.setFechaTurno(oferta.getFecha());
+        turno.setHoraTurno(oferta.getHorario());
+        turno.setEstado(true);
+        turno.setActivoPaciente(true);
+        turno.setActivoProfesional(false);
+        turno.setProfesional(profesional);
+        turno.setPaciente(paciente);
+        turno.setOferta(oferta);
+
+        turnoRepositorio.save(turno);
+
+        oferta.setReservado(true);
+        ofertaRepositorio.save(oferta);
+
+    }
+
 }

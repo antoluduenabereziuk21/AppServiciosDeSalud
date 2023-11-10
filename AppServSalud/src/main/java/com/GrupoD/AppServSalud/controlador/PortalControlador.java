@@ -1,25 +1,23 @@
 
 package com.GrupoD.AppServSalud.controlador;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
-import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
-import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -58,7 +56,14 @@ public class PortalControlador {
     }
 
     @GetMapping("/especialidades")
-    public String especialidades() {
+    public String especialidades(@RequestParam(required = false) String error, 
+        @RequestParam(required = false) String exito, ModelMap modelo) {
+        if(error != null){
+            modelo.addAttribute("error", error);
+        }
+        if(exito != null){
+            modelo.addAttribute("exito", exito);
+        }
         return "especialidades.html";
     }
 
@@ -68,13 +73,10 @@ public class PortalControlador {
         List<Profesional> profesionales = profesionalRepositorio
                 .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
         modelo.addAttribute("profesionales", profesionales);
-        modelo.addAttribute("ofertas", Arrays.asList(
-            new Oferta("of",TipoConsultaEnum.PRESENCIAL, "Detalle consulta", HorarioEnum._10HS, "ubicacion", 5000d, profesionales.get(0)),
-            new Oferta("of",TipoConsultaEnum.TELEMEDICINA, "Detalle consulta", HorarioEnum._10HS, "ubicacion", 5000d, profesionales.get(0))
-        
-        ));
+        modelo.addAttribute("ofertas", ofertaServicio.listarOferta());
         return "tarjetaProfesional.html";
     }
+
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @GetMapping("/tarjetaProfesional/oferta")
     public String turno( HttpSession session){
