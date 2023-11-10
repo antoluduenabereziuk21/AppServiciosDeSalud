@@ -89,8 +89,13 @@
                 <h5 class="modal-title" id="exampleModalLabel">Debes Iniciar Secion Para acceder al turno</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <a th:href="@{/login}" class="btn btn-primary">login</a>
+            <div class="modal-body" >
+                <div class="d-grid gap-2">
+                    <a th:href="@{/login}" class="btn btn-primary">login</a>
+                </div>
+                <br>
+                <span>En caso de que no tengas cuenta deberas registrarte , lo puedes hacer desde  <strong>
+                    <a href="/paciente/registro">AQUI!</a></strong></span>
             </div>
         </div>
     </div>
