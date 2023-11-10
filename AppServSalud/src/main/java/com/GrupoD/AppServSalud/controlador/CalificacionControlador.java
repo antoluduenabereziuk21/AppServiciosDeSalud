@@ -30,7 +30,6 @@ public class CalificacionControlador {
 
 //    @GetMapping("/calificar")
 //    public String calificar(){
-//
 //        //PONER NOMBRE CORRESPONDIENTE EN LA VISTA HTML
 //        return "calificarProfesional.html";
 //    }
