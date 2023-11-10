@@ -4,7 +4,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,6 +14,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 
 @Entity
 @Data
@@ -36,6 +37,8 @@ public class Turno {
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
     private Date FechaTurno;
+
+    private HorarioEnum horaTurno;
 
     private Boolean estado;
     private Boolean activoPaciente;

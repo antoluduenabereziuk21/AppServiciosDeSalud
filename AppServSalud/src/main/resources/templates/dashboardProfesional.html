@@ -16,10 +16,26 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         >
+        <style>
+
+            .toast-exito, .toast-error {
+                position: absolute;
+                top: 0;
+                right: -100%;
+                border-radius: 10px;
+                margin: 10px;
+                z-index: 9999;
+                display: flex;
+                gap: 20px;
+                transition: all 1s ease;
+            }
+
+        </style>
 
     </head>
     <body style="background-color: rgba(138, 186, 138, 0.75);">
         <header th:replace="/fragments/header :: header"></header>
+        <div th:replace="/fragments/toast :: div"></div>
         <main>
             <div class="container d-flex mt-3">
                 <section
@@ -120,15 +136,22 @@
                     </div>
                     <div
                         id="detallePacienteFragment"
+                        class="col-sm-11 justify-content-center d-none rounded-2"
+                        style="background-color: rgb(118, 194, 118);"
+                    >
+                        <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
+                    </div>
+                    <!-- <div
+                        id="detallePacienteFragment"
                         class="col-sm-11 fragment justify-content-center d-none modal fade rounded-2"
-                        style="background-color: rgba(17, 34, 17, 0.356);"
+                        
                     >
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </section>
                 <!-- TODO: mostrar el perfil del profesional logueado. -->
                 <aside
@@ -139,7 +162,7 @@
                     <div class="d-flex flex-column text-center">
                         <div class="d-flex justify-content-center m-3">
                             <img
-                                th:src="${profesional.imagen}__}"
+                                th:src="@{/imagen/perfil/__${profesional.id}__}"
                                 alt="Avatar"
                                 class="rounded-circle col-sm-6"
                                 th:if="${profesional.imagen != null}"
@@ -152,17 +175,19 @@
                             >
                         </div>
                         <div>
-                            <span th:text="${profesional.nombre}"></span>
-                            <span th:text="${profesional.apellido}"></span>
+                            <span class="text-capitalize" th:text="${profesional.nombre}"></span>
+                            <span class="text-capitalize" th:text="${profesional.apellido}"></span>
                         </div>
                         <div>
-                            <span>--En construcción--</span>
+                            <br>
+                            <span class="fw-bold">--En construcción--</span>
                             <p>Ultimos Pacientes</p>
                         </div>
                     </div>
                 </aside>
             </div>
         </main>
+        <footer th:replace="/fragments/footer :: footer"></footer>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -174,5 +199,6 @@
             crossorigin="anonymous"
         ></script>
         <script th:src="@{/js/dashProfesional.js}"></script>
+        <script th:src="@{/js/toast.js}"></script>
     </body>
 </html>
