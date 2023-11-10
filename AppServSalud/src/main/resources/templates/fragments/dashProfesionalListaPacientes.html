@@ -21,9 +21,10 @@
           <div
             class="card mb-2 mx-2 px-2 pt-1 pb-1"
             th:each="paciente : ${pacientesActivos}"
+            style="background-color: rgba(164, 215, 164, 0.75); border-color: #DDD;"
           >
             <div class="d-flex justify-content-between align-items-center mx-3">
-              <div class="avatar">
+              <div class="avatar rounded-circle overflow-hidden">
                 <img
                   th:src="@{paciente.imagen}"
                   alt="Avatar"
@@ -65,19 +66,11 @@
                 <button
                   class="btn btn-info mb-1 detalle-btn"
                   type="button"
-                  th:id="'detalleBtn_' + ${paciente.id}"
-                  th:data-id="${paciente.id}"
                   th:data-url="@{/paciente/detalles/{id}(id=${paciente.id})}"
-                  data-bs-toggle="modal" data-bs-target="#detallePacienteFragment"
+                  onclick="showFragment('detallePaciente')"
                 >Detalle</button>
-
-
-                <!-- <button
-                  class="btn btn-info mb-1"
-                  type="button"
-                >Detalle</button> -->
                 <form
-                  th:action="@{/paciente/baja}"
+                  th:action="@{/profesional/paciente/baja}"
                   method="POST"
                 >
                   <input
@@ -94,23 +87,106 @@
               </div>
             </div>
           </div>
-          </d>
-          <tbody th:if="${pacientesActivos == null || pacientesActivos.isEmpty}">
-            <tr>
-              <td colspan="6">
-                <p>No se encuentran usuarios activos en este momento</p>
-              </td>
-            </tr>
-          </tbody>
+          <div th:if="${pacientesActivos == null || pacientesActivos.isEmpty}">
+            <div
+              class="container rounded-1 p-1"
+              style="background-color: rgba(236, 236, 236, 0.329);"
+            >
+              <div class="text-center">No se encuentran pacientes activos en este momento</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="tabla-principal">
         <h6>Inactivos</h6>
-
+        <div
+          class=""
+          style="max-height: 95px; overflow: auto;"
+        >
+          <div th:if="${pacientesInactivos != null || !pacientesInactivos.isEmpty}">
+            <div
+              class="card mb-2 mx-2 px-2 pt-1 pb-1"
+              th:each="paciente : ${pacientesInactivos}"
+              style="background-color: rgba(164, 215, 164, 0.75); border-color: #DDD;"
+            >
+              <div class="d-flex justify-content-between align-items-center mx-3">
+                <div class="avatar rounded-circle overflow-hidden">
+                  <img
+                    th:src="@{paciente.imagen}"
+                    alt="Avatar"
+                    class="avatar"
+                    th:if="${paciente.imagen != null}"
+                    style="width: 65px;"
+                  >
+                  <img
+                    th:src="@{/assets/avatar.png}"
+                    alt="Avatar"
+                    class="avatar"
+                    th:if="${paciente.imagen == null}"
+                    style="width: 65px;"
+                  >
+                </div>
+                <div>
+                  <div>
+                    <span th:text="${paciente.nombre} "></span>
+                    <span th:text="${paciente.apellido} "></span>
+                  </div>
+                  <div>
+                    <span>dni: </span>
+                    <span th:text="${paciente.dni}"></span>
+                  </div>
+                  <div>
+                    <span th:text="${paciente.obraSocial} "></span>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <span th:text="${paciente.email} "></span>
+                  </div>
+                  <div>
+                    <span>tel: </span>
+                    <span th:text="${paciente.telefono}"></span>
+                  </div>
+                </div>
+                <div class="d-grid">
+                  <button
+                    class="btn btn-info mb-1 detalle-btn"
+                    type="button"
+                    th:data-url="@{/paciente/detalles/{id}(id=${paciente.id})}"
+                    onclick="showFragment('detallePaciente')"
+                  >Detalle</button>
+                  <form
+                    th:action="@{/profesional/paciente/alta}"
+                    method="POST"
+                  >
+                    <input
+                      type="text"
+                      style="display: none"
+                      th:value="${paciente.id}"
+                      name="idPaciente"
+                    >
+                    <button
+                      class="btn btn-warning"
+                      type="submit"
+                    >Dar Alta</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div th:if="${pacientesInactivos == null || pacientesInactivos.isEmpty}">
+              <div
+                class="container rounded-1 p-1"
+                style="background-color: rgba(236, 236, 236, 0.329);"
+              >
+                <div class="text-center">No se encuentran pacientes inactivos en este momento</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
-  
+
 </div>
