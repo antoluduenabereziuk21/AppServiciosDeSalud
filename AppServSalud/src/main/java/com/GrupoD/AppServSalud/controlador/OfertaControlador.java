@@ -7,8 +7,10 @@ package com.GrupoD.AppServSalud.controlador;
 
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
-import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
-import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,29 +25,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/oferta")
 public class OfertaControlador {
-    
+
     @Autowired
     private OfertaServicio ofertaServicio;
-    
+
     @GetMapping("/llenar-oferta")
-    public String llenarOferta(){
-    
-        //USAR NOMBRE CORRESPONDIENTE
+    public String llenarOferta() {
+
         return "formOferta.html";
     }
-    
+
     @PostMapping("/enviar-oferta")
-    public String enviarOferta(TipoConsultaEnum tipo,String detalle,HorarioEnum horario,String ubicacion,
-            Double precio, String idProfesional, ModelMap modelo){
-    
+    public String enviarOferta(String tipoConsulta, String detalleOferta, String fechaConsulta,
+            String horarioOferta, String ubicacionOferta, Double precioOferta, String profesionalOferta,
+            ModelMap modelo) {
+
         try {
-            ofertaServicio.crearOferta(tipo, detalle, horario, ubicacion, precio, idProfesional);
+            ofertaServicio.crearOferta(tipoConsulta, detalleOferta, fechaConsulta, horarioOferta, ubicacionOferta,
+                    precioOferta, profesionalOferta);
             modelo.put("exito", "La solicitud fue cargada correctamente");
         } catch (MiExcepcion ex) {
-            modelo.put("error", ex.getMessage());
-            //USAR NOMBRE CORRESPONDIENTE
-            return "formOferta.html";
+            return "redirect:/profesional/dashboard?error="+URLEncoder.encode(ex.getMessage(), StandardCharsets.UTF_8);
         }
-        return "index.html";
+        return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("La solicitud fue cargada correctamente", StandardCharsets.UTF_8);
     }
 }

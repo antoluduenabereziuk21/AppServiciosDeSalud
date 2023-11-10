@@ -69,21 +69,6 @@
                   th:data-url="@{/paciente/detalles/{id}(id=${paciente.id})}"
                   onclick="showFragment('detallePaciente')"
                 >Detalle</button>
-                <form
-                  th:action="@{/profesional/paciente/baja}"
-                  method="POST"
-                >
-                  <input
-                    type="text"
-                    style="display: none"
-                    th:value="${paciente.id}"
-                    name="idPaciente"
-                  >
-                  <button
-                    class="btn btn-danger"
-                    type="submit"
-                  >Dar baja</button>
-                </form>
               </div>
             </div>
           </div>
@@ -156,21 +141,6 @@
                     th:data-url="@{/paciente/detalles/{id}(id=${paciente.id})}"
                     onclick="showFragment('detallePaciente')"
                   >Detalle</button>
-                  <form
-                    th:action="@{/profesional/paciente/alta}"
-                    method="POST"
-                  >
-                    <input
-                      type="text"
-                      style="display: none"
-                      th:value="${paciente.id}"
-                      name="idPaciente"
-                    >
-                    <button
-                      class="btn btn-warning"
-                      type="submit"
-                    >Dar Alta</button>
-                  </form>
                 </div>
               </div>
             </div>

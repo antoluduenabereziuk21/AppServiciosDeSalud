@@ -7,6 +7,8 @@ public enum HorarioEnum {
     _11HS,
     _12HS,
     _13HS,
+    _14HS,
+    _15HS,
     _16HS,
     _17HS,
     _18HS,
