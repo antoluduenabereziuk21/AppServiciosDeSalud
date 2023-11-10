@@ -78,6 +78,7 @@
                 </div>
             </div>
             <div class="modal fade modal-general" th:id="'modal-'+${profesional.id}" tabindex="-1"
+                th:if="${session.usuario != null}"
                 aria-labelledby="modalIniciarSesionLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
@@ -113,14 +114,12 @@
                                     <p class="card-text">Detalle de la oferta:
                                         <span th:text="${oferta.detalle}"></span>
                                     </p>
-                                    
                                     <form th:if="${!oferta.reservado}" th:action="@{/oferta/reservar}" method="post">
                                         <input type="hidden" th:value="${session.usuario.id}" name="idPaciente">
                                         <input type="hidden" th:value="${oferta.id}" name="idOferta">
                                         <input type="submit" value="Reservar" class="btn btn-primary">
                                     </form> 
                                     <button disabled th:if="${oferta.reservado}" class="btn btn-secondary">Reservado</button>
-
                                 </div>
                             </div>
                         </div>
@@ -130,19 +129,22 @@
         </div>
 
         <!-- Modal para iniciar sesión -->
-        <div class="modal fade" id="modalIniciarSesion" tabindex="-1" aria-labelledby="modalIniciarSesionLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="modalIniciarSesion" tabindex="-1" aria-labelledby="modalIniciarSesionLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Debes Iniciar Secion Para acceder al turno</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Debes Iniciar Sesion Para acceder al turno</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <a th:href="@{/login}" class="btn btn-primary">login</a>
+                    <div class="modal-body" >
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/login}" class="btn btn-primary">login</a>
+                        </div>
+                        <br>
+                        <span>En caso de que no tengas cuenta deberas registrarte , lo puedes hacer desde  <strong>
+                            <a href="/paciente/registro">AQUI!</a></strong></span>
                     </div>
                 </div>
-
             </div>
         </div>
 
