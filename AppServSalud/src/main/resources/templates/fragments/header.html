@@ -114,6 +114,14 @@
                
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a class="nav-link active"
+                                       th:href="@{/turno/misTurnos/__${#httpServletRequest.getRemoteUser()}__}"
+                                       sec:authorize="hasRole('ROLE_PACIENTE')"
+                                    >
+                                    Mis Turnos
+                                    </a>
+                                </li>
+                                <li>
                                  <a class="nav-link active"
                                     th:href="@{/paciente/perfil/__${#httpServletRequest.getRemoteUser()}__}"
                                     sec:authorize="hasRole('ROLE_PACIENTE')"
