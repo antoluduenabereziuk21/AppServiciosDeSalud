@@ -1,13 +1,14 @@
 package com.GrupoD.AppServSalud.controlador;
 
+
 import com.GrupoD.AppServSalud.dominio.entidades.Admin;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
+import com.GrupoD.AppServSalud.dominio.repositorio.PermisoRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private AdminServicio adminServicio;
+  @Autowired
+  private AdminServicio adminServicio;
+
+  @Autowired
+  private PermisoRepositorio permisoRepositorio;
+
+  @GetMapping("/perfil/{email}")
+  public String perfil(@PathVariable String email, ModelMap modelo, HttpSession session) {
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    modelo.addAttribute("usuario", adminServicio.buscarPorEmail(usuario.getEmail()));
+    return "vistaPerfil.html";
+  }
 
     @Autowired
     private ServicioPaciente pacienteServicio;
@@ -37,6 +50,16 @@ public class AdminController {
         modelo.addAttribute("usuario", adminServicio.buscarPorEmail(usuario.getEmail()));
         return "vistaPerfil.html";
     }
+  }
+
+  @GetMapping("/lista")
+  public String listar(List<String> permisos, ModelMap modelo) {
+    List<Permiso> permisosAdmin = permisos.stream().map(
+        permiso -> permisoRepositorio.findByPermiso(PermisosEnum.valueOf(permiso)).get()).collect(Collectors.toList());
+    modelo.addAttribute("permisos", permisosAdmin);
+    return "forms/crearAdmin.html";
+
+  }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/modificar/{email}")

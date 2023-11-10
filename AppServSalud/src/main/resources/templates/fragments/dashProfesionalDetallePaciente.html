@@ -1,0 +1,38 @@
+<div
+  class="col-sm-12 px-5"
+  th:fragment="detallePaciente"
+>
+  <div class="text-end">
+    <button
+      class="btn pb-0 pt-0 m-0 position-absolute top-0 end-0"
+      data-bs-toggle="modal"
+      data-bs-target="#detallePacienteFragment"
+      data-bs-dismiss="modal" aria-label="Cerrar"
+    >x</button>
+  </div>
+  <div
+    id="dash-titulo"
+    class="mt-2 mb-2"
+  >
+    <h5>Detalle Paciente</h5>
+  </div>
+
+  <div
+    id="dash-titulo"
+    class="mt-2 mb-2"
+  >
+    <h5>Mostrar historia clínica del paciente y sus registros</h5>
+    <div class="container mt-3">
+      <h5>Detalles del Paciente</h5>
+      <div>
+        <!-- Aquí puedes utilizar Thymeleaf para mostrar los detalles del paciente -->
+        <!-- Ejemplo: -->
+        <p>Nombre: <span id="pacienteNombre"></span></p>
+        <p>Apellido: <span id="pacienteApellido"></span></p>
+        <p>DNI: <span id="pacienteDni"></span></p>
+        <!-- Agrega más detalles según tu modelo de datos -->
+      </div>
+    </div>
+  </div>
+
+</div>

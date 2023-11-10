@@ -7,6 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -38,4 +40,7 @@ public class Oferta {
     private String ubicacion;
     
     private Double precio;
+
+    @ManyToOne
+    private Profesional profesional;
 }
