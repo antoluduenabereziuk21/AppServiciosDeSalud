@@ -34,6 +34,12 @@ public class Profesional extends Usuario{
     private String descripcion;
     
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "profesional_turno",
+        joinColumns = @JoinColumn(name = "id_profesional"),
+        inverseJoinColumns = @JoinColumn(name = "id_turno"))
+    private List<Turno> turnos;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "profesional_calificacion",
         joinColumns = @JoinColumn(name = "id_profesional"),
         inverseJoinColumns = @JoinColumn(name = "id_calificacion"))
