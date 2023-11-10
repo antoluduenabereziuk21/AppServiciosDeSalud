@@ -3,6 +3,7 @@ package com.GrupoD.AppServSalud.controlador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
@@ -40,11 +42,27 @@ public class ProfesionalControlador {
   public String homeProfesional(ModelMap modelo) {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Profesional profesional = profesionalServicio.buscarPorEmail(userDetails.getUsername());
-    //TODO: retornar pacientes, turnos  y ofertas relacionados al profesional
+    List<Oferta> ofertas = null;//RETORNAR OFERTAS DEL PROFESIONAL
+    //TODO: retornar pacientes, turnos relacionados al profesional
     modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
     modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
     modelo.put("profesional", profesional);
+    modelo.put("ofertas", ofertas);
     return "dashboardProfesional.html";
+  }
+
+  @PreAuthorize("hasRole('ROLE_MEDICO')")
+  @PostMapping("/paciente/baja")
+  public String bajaPaciente(String idPaciente) {
+    servicioPaciente.bajaPaciente(false, idPaciente);
+    return "redirect:/profesional/dashboard";
+  }
+
+  @PreAuthorize("hasRole('ROLE_MEDICO')")
+  @PostMapping("/paciente/alta")
+  public String altaPaciente(String idPaciente) {
+    servicioPaciente.bajaPaciente(true, idPaciente);
+    return "redirect:/profesional/dashboard";
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -135,20 +153,20 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/baja")
-  public String bajaPaciente(String idProfesional) {
+  public String bajaProfesional(String idProfesional) {
     profesionalServicio.bajaProfesional(false, idProfesional);
     return "redirect:/profesional/todos";
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/alta")
-  public String altaPaciente(String idProfesional) {
+  public String altaProfesional(String idProfesional) {
     profesionalServicio.bajaProfesional(true, idProfesional);
     return "redirect:/profesional/todos";
   }
 
   @GetMapping("/darBaja/{iProfesional}")
-  public String barseDeBaja(@PathVariable String iProfesional,ModelMap modelo,HttpServletRequest request, HttpServletResponse response){
+  public String darseDeBaja(@PathVariable String iProfesional,ModelMap modelo,HttpServletRequest request, HttpServletResponse response){
     profesionalServicio.bajaProfesional(false, iProfesional);
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null) {

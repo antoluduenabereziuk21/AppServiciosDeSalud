@@ -120,15 +120,22 @@
                     </div>
                     <div
                         id="detallePacienteFragment"
+                        class="col-sm-11 justify-content-center d-none rounded-2"
+                        style="background-color: rgb(118, 194, 118);"
+                    >
+                        <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
+                    </div>
+                    <!-- <div
+                        id="detallePacienteFragment"
                         class="col-sm-11 fragment justify-content-center d-none modal fade rounded-2"
-                        style="background-color: rgba(17, 34, 17, 0.356);"
+                        
                     >
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </section>
                 <!-- TODO: mostrar el perfil del profesional logueado. -->
                 <aside
@@ -152,17 +159,19 @@
                             >
                         </div>
                         <div>
-                            <span th:text="${profesional.nombre}"></span>
-                            <span th:text="${profesional.apellido}"></span>
+                            <span class="text-capitalize" th:text="${profesional.nombre}"></span>
+                            <span class="text-capitalize" th:text="${profesional.apellido}"></span>
                         </div>
                         <div>
-                            <span>--En construcción--</span>
+                            <br>
+                            <span class="fw-bold">--En construcción--</span>
                             <p>Ultimos Pacientes</p>
                         </div>
                     </div>
                 </aside>
             </div>
         </main>
+        <footer th:replace="/fragments/footer :: footer"></footer>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

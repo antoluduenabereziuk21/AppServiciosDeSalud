@@ -28,12 +28,12 @@ public class CalificacionControlador {
     @Autowired
     private MailService mailService;
 
-    @GetMapping("/calificar")
-    public String calificar(){
+    // @GetMapping("/calificar")
+    // public String calificar(){
     
-        //PONER NOMBRE CORRESPONDIENTE EN LA VISTA HTML
-        return "calificarProfesional.html";
-    }
+    //     //PONER NOMBRE CORRESPONDIENTE EN LA VISTA HTML
+    //     return "calificarProfesional.html";
+    // }
 
     @GetMapping("/calificar")
     public String calificar(String email,ModelMap modelo) {
