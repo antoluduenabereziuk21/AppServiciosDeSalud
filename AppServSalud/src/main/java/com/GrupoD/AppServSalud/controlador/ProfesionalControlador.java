@@ -40,7 +40,6 @@ public class ProfesionalControlador {
   public String homeProfesional(ModelMap modelo) {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Profesional profesional = profesionalServicio.buscarPorEmail(userDetails.getUsername());
-    //TODO: retornar pacientes, turnos  y ofertas relacionados al profesional
     modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
     modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
     modelo.put("profesional", profesional);
