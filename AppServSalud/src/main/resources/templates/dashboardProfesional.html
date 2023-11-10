@@ -16,10 +16,26 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         >
+        <style>
+
+            .toast-exito, .toast-error {
+                position: absolute;
+                top: 0;
+                right: -100%;
+                border-radius: 10px;
+                margin: 10px;
+                z-index: 9999;
+                display: flex;
+                gap: 20px;
+                transition: all 1s ease;
+            }
+
+        </style>
 
     </head>
     <body style="background-color: rgba(138, 186, 138, 0.75);">
         <header th:replace="/fragments/header :: header"></header>
+        <div th:replace="/fragments/toast :: div"></div>
         <main>
             <div class="container d-flex mt-3">
                 <section
@@ -146,7 +162,7 @@
                     <div class="d-flex flex-column text-center">
                         <div class="d-flex justify-content-center m-3">
                             <img
-                                th:src="${profesional.imagen}__}"
+                                th:src="@{/imagen/perfil/__${profesional.id}__}"
                                 alt="Avatar"
                                 class="rounded-circle col-sm-6"
                                 th:if="${profesional.imagen != null}"
@@ -183,5 +199,6 @@
             crossorigin="anonymous"
         ></script>
         <script th:src="@{/js/dashProfesional.js}"></script>
+        <script th:src="@{/js/toast.js}"></script>
     </body>
 </html>
