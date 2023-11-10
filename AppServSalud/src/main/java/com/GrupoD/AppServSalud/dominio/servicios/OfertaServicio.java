@@ -108,11 +108,15 @@ public class OfertaServicio {
     }
 
     public void reservarOferta(String idOferta, String idPaciente) throws MiExcepcion{
-
+        
         Validacion.validarStrings(idOferta, idPaciente);
 
         Oferta oferta = ofertaRepositorio.findById(idOferta)
             .orElseThrow(() -> new MiExcepcion("No se encontro ninguna oferta"));
+
+        if(oferta.getReservado()){
+            throw new MiExcepcion("El turno Ya no se encuentra disponible");
+        }
         
         Paciente paciente = pacienteRepositorio.findById(idPaciente)
             .orElseThrow(() -> new MiExcepcion("No se encontro ningun paciente"));
