@@ -25,6 +25,9 @@ import org.springframework.stereotype.Service;
 public class OfertaServicio {
 
     @Autowired
+    private NotificacionServicio notificacionServicio;
+
+    @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
 
     @Autowired
@@ -51,7 +54,7 @@ public class OfertaServicio {
             throw new MiExcepcion("Error al parsear la fecha");
         }
 
-        validarFecha(fechaOerta, HorarioEnum.valueOf("_" + horarioOferta + "HS"));
+        validarFecha(fechaOerta, HorarioEnum.valueOf("_" + horarioOferta + "HS"),idProfesional);
 
         Profesional profesional = profesionalRepositorio.findById(idProfesional)
                 .orElseThrow(() -> new MiExcepcion("No se encontro ningun profesional"));
@@ -83,8 +86,7 @@ public class OfertaServicio {
         return ofertaRepositorio.buscarPorTipo(tipo);
     }
 
-    public void validarFecha(Date fecha, HorarioEnum horario) throws MiExcepcion {
-        System.out.println("Sacando Horario: " + horario.name().substring(1, 3));
+    public void validarFecha(Date fecha, HorarioEnum horario,String idProfesional) throws MiExcepcion {
         Date fechaActual = new Date();
         if (fecha.before(fechaActual)) {
             throw new MiExcepcion("La fecha no puede ser anterior a la actual");
@@ -94,7 +96,7 @@ public class OfertaServicio {
                 throw new MiExcepcion("La hora no puede ser anterior a la actual");
             }
         }
-        List<Oferta> ofertas = ofertaRepositorio.findAll();
+        List<Oferta> ofertas = listarOfertasProfesional(idProfesional);
 
         boolean ofertaExistente = ofertas.stream()
                 .anyMatch(oferta -> oferta.getHorario().equals(horario) && oferta.getFecha().equals(fecha));
@@ -134,6 +136,8 @@ public class OfertaServicio {
 
         oferta.setReservado(true);
         ofertaRepositorio.save(oferta);
+
+        notificacionServicio.crearNotificacionPedidoTurno(idPaciente,oferta.getProfesional().getId());
 
     }
 

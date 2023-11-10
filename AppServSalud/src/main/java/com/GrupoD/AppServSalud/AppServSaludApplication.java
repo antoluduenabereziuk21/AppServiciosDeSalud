@@ -1,36 +1,14 @@
 package com.GrupoD.AppServSalud;
 
-// import com.GrupoD.AppServSalud.dominio.entidades.Permiso;
-// import com.GrupoD.AppServSalud.dominio.repositorio.PermisoRepositorio;
-// import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
-// import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
-// import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
-// import com.GrupoD.AppServSalud.utilidades.PermisosEnum;
-
-// import lombok.extern.slf4j.Slf4j;
-
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-// import java.util.Arrays;
-// import java.util.Date;
-
-// @Slf4j
 @SpringBootApplication
 public class AppServSaludApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppServSaludApplication.class, args);
 	}
-
-	// @Bean
-	// public BCryptPasswordEncoder passwordEncoder() {
-	// 	return new BCryptPasswordEncoder();
-	// }
 
 	// @Autowired
 	// private ServicioPaciente servicioPaciente;

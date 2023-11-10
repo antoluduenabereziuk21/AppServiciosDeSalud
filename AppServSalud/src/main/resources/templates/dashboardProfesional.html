@@ -36,6 +36,7 @@
     <body style="background-color: rgba(138, 186, 138, 0.75);">
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
+
         <main>
             <div class="container d-flex mt-3">
                 <section
@@ -187,6 +188,28 @@
                 </aside>
             </div>
         </main>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Notificaciones
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Notificaciones</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body">
+                        <ul th:each="notificacion : ${profesional.notificaciones}">
+                            <li  th:text="${notificacion.mensaje}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <footer th:replace="/fragments/footer :: footer"></footer>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

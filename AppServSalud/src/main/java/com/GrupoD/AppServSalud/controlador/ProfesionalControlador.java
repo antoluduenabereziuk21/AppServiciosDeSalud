@@ -27,6 +27,7 @@ import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+import com.GrupoD.AppServSalud.dominio.servicios.TurnoServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 @Controller
@@ -42,6 +43,9 @@ public class ProfesionalControlador {
   @Autowired
   private OfertaServicio ofertaServicio;
 
+  @Autowired
+  private TurnoServicio turnoServicio;
+
   @GetMapping("/dashboard")
   public String homeProfesional(@RequestParam(name = "exito", required = false) String exito,
       @RequestParam(name = "error", required = false) String error, ModelMap modelo) {
@@ -53,6 +57,7 @@ public class ProfesionalControlador {
     modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
     modelo.put("profesional", profesional);
     modelo.put("ofertas", ofertas);
+    modelo.put("turnos", turnoServicio.listarTurnosPorProfesional(profesional.getId()));
     modelo.put("exito", exito != null ? exito : null);
     modelo.put("error", error != null ? error : null);
     return "dashboardProfesional.html";

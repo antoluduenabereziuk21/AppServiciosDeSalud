@@ -21,7 +21,7 @@ public class NotificacionServicio {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    private void crearNotificacionPedidoTurno(String idUsuario, String idReceptor) throws MiExcepcion {
+    public void crearNotificacionPedidoTurno(String idUsuario, String idReceptor) throws MiExcepcion {
 
         Optional<Usuario> emisorOptional = usuarioRepositorio.findById(idUsuario);
         Optional<Usuario> receptorOptional = usuarioRepositorio.findById(idReceptor);
@@ -49,9 +49,9 @@ public class NotificacionServicio {
     }
 
     @Transactional
-    private void crearNotificacionEstadoTurno(String idUsuario, String idReceptor, boolean aceptado) throws MiExcepcion{
-        Optional<Usuario> emisorOptional = usuarioRepositorio.findById(idUsuario);
-        Optional<Usuario> receptorOptional = usuarioRepositorio.findById(idReceptor);
+    public void crearNotificacionEstadoTurno(String idPaciente, String idProfesional, boolean aceptado) throws MiExcepcion{
+        Optional<Usuario> emisorOptional = usuarioRepositorio.findById(idProfesional);
+        Optional<Usuario> receptorOptional = usuarioRepositorio.findById(idPaciente);
         if (!emisorOptional.isPresent()) {
             throw new MiExcepcion("El usuario Emisor no existe");
         }
