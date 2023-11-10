@@ -240,4 +240,30 @@ public class ServicioPaciente {
         }
         return null;
     }
+
+    public void modificarPacienteAdmin(String emailPath, String email, String nombre, String apellido, String dni, String sexo,
+            String telefono, Date dateFecha, String obraSocial) throws MiExcepcion{
+        Validacion.validarStrings(nombre, apellido, dni, sexo, telefono, obraSocial);
+        
+        Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorEmail(emailPath);
+
+        if (respuestaPaciente.isPresent()) {
+
+            Paciente paciente = respuestaPaciente.get();
+
+            paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
+            paciente.setDni(dni);
+            paciente.setSexo(Sexo.valueOf(sexo));
+            paciente.setTelefono(telefono);
+            paciente.setFechaNacimiento(dateFecha);
+            paciente.setEmail(email);
+            paciente.setObraSocial(ObraSocialEnum.valueOf(obraSocial));
+
+            pacienteRepositorio.save(paciente);
+        }else{
+            throw new MiExcepcion("No se encontro el paciente");
+        }
+
+    }
 }

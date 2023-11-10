@@ -18,7 +18,7 @@
         <div class="container">
             <form
                 class="formulario"
-                th:action="@{/admin/modPaciente}"
+                th:action="@{/admin/modPaciente/__${paciente.email}__}"
                 method="POST"
             >
                 <div class="text-center mb-5">
@@ -81,7 +81,7 @@
                             <input
                                 class="form-control"
                                 type="date"
-                                name="fechaDeNacimiento"
+                                name="fechaNacimiento"
                                 id="fechaNacimiento"
                                 th:value="${paciente.fechaNacimiento}"
                             />
@@ -134,36 +134,6 @@
                                 placeholder="1123456789"
                                 id="pacienteTelefono"
                                 th:value="${paciente.telefono}"
-                            >
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group my-3">
-                            <label
-                                for="password"
-                                class="input-group-text"
-                            >Contraseña</label>
-                            <input
-                                type="password"
-                                class="form-control"
-                                name="password"
-                                placeholder="******"
-                            >
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="input-group my-3">
-                            <label
-                                for="password"
-                                class="input-group-text"
-                            >Repetir Contraseña</label>
-                            <input
-                                type="password"
-                                class="form-control"
-                                name="password2"
-                                placeholder="******"
                             >
                         </div>
                     </div>
