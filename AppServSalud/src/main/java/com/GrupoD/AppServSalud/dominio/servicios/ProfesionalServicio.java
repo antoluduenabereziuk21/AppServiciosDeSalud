@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
 import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
 import com.GrupoD.AppServSalud.utilidades.*;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
@@ -24,13 +23,13 @@ public class ProfesionalServicio {
 
   @Autowired
   private UsuarioRepositorio usuarioRepositorio;
-  
+
   @Autowired
   private ProfesionalRepositorio profesionalRepositorio;
 
   @Autowired
   private ImagenServicio imagenServicio;
-  
+
   @Transactional
   public void crearProfesional(String nombre, String apellido, String dni,
       Date fechaDeNacimiento, String email,
@@ -41,7 +40,7 @@ public class ProfesionalServicio {
       throw new MiExcepcion("El email ya se encuentra registrado");
     }
 
-    if(usuarioRepositorio.buscarPorDni(dni).isPresent()){
+    if (usuarioRepositorio.buscarPorDni(dni).isPresent()) {
       throw new MiExcepcion("El DNI ya se encuentra registrado");
     }
 
@@ -69,40 +68,39 @@ public class ProfesionalServicio {
   }
 
   @Transactional
-  public void modificarProfesional(MultipartFile archivo, String email, String nombre, 
-                                    String apellido, String sexo, String telefono, String descripcion) throws MiExcepcion {
-    
-    Validacion.validarStrings(nombre, apellido, email, sexo, telefono,descripcion);
+  public void modificarProfesional(MultipartFile archivo, String email, String nombre,
+      String apellido, String sexo, String telefono, String descripcion) throws MiExcepcion {
+
+    Validacion.validarStrings(nombre, apellido, email, sexo, telefono, descripcion);
 
     Optional<Profesional> respuestaProfesional = profesionalRepositorio.buscarPorEmail(email);
 
     if (respuestaProfesional.isPresent()) {
       Profesional profesional = respuestaProfesional.get();
-      
+
       profesional.setNombre(nombre);
       profesional.setApellido(apellido);
       profesional.setSexo(Sexo.valueOf(sexo));
       profesional.setTelefono(telefono);
       profesional.setDescripcion(descripcion);
-      if (!archivo.isEmpty()){
-                String idImagen = null;
+      if (!archivo.isEmpty()) {
+        String idImagen = null;
 
-                if (profesional.getImagen() != null) {
+        if (profesional.getImagen() != null) {
 
-                    idImagen = profesional.getImagen().getId();
-                }
+          idImagen = profesional.getImagen().getId();
+        }
 
-                Imagen imagen = null;
+        Imagen imagen = null;
 
-                try {
-                    imagen = imagenServicio.actualizar(archivo, idImagen);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+          imagen = imagenServicio.actualizar(archivo, idImagen);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
 
-                profesional.setImagen(imagen);
-            }
-
+        profesional.setImagen(imagen);
+      }
 
       profesionalRepositorio.save(profesional);
     }
@@ -138,6 +136,28 @@ public class ProfesionalServicio {
   public List<Profesional> filtrarUsuarios(FiltroUsuario usuario) {
     return profesionalRepositorio.buscarPorFiltro(usuario);
   }
-  
+
+  public void modificarProfesionalAdmin(String emailPath, String email, String nombre, String apellido, String dni,
+      String sexo, String telefono, Date dateFecha, String matricula,String especialidad) throws MiExcepcion {
+
+    Validacion.validarStrings(nombre, apellido, email, sexo, telefono);
+
+    Optional<Profesional> respuestaProfesional = profesionalRepositorio.buscarPorEmail(emailPath);
+
+    if (respuestaProfesional.isPresent()) {
+      Profesional profesional = respuestaProfesional.get();
+
+      profesional.setNombre(nombre);
+      profesional.setApellido(apellido);
+      profesional.setSexo(Sexo.valueOf(sexo));
+      profesional.setTelefono(telefono);
+      profesional.setDni(dni);
+      profesional.setFechaNacimiento(dateFecha);
+      profesional.setMatriculaProfesional(matricula);
+      profesional.setEmail(email);
+      profesional.setEspecialidad(EspecialidadEnum.valueOf(especialidad));
+      profesionalRepositorio.save(profesional);
+    }
+  }
 
 }

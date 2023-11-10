@@ -12,6 +12,7 @@ import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,12 @@ public class AdminController {
 
   @Autowired
   private PermisoRepositorio permisoRepositorio;
+
+  @Autowired
+  private ServicioPaciente servicioPaciente;
+
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
 
   @GetMapping("/perfil/{email}")
   public String perfil(@PathVariable String email, ModelMap modelo, HttpSession session) {
@@ -91,9 +98,17 @@ public class AdminController {
 
   @PostMapping("/modPaciente/{emailPath}")
   public String modificarPacienteAdmin(@PathVariable String emailPath, String nombre,
-                    String apellido, String dni, String sexo, String fechaNacimiento,
-                    String telefono, String obraSocial,String email, ModelMap modelo) {
-    
+      String apellido, String dni, String sexo, String fechaNacimiento,
+      String telefono, String obraSocial, String email, String password,
+      ModelMap modelo, HttpSession session) {
+
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    if (!passwordEncoder.matches(password, usuario.getPassword())) {
+      modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
+      modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
+      modelo.put("error", "La contraseña ingresada no es correcta");
+      return "pacientes.html";
+    }
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date dateFecha = null;
     try {
@@ -102,9 +117,12 @@ public class AdminController {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
     }
     try {
-      pacienteServicio.modificarPacienteAdmin(emailPath,email, nombre, apellido,dni, sexo, telefono,dateFecha,obraSocial);
+      pacienteServicio.modificarPacienteAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono, dateFecha,
+          obraSocial);
       modelo.put("exito", "Paciente modificado correctamente");
-      return "redirect:/paciente/todos";
+      modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
+      modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
+      return "pacientes.html";
     } catch (MiExcepcion e) {
       modelo.put("error", e.getMessage());
       return "forms/editarPacienteAdmin.html";
@@ -117,6 +135,42 @@ public class AdminController {
     Profesional profesional = profesionalServicio.buscarPorEmail(email);
     modelo.put("profesional", profesional);
     return "forms/editarProfesionalAdmin.html";
+  }
+
+  @PostMapping("/modProfesional/{emailPath}")
+  public String modificarProfesionalAdmin(@PathVariable String emailPath, String nombre,
+      String apellido, String dni, String sexo, String fechaNacimiento,
+      String telefono, String matriculaProfesional, String email, String password,
+      String especialidad, ModelMap modelo, HttpSession session) {
+
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    if (!passwordEncoder.matches(password, usuario.getPassword())) {
+      modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
+      modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
+      modelo.put("error", "La contraseña ingresada no es correcta");
+      return "profesionales.html";
+    }
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date dateFecha = null;
+    try {
+      dateFecha = dateFormat.parse(fechaNacimiento);
+    } catch (ParseException ex) {
+      Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    try {
+      profesionalServicio.modificarProfesionalAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono, dateFecha,
+        matriculaProfesional,especialidad);
+      modelo.put("exito", "Profesional modificado correctamente");
+      modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
+      modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
+      return "profesionales.html";
+    } catch (MiExcepcion e) {
+      modelo.put("error", e.getMessage());
+      return "forms/editarProfesionalAdmin.html";
+    }
+
   }
 
 }
