@@ -85,6 +85,7 @@ public class PacienteControlador {
     @GetMapping("/modificar/{email}")
     public String vistaModificarPaciente(@PathVariable String email, ModelMap modelo, HttpSession session) {
         Paciente paciente = servicioPaciente.buscarPorEmail(email);
+        session.getAttribute("usuario");
         modelo.put("paciente", paciente);
         return "forms/editarPaciente.html";
     }
