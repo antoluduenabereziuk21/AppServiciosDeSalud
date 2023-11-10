@@ -15,7 +15,6 @@
             </a>
         </div>
         <div class="d-flex">
-
             <div>
                 <nav
                     class="navbar navbar-expand-lg"
@@ -44,7 +43,10 @@
                                     href="/"
                                 >Inicio</a>
                             </li>
-                            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li
+                                class="nav-item dropdown"
+                                sec:authorize="hasRole('ROLE_ADMIN')"
+                            >
                                 <a
                                     class="nav-link dropdown-toggle active"
                                     href="#"
@@ -55,112 +57,157 @@
                                     Administracion
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li
-                                    sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')"
-                                    ><a
+                                    <li sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')">
+                                        <a
                                             class="dropdown-item"
                                             href="/profesional/registro"
-                                    >Registrar Profesional</a></li>
+                                        >Registrar Profesional</a>
+                                    </li>
                                     <li>
                                         <a
                                             class="dropdown-item"
                                             href="/admin/registro"
-                                    >Crear administrador</a></li>
-                                    <li><a
+                                        >
+                                            Crear administrador
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
                                             class="dropdown-item"
                                             href="/paciente/todos"
-                                        >Todos Los Pacientes</a></li>
-                                    <li><a
+                                        >
+                                            Todos Los Pacientes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
                                             class="dropdown-item"
                                             href="/profesional/todos"
-                                    >Todos Los Profesionales</a></li>
-                                    <li><a
+                                        >
+                                            Todos Los Profesionales
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
                                             class="dropdown-item"
                                             href="#"
-                                    >----</a></li>
+                                        >
+                                            ----
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
-                            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <li
+                                class="nav-item"
+                                sec:authorize="!isAuthenticated()"
+                            >
                                 <a
                                     class="nav-link active"
                                     aria-current="page"
                                     href="/paciente/registro"
-                                >Registrarse</a>
+                                >
+                                    Registrarse
+                                </a>
                             </li>
-                            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <li
+                                class="nav-item"
+                                sec:authorize="!isAuthenticated()"
+                            >
                                 <a
                                     class="nav-link active"
                                     href="/login"
-                                >Iniciar sesión</a>
+                                >
+                                    Iniciar sesión
+                                </a>
                             </li>
                             <li
-                                    class="nav-item"
-                                    sec:authorize="hasRole('ROLE_MEDICO')"
+                                class="nav-item"
+                                sec:authorize="hasRole('ROLE_MEDICO')"
                             >
                                 <a
-                                        class="nav-link active"
-                                        href="/profesional/dashboard"
-                                >Panel Profesional</a>
+                                    class="nav-link active"
+                                    href="/profesional/dashboard"
+                                >
+                                    Panel Profesional
+                                </a>
                             </li>
-                           <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <li
+                                class="nav-item"
+                                sec:authorize="isAuthenticated()"
+                            >
                                 <a
                                     class="nav-link dropdown-toggle active"
                                     href="#"
                                     role="button"
                                     data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                Perfil
-                                </a>
-               
-                            <ul class="dropdown-menu">
-                                <li>
-                                 <a class="nav-link active"
-                                    th:href="@{/paciente/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                    sec:authorize="hasRole('ROLE_PACIENTE')"
-                                 >
-                                  Ver Mi Perfil</a>
-                                    <a class="nav-link active"
-                                       th:href="@{/profesional/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_MEDICO')"
-                                    >
-                                        Ver Mi Perfil</a>
-                                    <a class="nav-link active"
-                                       th:href="@{/admin/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_ADMIN')"
-                                    >
-                                        Ver Mi Perfil</a>
-                                </li>
-                                <li>
-                                <a class="nav-link active" 
-                                   th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}"
-                                   sec:authorize="hasRole('ROLE_PACIENTE')"
-                                   >Editar Perfil</a>
-                                   <a class="nav-link active" 
-                                   th:href="@{/profesional/modificar/__${#httpServletRequest.getRemoteUser()}__}"
-                                   sec:authorize="hasRole('ROLE_MEDICO')"
-                                   >Editar Perfil</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link active" 
-                                       th:href="@{/admin/modificar/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_ADMIN')"
-                                       >Editar Perfil</a>
-                                </li>
-                               <li class="nav-item" sec:authorize="isAuthenticated()">
-                                <form
-                                    th:action="@{/logout}"
-                                    method="post"
+                                    aria-expanded="false"
                                 >
-                                    <input
-                                        class="nav-link active"
-                                        type="submit"
-                                        value="Cerrar sesión"
+                                    Perfil
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a
+                                            class="nav-link active"
+                                            th:href="@{/paciente/perfil/__${#httpServletRequest.getRemoteUser()}__}"
+                                            sec:authorize="hasRole('ROLE_PACIENTE')"
+                                        >
+                                            Ver Mi Perfil</a>
+                                        <a
+                                            class="nav-link active"
+                                            th:href="@{/profesional/perfil/__${#httpServletRequest.getRemoteUser()}__}"
+                                            sec:authorize="hasRole('ROLE_MEDICO')"
+                                        >
+                                            Ver Mi Perfil</a>
+                                        <a
+                                            class="nav-link active"
+                                            th:href="@{/admin/perfil/__${#httpServletRequest.getRemoteUser()}__}"
+                                            sec:authorize="hasRole('ROLE_ADMIN')"
+                                        >
+                                            Ver Mi Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="nav-link active"
+                                            th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                            sec:authorize="hasRole('ROLE_PACIENTE')"
+                                        >
+                                            Editar Perfil
+                                        </a>
+                                        <a
+                                            class="nav-link active"
+                                            th:href="@{/profesional/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                            sec:authorize="hasRole('ROLE_MEDICO')"
+                                        >
+                                            Editar Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="nav-link active"
+                                            th:href="@{/admin/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                            sec:authorize="hasRole('ROLE_ADMIN')"
+                                        >
+                                            Editar Perfil
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="nav-item"
+                                        sec:authorize="isAuthenticated()"
                                     >
-                                </form>
-                               </li>
-                             </ul>
-
-                           </li>
+                                        <form
+                                            th:action="@{/logout}"
+                                            method="post"
+                                        >
+                                            <input
+                                                class="nav-link active"
+                                                type="submit"
+                                                value="Cerrar sesión"
+                                            >
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </nav>

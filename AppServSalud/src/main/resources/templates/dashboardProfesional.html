@@ -16,9 +16,16 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         >
+        <link rel="stylesheet" th:href="@{/styles/footer.css}">
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,400;1,900&display=swap');
 
-            .toast-exito, .toast-error {
+            * {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .toast-exito,
+            .toast-error {
                 position: absolute;
                 top: 0;
                 right: -100%;
@@ -29,7 +36,6 @@
                 gap: 20px;
                 transition: all 1s ease;
             }
-
         </style>
 
     </head>
@@ -38,12 +44,13 @@
         <div th:replace="/fragments/toast :: div"></div>
 
         <main>
-            <div class="container d-flex mt-3">
+            <div class="container d-flex mt-3 mb-3">
                 <section
                     class="col-10 d-flex justify-content-center"
                     id="tablero"
                     style="height: 600px;"
                 >
+                    <!-- Barra lateral de navegación -->
                     <div class="card justify-content-evenly mx-2">
                         <button
                             onclick="showFragment('principal')"
@@ -91,6 +98,22 @@
                             </svg>
                         </button>
                         <button
+                            type="button"
+                            class="btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#notificacionesModal"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="1em"
+                                viewBox="0 0 448 512"
+                            ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path
+                                    d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
+                                />
+                            </svg>
+                        </button>
+                        <button
                             onclick="showFragment('misDatos')"
                             title="Mis Datos"
                             class="btn"
@@ -106,6 +129,7 @@
                             </svg>
                         </button>
                     </div>
+                    <!-- Fragments de dashboard -->
                     <div
                         id="principalFragment"
                         class="col-sm-11 fragment justify-content-center rounded-2"
@@ -142,17 +166,6 @@
                     >
                         <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
                     </div>
-                    <!-- <div
-                        id="detallePacienteFragment"
-                        class="col-sm-11 fragment justify-content-center d-none modal fade rounded-2"
-                        
-                    >
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
-                            </div>
-                        </div>
-                    </div> -->
                 </section>
                 <!-- TODO: mostrar el perfil del profesional logueado. -->
                 <aside
@@ -176,8 +189,14 @@
                             >
                         </div>
                         <div>
-                            <span class="text-capitalize" th:text="${profesional.nombre}"></span>
-                            <span class="text-capitalize" th:text="${profesional.apellido}"></span>
+                            <span
+                                class="text-capitalize"
+                                th:text="${profesional.nombre}"
+                            ></span>
+                            <span
+                                class="text-capitalize"
+                                th:text="${profesional.apellido}"
+                            ></span>
                         </div>
                         <div>
                             <br>
@@ -188,23 +207,31 @@
                 </aside>
             </div>
         </main>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Notificaciones
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Notificaciones</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="notificacionesModal"
+            tabindex="-1"
+            aria-labelledby="notificacionesModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1
+                            class="modal-title fs-5"
+                            id="notificacionesModalLabel"
+                        >Notificaciones</h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
                     <div class="modal-body">
                         <ul th:each="notificacion : ${profesional.notificaciones}">
-                            <li  th:text="${notificacion.mensaje}"></li>
+                            <li th:text="${notificacion.mensaje}"></li>
                         </ul>
                     </div>
                 </div>
