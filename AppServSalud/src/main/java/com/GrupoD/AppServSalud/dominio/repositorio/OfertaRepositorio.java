@@ -20,5 +20,8 @@ public interface OfertaRepositorio extends JpaRepository<Oferta, String> {
     
     @Query("SELECT o FROM Oferta o WHERE o.horario = :horario")
     List<Oferta> buscarPorHorario(@Param("horario") HorarioEnum horario);
+
+    @Query("SELECT o FROM Oferta o WHERE o.profesional.id = :id")
+    List<Oferta> buscarPorProfesional(@Param("id") String id);
     
 }

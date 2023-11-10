@@ -15,6 +15,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
+
 @Entity
 @Data
 @Getter
@@ -35,6 +37,8 @@ public class Turno {
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
     private Date FechaTurno;
+
+    private HorarioEnum horaTurno;
 
     private Boolean estado;
     private Boolean activoPaciente;

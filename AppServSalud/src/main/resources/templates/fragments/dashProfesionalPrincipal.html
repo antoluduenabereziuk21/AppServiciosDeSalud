@@ -28,12 +28,7 @@
     <div class="d-flex rounded-3 mt-2 overflow-auto col-sm-10 pb-3 pt-3" style="background-color: rgba(17, 34, 17, 0.356);">
       <!-- ITERAR para mostrar las ofertas -->
       <div class="card col-sm-4 mx-2">
-        OFERTA1 <br>
-        OFERTA1 <br>
-        OFERTA1 <br>
-        OFERTA1 <br>
-        OFERTA1 <br>
-        OFERTA1 <br>
+        <p th:each="oferta : ${ofertas}" th:text="${oferta.fecha} + ' ' + ${oferta.horario} + ' ' + (${oferta.reservado} ? RESERVADO : LIBRE)"></p>
       </div>
       <div class="card col-sm-4 mx-2">
         OFERTA2 <br>
@@ -133,7 +128,7 @@
         style="width: 850px; background-color: rgb(98, 175, 98);"
       >
 
-        <form method="POST">
+        <form th:action="@{/oferta/enviar-oferta}" method="POST">
           <div class="text-center mb-5">
             <h3 class="card-title">Nueva Oferta</h3>
           </div>
@@ -157,20 +152,18 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="input-group mb-3">
-                <label
-                  for="tipoConsulta"
-                  class="input-group-text"
-                >Tipo de consulta</label>
-                <select
-                  class="form-select"
-                  id="tipoConsulta"
-                  name="tipoConsulta"
-                >
-                  <option value="TELEMEDICINA">Telemedicina</option>
-                  <option value="PRESENCIAL">Presencial</option>
-                </select>
+                  <label
+                      class="input-group-text"
+                      for="fechaConsulta"
+                  >Fecha Consulta</label>
+                  <input
+                      class="form-control"
+                      type="date"
+                      name="fechaConsulta"
+                      id="fechaConsulta"
+                  />
               </div>
-            </div>
+          </div>
             <div class="col-lg-6">
               <div class="input-group mb-3">
                 <label
@@ -203,12 +196,12 @@
             </div>
           </div>
           <div class="row justify-content-between">
-            <div class="col-lg-4">
+            <div class="col-lg-5">
               <div class="input-group mb-3">
                 <label
                   for="precioOferta"
                   class="input-group-text"
-                >Precio</label>
+                >Precio Consulta</label>
                 <input
                   type="number"
                   class="form-control"
@@ -227,6 +220,22 @@
                 name="profesionalOferta"
                 hidden
               >
+            </div>
+            <div class="col-lg-7">
+              <div class="input-group mb-3">
+                <label
+                  for="tipoConsulta"
+                  class="input-group-text"
+                >Tipo de consulta</label>
+                <select
+                  class="form-select"
+                  id="tipoConsulta"
+                  name="tipoConsulta"
+                >
+                  <option value="TELEMEDICINA">Telemedicina</option>
+                  <option value="PRESENCIAL">Presencial</option>
+                </select>
+              </div>
             </div>
             <div class="col-lg-4">
               <div class="input-group mb-3 d-grid">

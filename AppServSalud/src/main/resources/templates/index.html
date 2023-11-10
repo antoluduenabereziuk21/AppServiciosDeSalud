@@ -6,7 +6,7 @@
 <head th:replace="/fragments/head :: head"></head>
 
 <body>
-<header th:replace="/fragments/header :: header"></header>
+<header th:replace="/fragments/header :: header" th:with="usuario=${session.usuario.notificaciones}"></header>
 <main>
     <div th:replace="/fragments/toast :: div"></div>
     <section class="contenedor-video">
