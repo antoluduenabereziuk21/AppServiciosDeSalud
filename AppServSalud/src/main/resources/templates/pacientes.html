@@ -60,7 +60,8 @@
                 <th>email</th>
                 <th>Obra social</th>
                 <th>telefono</th>
-                <th>Acciones</th>
+                <th>Estado</th>
+                <th>Modificar</th>
             </tr>
             </thead>
             <tbody th:if="${pacientesActivos != null || !pacientesActivos.isEmpty}">
@@ -82,8 +83,18 @@
                                 th:value="${paciente.id}"
                                 name="idPaciente"
                         >
-                        <button type="submit">Dar de baja</button>
+                        <input type="image" th:src="@{/assets/Altas_y_bajas.png}" width="40" height="30">
                     </form>
+                </td>
+                <td>
+                    <a th:href="@{/admin/modPaciente/__${paciente.email}__}"> 
+                    <img
+                    th:src="@{/assets/modificar.png}"
+                    alt="modificar"
+                    width="40"
+                    height="30"
+                    >
+                    </a>
                 </td>
             </tr>
             </tbody>

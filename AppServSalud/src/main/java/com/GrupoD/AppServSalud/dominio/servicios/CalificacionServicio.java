@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.GrupoD.AppServSalud.dominio.servicios;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Calificacion;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
-import com.GrupoD.AppServSalud.dominio.repositorio.CalificacionRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
@@ -16,15 +10,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author leand
- */
 @Service
 public class CalificacionServicio {
     
-    @Autowired
-    private CalificacionRepositorio calificacionRepositorio;
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
     @Autowired
