@@ -1,9 +1,14 @@
 
 package com.GrupoD.AppServSalud.controlador;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
+import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
+import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
+import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -20,6 +27,10 @@ import java.util.List;
 public class PortalControlador {
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
+
+    @Autowired
+    private OfertaServicio ofertaServicio;
+    
 
     @GetMapping("/")
     public String index() {
@@ -57,6 +68,11 @@ public class PortalControlador {
         List<Profesional> profesionales = profesionalRepositorio
                 .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
         modelo.addAttribute("profesionales", profesionales);
+        modelo.addAttribute("ofertas", Arrays.asList(
+            new Oferta("of",TipoConsultaEnum.PRESENCIAL, "Detalle consulta", HorarioEnum._10HS, "ubicacion", 5000d, profesionales.get(0)),
+            new Oferta("of",TipoConsultaEnum.TELEMEDICINA, "Detalle consulta", HorarioEnum._10HS, "ubicacion", 5000d, profesionales.get(0))
+        
+        ));
         return "tarjetaProfesional.html";
     }
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
