@@ -19,10 +19,10 @@ public class OfertaControlador {
     @Autowired
     private OfertaServicio ofertaServicio;
 
-    // @PostMapping("/enviar-oferta")
-    // public String enviarOferta(String tipoConsulta, String detalleOferta, String fechaConsulta,
-    //         String horarioOferta, String ubicacionOferta, Double precioOferta, String profesionalOferta,
-    //         ModelMap modelo) {
+    @PostMapping("/enviar-oferta")
+    public String enviarOferta(String tipoConsulta, String detalleOferta, String fechaConsulta,
+            String horarioOferta, String ubicacionOferta, Double precioOferta, String profesionalOferta,
+            ModelMap modelo) {
 
         try {
             ofertaServicio.crearOferta(tipoConsulta, detalleOferta, fechaConsulta, horarioOferta, ubicacionOferta,
@@ -34,8 +34,8 @@ public class OfertaControlador {
         return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("La solicitud fue cargada correctamente");
     }
 
-    // @PostMapping("/reservar")
-    // public String reservarOferta(String idOferta, String idPaciente){
+    @PostMapping("/reservar")
+    public String reservarOferta(String idOferta, String idPaciente){
 
         try{
             ofertaServicio.reservarOferta(idOferta, idPaciente);
@@ -44,5 +44,5 @@ public class OfertaControlador {
         }
         return "redirect:/especialidades?exito="+URLEncoder.encode("La oferta fue reservada correctamente");
 
-    // }
+    }
 }
