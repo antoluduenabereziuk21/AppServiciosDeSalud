@@ -1,265 +1,188 @@
 <!DOCTYPE html>
-<html
-    lang="es"
-    xmlns:th="http://www.thymeleaft.org"
->
-    <head th:replace="/fragments/head :: head"></head>
-    <body>
-        <header th:replace="/fragments/header :: header"></header>
-        <div th:replace="/fragments/toast :: div"></div>
-        <div class="container">
-            <form
-                class="formulario"
-                th:action="@{/paciente/modificar/__${paciente.email}__}"
-                method="POST"
-                enctype="multipart/form-data"
-            >
-                <input hidden th:value="${paciente.id}" name="id">
-                
-                <div class="text-center mb-5">
-                    <h3 class="card-title"
-                        >Actualizar Datos</h3>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3">
-                            <label
-                                for="fotoPerfil"
-                                class="input-group-text"
-                            >Cambiar foto de perfil </label>
+<html lang="es" xmlns:th="http://www.thymeleaft.org">
 
-                            <img th:src="@{/imagen/perfil/__${paciente.id}__}"
-                                 class="rounded float-start"
-                                 width="320"
-                                 height="280"
-                                 alt="fotoPerfil"
-                                 th:if="${paciente.imagen != null}" >
-                            <img th:src="@{/assets/avatar.png}"
-                                 class="circle"
-                                 width="320"
-                                 height="280"
-                                 alt="fotoPerfil"
-                                 th:if="${paciente.imagen == null}" >
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="file"
-                                   class="form-control"
-                                   name="archivo"
-                                   >
-                        </div>
-                        
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+    <header th:replace="/fragments/header :: header"></header>
+    <div th:replace="/fragments/toast :: div"></div>
+    <div class="container">
+        <form class="formulario" th:action="@{/paciente/modificar/__${paciente.email}__}" method="POST"
+            enctype="multipart/form-data">
+            <input hidden th:value="${paciente.id}" name="id">
+
+            <div class="text-center mb-5">
+                <h3 class="card-title">Actualizar Datos</h3>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                        <label for="fotoPerfil" class="input-group-text">Cambiar foto de perfil </label>
+
+                        <img th:src="@{/imagen/perfil/__${paciente.id}__}" class="rounded float-start" width="320"
+                            height="280" alt="fotoPerfil" th:if="${paciente.imagen != null}">
+                        <img th:src="@{/assets/avatar.png}" class="circle" width="320" height="280" alt="fotoPerfil"
+                            th:if="${paciente.imagen == null}">
                     </div>
-                </div>       
-                
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3">
-                            <label
-                                for="pacienteNombre"
-                                class="input-group-text"
-                            >Nombre</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="nombre"
-                                placeholder="Juan"
-                                id="pacienteNombre"
-                                th:value="${paciente.nombre}"
-                            >
-                        </div>
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" name="archivo">
                     </div>
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3">
-                            <label
-                                for="pacienteApellido"
-                                class="input-group-text"
-                            >Apellido</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="apellido"
-                                placeholder="Rodriguez"
-                                id="pacienteApellido"
-                                th:value="${paciente.apellido}"
-                            >
-                        </div>
+
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                        <label for="pacienteNombre" class="input-group-text">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Juan" id="pacienteNombre"
+                            th:value="${paciente.nombre}">
                     </div>
                 </div>
-               
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3"> 
-                           <label
-                                class="input-group-text"
-                                for="obraSocial"
-                            >Obra Social</label>
-                            <select
-                                    id="obraSocial"
-                                    class="form-select"
-                                    name="obraSocial"
-                            >
-                                <option th:selected="${paciente.obraSocial.name == 'OSPE'}" value="OSPE"> OSPE</option>
-                                <option th:selected="${paciente.obraSocial.name == 'SWISS_MEDICAL'}" value="SWISS_MEDICAL">SwissMedical</option>
-                                <option th:selected="${paciente.obraSocial.name == 'SANCORSALUD'}" value="SANCORSALUD">SancorSalud</option>
-                                <option th:selected="${paciente.obraSocial.name == 'OSPRERA'}" value="OSPRERA">OSPRERA</option>
-                                <option th:selected="${paciente.obraSocial.name == 'UPCN'}" value="UPCN">UPCN</option>
-                                <option th:selected="${paciente.obraSocial.name == 'OSDE'}" value="OSDE">OSDE</option>
-                                <option th:selected="${paciente.obraSocial.name == 'PARTICULAR'}" value="PARTICULAR">Particular</option>
-                            </select>   
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="input-group mb-3">
-                            <label
-                                class="input-group-text"
-                                for="pacienteSexo"
-                            >Sexo</label>
-                            <select
-                                class="form-select"
-                                id="pacienteSexo"
-                                name="sexo"
-                            >
-                                <option th:selected="${paciente.sexo.name == 'MASCULINO'}" value="MASCULINO">Masculino</option>
-                                <option th:selected="${paciente.sexo.name == 'FEMENINO'}" value="FEMENINO">Femenino</option>
-                                <option th:selected="${paciente.sexo.name == 'X'}" value="X">X</option>
-                            </select>
-                        </div>
+                <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                        <label for="pacienteApellido" class="input-group-text">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" placeholder="Rodriguez"
+                            id="pacienteApellido" th:value="${paciente.apellido}">
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="input-group mb-3">
-                            <label
-                                class="input-group-text"
-                                for="pacienteTelefono"
-                            >N° de Telefono</label>
-                            <input
-                                type="number"
-                                class="form-control"
-                                name="telefono"
-                                placeholder="1123456789"
-                                id="pacienteTelefono"
-                                th:value="${paciente.telefono}"
-                            >
-                        </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="obraSocial">Obra Social</label>
+                        <select id="obraSocial" class="form-select" name="obraSocial">
+                            <option th:selected="${paciente.obraSocial.name == 'OSPE'}" value="OSPE"> OSPE</option>
+                            <option th:selected="${paciente.obraSocial.name == 'SWISS_MEDICAL'}" value="SWISS_MEDICAL">
+                                SwissMedical</option>
+                            <option th:selected="${paciente.obraSocial.name == 'SANCORSALUD'}" value="SANCORSALUD">
+                                SancorSalud</option>
+                            <option th:selected="${paciente.obraSocial.name == 'OSPRERA'}" value="OSPRERA">OSPRERA
+                            </option>
+                            <option th:selected="${paciente.obraSocial.name == 'UPCN'}" value="UPCN">UPCN</option>
+                            <option th:selected="${paciente.obraSocial.name == 'OSDE'}" value="OSDE">OSDE</option>
+                            <option th:selected="${paciente.obraSocial.name == 'PARTICULAR'}" value="PARTICULAR">
+                                Particular</option>
+                        </select>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-5">
-                    <div class="col-lg-4 d-grid">
+                <div class="col-lg-3">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="pacienteSexo">Sexo</label>
+                        <select class="form-select" id="pacienteSexo" name="sexo">
+                            <option th:selected="${paciente.sexo.name == 'MASCULINO'}" value="MASCULINO">Masculino
+                            </option>
+                            <option th:selected="${paciente.sexo.name == 'FEMENINO'}" value="FEMENINO">Femenino</option>
+                            <option th:selected="${paciente.sexo.name == 'X'}" value="X">X</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="pacienteTelefono">N° de Telefono</label>
+                        <input type="number" class="form-control" name="telefono" placeholder="1123456789"
+                            id="pacienteTelefono" th:value="${paciente.telefono}">
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-4 d-grid">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Guardar Cambios
                     </button>
-                    </div>
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="contrasenha">Contraseña</label>
+                                <input type="password" class="form-control" name="password" placeholder="********"
+                                    id="contrasenha">
                             </div>
-                            <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <label
-                                            class="input-group-text"
-                                            for="contrasenha"
-                                    >Contraseña</label>
-                                    <input
-                                            type="password"
-                                            class="form-control"
-                                            name="password"
-                                            placeholder="********"
-                                            id="contrasenha"
-                                    >
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                >Confirmar</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Confirmar</button>
                         </div>
                     </div>
                 </div>
-            </form>
-            <form th:action="@{/paciente/cambiarContrasenha}" method="post" >
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cambiarContrasenha">
-                    Cambiar Contraseña
-                </button>
+            </div>
+        </form>
+        <form th:action="@{/paciente/cambiarContrasenha}" method="post">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cambiarContrasenha">
+                Cambiar Contraseña
+            </button>
 
-                <div class="modal fade" id="cambiarContrasenha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal fade" id="cambiarContrasenha" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Contraseña</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="miContrasenha">Contraseña Anterior</label>
+                                <input type="password" class="form-control" name="password" placeholder="********"
+                                    id="miContrasenha">
                             </div>
-                            <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <label
-                                            class="input-group-text"
-                                            for="miContrasenha"
-                                    >Contraseña Anterior</label>
-                                    <input
-                                            type="password"
-                                            class="form-control"
-                                            name="password"
-                                            placeholder="********"
-                                            id="miContrasenha"
-                                    >
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label
-                                            class="input-group-text"
-                                            for="nuevaContrasenha"
-                                    >Nueva Contraseña</label>
-                                    <input
-                                            type="password"
-                                            class="form-control"
-                                            name="newPassword"
-                                            placeholder="********"
-                                            id="nuevaContrasenha"
-                                    >
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label
-                                            class="input-group-text"
-                                            for="nuevaContrasenha2"
-                                    >Repetir Contraseña</label>
-                                    <input
-                                            type="password"
-                                            class="form-control"
-                                            name="newPassword2"
-                                            placeholder="********"
-                                            id="nuevaContrasenha2"
-                                    >
-                                </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="nuevaContrasenha">Nueva Contraseña</label>
+                                <input type="password" class="form-control" name="newPassword" placeholder="********"
+                                    id="nuevaContrasenha">
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="nuevaContrasenha2">Repetir Contraseña</label>
+                                <input type="password" class="form-control" name="newPassword2" placeholder="********"
+                                    id="nuevaContrasenha2">
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" id="enviar">Cambiar Contraseña</button>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 
+    <footer th:replace="/fragments/footer :: footer"></footer>
 
-        
-        <footer th:replace="/fragments/footer :: footer"></footer>
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-        <script th:src="@{/js/toast.js}"></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script th:src="@{/js/toast.js}"></script>
+    <script>
+        document.getElementById("enviar").disabled = true;
+        function validarPassword() {
+            const password = document.getElementById("nuevaContrasenha").value;
+            const password2 = document.getElementById("nuevaContrasenha2").value;
+
+            if (password === password2 && password != "" && password2 != "") {
+                document.getElementById("enviar").disabled = false;
+            } else {
+                document.getElementById("enviar").disabled = true;
+            }
+        }
+
+        document.getElementById("nuevaContrasenha").addEventListener("keyup", validarPassword);
+        document.getElementById("nuevaContrasenha2").addEventListener("keyup", validarPassword);
+    </script>
+</body>
+
 </html>

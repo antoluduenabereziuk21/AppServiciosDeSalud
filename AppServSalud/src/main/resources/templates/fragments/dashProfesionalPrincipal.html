@@ -1,0 +1,254 @@
+<div
+  class="col-sm-12 px-5"
+  th:fragment="principal"
+>
+  <div
+    id="dash-titulo"
+    class="mt-2 mb-2"
+  >
+    <h5>Dashboard</h5>
+  </div>
+
+  <div class="container bg-primary rounded-3 px-5 p-2 text-center">
+    <p class="text-white fw-bold fs-4 m-0">
+      Bienvenido, <span
+        class="text-capitalize"
+        th:text="${profesional.nombre}"
+      ></span>
+    </p>
+    <p class="text-white m-0">Tenga un buen día</p>
+  </div>
+  <div
+    id="dash-titulo"
+    class="mt-2 mb-2"
+  >
+    <h5>Ofertas</h5>
+  </div>
+  <div class="d-flex">
+    <div class="d-flex rounded-3 mt-2 overflow-auto col-sm-10 pb-3 pt-3" style="background-color: rgba(17, 34, 17, 0.356);">
+      <!-- ITERAR para mostrar las ofertas -->
+      <div class="card col-sm-4 mx-2">
+        <p th:each="oferta : ${ofertas}" th:text="${oferta.fecha} + ' ' + ${oferta.horario} + ' ' + (${oferta.reservado} ? RESERVADO : LIBRE)"></p>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA2 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA3 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA3 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+      <div class="card col-sm-4 mx-2">
+        OFERTA3 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+        OFERTA1 <br>
+      </div>
+    </div>
+    <div class="col-sm-2 d-grid p-2 mx-1">
+      <button
+        class="btn btn-light mt-1"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#nuevaOferta"
+        href="#"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="1em"
+          viewBox="0 0 448 512"
+        ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+          <path
+            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+          />
+        </svg>
+        Nueva Oferta
+      </button>
+    </div>
+  </div>
+  <!-- AGREGAR CONDICION PARA QUE SE MUESTRE UNO U OTRO -->
+  <div>
+    <div class="d-flex rounded-3 justify-content-center mt-2">
+      <div class="card col-sm-10 d-flex flex-column justify-content-center bg-warning fw-bold text-center">
+        <div class="align-self-center">
+          Sin ofertas disponibles
+        </div>
+      </div>
+      <div class="px-3 fw-bold text-center">
+        <div class="col-sm-2 d-grid">
+          <button
+            class="btn btn-light"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#nuevaOferta"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1em"
+              viewBox="0 0 448 512"
+            ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+              />
+            </svg>
+            Agregar Oferta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FORMULARIO PARA CREAR UNA NUEVA OFERTA -->
+  <div
+    id="nuevaOferta"
+    class="modal fade rounded-2"
+    style="background-color: rgba(17, 34, 17, 0.356);"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div
+        class="modal-content p-5"
+        style="width: 850px; background-color: rgb(98, 175, 98);"
+      >
+
+        <form th:action="@{/oferta/enviar-oferta}" method="POST">
+          <div class="text-center mb-5">
+            <h3 class="card-title">Nueva Oferta</h3>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+              <div class="input-group mb-3">
+                <label
+                  for="detalleOferta"
+                  class="input-group-text"
+                >Detalle</label>
+                <textarea
+                  name="detalleOferta"
+                  id="detalleOferta"
+                  cols="80"
+                  rows="3"
+                  class="form-control"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="input-group mb-3">
+                  <label
+                      class="input-group-text"
+                      for="fechaConsulta"
+                  >Fecha Consulta</label>
+                  <input
+                      class="form-control"
+                      type="date"
+                      name="fechaConsulta"
+                      id="fechaConsulta"
+                  />
+              </div>
+          </div>
+            <div class="col-lg-6">
+              <div class="input-group mb-3">
+                <label
+                  for="horarioOferta"
+                  class="input-group-text"
+                >Horario</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="horarioOferta"
+                  name="horarioOferta"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+              <div class="input-group mb-3">
+                <label
+                  for="ubicacionOferta"
+                  class="input-group-text"
+                >Ubicación</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="ubicacionOferta"
+                  name="ubicacionOferta"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-between">
+            <div class="col-lg-5">
+              <div class="input-group mb-3">
+                <label
+                  for="precioOferta"
+                  class="input-group-text"
+                >Precio Consulta</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="precioOferta"
+                  name="precioOferta"
+                >
+              </div>
+              <label
+                for="profesionalOferta"
+                hidden
+              >Profesional</label>
+              <input
+                type="text"
+                th:value="${profesional.id}"
+                id="profesionalOferta"
+                name="profesionalOferta"
+                hidden
+              >
+            </div>
+            <div class="col-lg-7">
+              <div class="input-group mb-3">
+                <label
+                  for="tipoConsulta"
+                  class="input-group-text"
+                >Tipo de consulta</label>
+                <select
+                  class="form-select"
+                  id="tipoConsulta"
+                  name="tipoConsulta"
+                >
+                  <option value="TELEMEDICINA">Telemedicina</option>
+                  <option value="PRESENCIAL">Presencial</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="input-group mb-3 d-grid">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                >Crear Oferta</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

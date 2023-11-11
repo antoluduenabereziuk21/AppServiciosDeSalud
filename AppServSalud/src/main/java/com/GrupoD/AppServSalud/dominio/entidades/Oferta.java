@@ -2,23 +2,26 @@ package com.GrupoD.AppServSalud.dominio.entidades;
 
 import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
+
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 public class Oferta {
     
@@ -31,6 +34,9 @@ public class Oferta {
     private TipoConsultaEnum tipo;
     
     private String detalle;
+
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
     
     @Enumerated(EnumType.STRING)
     private HorarioEnum horario;
@@ -38,4 +44,9 @@ public class Oferta {
     private String ubicacion;
     
     private Double precio;
+
+    private Boolean reservado = false;
+
+    @ManyToOne
+    private Profesional profesional;
 }

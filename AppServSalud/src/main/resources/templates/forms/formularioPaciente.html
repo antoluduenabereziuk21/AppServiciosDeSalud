@@ -7,7 +7,7 @@
     <body>
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
-        <div class="container">
+        <div class="container mb-5 mt-5">
             <form
                 class="formulario"
                 th:action="@{/paciente/registro}"
@@ -64,7 +64,7 @@
                             >
                         </div>
                     </div>
-                  <div class="col-lg-4">
+                    <div class="col-lg-4">
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
@@ -81,8 +81,8 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
-                        <div class="input-group mb-3"> 
-                           <label
+                        <div class="input-group mb-3">
+                            <label
                                 class="input-group-text"
                                 for="obraSocial"
                             >Obra Social</label>
@@ -98,7 +98,7 @@
                                 <option value="UPCN">UPCN</option>
                                 <option value="OSDE">OSDE</option>
                                 <option value="PARTICULAR">Particular</option>
-                            </select>   
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-3">
@@ -181,7 +181,7 @@
                             >
                         </div>
                     </div>
-                </div>          
+                </div>
                 <div class="row justify-content-center mt-5">
                     <div class="col-lg-4 d-grid">
                         <button
@@ -193,6 +193,9 @@
 
             </form>
         </div>
+        <footer th:replace="/fragments/footer :: footer"></footer>
+
+
 
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

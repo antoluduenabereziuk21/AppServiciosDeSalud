@@ -1,17 +1,7 @@
 package com.GrupoD.AppServSalud;
 
-import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
-import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
-import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
-import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.Date;
 
 @SpringBootApplication
 public class AppServSaludApplication {
@@ -20,126 +10,199 @@ public class AppServSaludApplication {
 		SpringApplication.run(AppServSaludApplication.class, args);
 	}
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	// @Autowired
+	// private ServicioPaciente servicioPaciente;
 
-	@Autowired
-	private ServicioPaciente servicioPaciente;
+	// @Autowired
+	// private AdminServicio adminServicio;
 
-	@Autowired
-	private AdminServicio adminServicio;
+	// @Autowired
+	// private ProfesionalServicio profesionalServicio;
 
-	@Autowired
-	private ProfesionalServicio profesionalServicio;
+	// @Autowired
+	// private PermisoRepositorio permisoRepositorio;
 
 
-	/**
-	 * Metodo que se ejecuta al iniciar la aplicacion
-	 *
-	 * Aqui podemos hacer que se ejecuten metodos de prueba al iniciar la aplicacion
-	 *
-	 * @return
-	 */
-	@Bean
-	CommandLineRunner init(){
-		return args -> {
+	// /**
+	//  * Metodo que se ejecuta al iniciar la aplicacion
+	//  *
+	//  * Aqui podemos hacer que se ejecuten metodos de prueba al iniciar la aplicacion
+	//  *
+	//  * @return
+	//  */
+	// @Bean
+	// CommandLineRunner init(){
+	// 	return args -> {
 
-			profesionalServicio.crearProfesional(
-					"medico",
-					"ginecologo",
-					"12333212",
-					new Date(),
-					"ginecologo@mail.com",
-					"X",
-					"12333322",
-					"123456",
-					"MP-122211",
-					"GINECOLOGIA"
-			);
+	// 		Arrays.stream(PermisosEnum.values()).forEach(permisoEnum -> {
+	// 			if (!permisoRepositorio.findByPermiso(permisoEnum).isPresent()) {
+	// 				Permiso permiso = Permiso.builder().permiso(permisoEnum).build();
+	// 				permisoRepositorio.save(permiso);
+	// 			}
+	// 		});
+			
+	// 		log.info("Permisos guardados en la base de datos");
 
-			adminServicio.crearAdmin(
-					"admin@mail.com",
-					"admin",
-					"Admin",
-					"User",
-					"ADMIN");
+	// 		profesionalServicio.crearProfesional(
+	// 				"medico",
+	// 				"ginecologo",
+	// 				"12345678",
+	// 				new Date(),
+	// 				"ginecologo@mail.com",
+	// 				"X",
+	// 				"12333322",
+	// 				"123456",
+	// 				"MP-122211",
+	// 				"GINECOLOGIA"
 
-			servicioPaciente.crearPaciente(
-					"Mauricio@mail.com",
-					"123456",
-					"Mauricio",
-					"Mauricio",
-					"11111111",
-					new Date(),
-					"MASCULINO",
-					"123123");
+	// 		);profesionalServicio.crearProfesional(
+	// 				"medico",
+	// 				"ginecologo",
+	// 				"78451223",
+	// 				new Date(),
+	// 				"ginecologo1@mail.com",
+	// 				"X",
+	// 				"12333322",
+	// 				"123456",
+	// 				"MP-122215",
+	// 				"GINECOLOGIA"
 
-			servicioPaciente.crearPaciente(
-					"Ayelen@mail.com",
-					"123456",
-					"Ayelen",
-					"Ayelen",
-					"22222222",new Date(),
-					"FEMENINO",
-					"3333333");
+	// 		);profesionalServicio.crearProfesional(
+	// 				"medico",
+	// 				"Cardiologo",
+	// 				"87654321",
+	// 				new Date(),
+	// 				"cardiologo@mail.com",
+	// 				"X",
+	// 				"12333322",
+	// 				"123456",
+	// 				"MP-122212",
+	// 				"CARDIOLOGIA"
+	// 		);profesionalServicio.crearProfesional(
+	// 				"medico",
+	// 				"Clinico",
+	// 				"45454545",
+	// 				new Date(),
+	// 				"clinico@mail.com",
+	// 				"X",
+	// 				"45454545",
+	// 				"123456",
+	// 				"MP-122213",
+	// 				"CLINICA"
+	// 		);profesionalServicio.crearProfesional(
+	// 				"medico",
+	// 				"Pediatra",
+	// 				"68686868",
+	// 				new Date(),
+	// 				"pediatra@mail.com",
+	// 				"X",
+	// 				"12333322",
+	// 				"123456",
+	// 				"MP-122214",
+	// 				"PEDIATRIA"
+	// 		);
 
-			servicioPaciente.crearPaciente(
-					"Maria@mail.com",
-					"123456",
-					"Maria",
-					"Maria",
-					"33333333",new Date(),
-					"FEMENINO",
-					"123123");
+	// 		log.info("profesional guardado en la base de datos");
 
-			servicioPaciente.crearPaciente(
-					"Antonio@mail.com",
-					"123456",
-					"Antonio",
-					"Antonio",
-					"44444444",new Date(),
-					"MASCULINO",
-					"123123");
 
-			servicioPaciente.crearPaciente(
-					"Araceli@mail.com",
-					"123456",
-					"Araceli",
-					"Araceli",
-					"55555555",new Date(),
-					"FEMENINO",
-					"123123");
+	// 		adminServicio.crearAdmin(
+	// 				"superadmin@admin.com",
+	// 				"123456", 
+	// 				"Super ADMIN",
+	// 				"Ranger", 
+	// 				"MASCULINO",
+	// 				new String[]{
+	// 					"ADD_PROFESIONAL",
+	// 					"EDIT_PROFESIONAL",
+	// 					"DELETE_PROFESIONAL",
+	// 					"ADD_TURN",
+	// 					"EDIT_TURN",
+	// 					"DELETE_TURN",
+	// 					"ADD_MEDIC",
+	// 					"EDIT_MEDIC",
+	// 					"DELETE_MEDIC",
+	// 					"ADD_ADMIN",
+	// 					"EDIT_ADMIN",
+	// 					"DELETE_ADMIN",
+	// 					"EDIT_PERMISIONS"
+	// 					});
 
-			servicioPaciente.crearPaciente(
-					"Lucas@mail.com",
-					"123456",
-					"Lucas",
-					"Lucas",
-					"66666666",new Date(),
-					"MASCULINO",
-					"123123");
+	// 		log.info("admin guardado en la base de datos");
 
-			servicioPaciente.crearPaciente(
-					"Ramiro@mail.com",
-					"123456",
-					"Ramiro",
-					"Ramiro",
-					"77777777",new Date(),
-					"MASCULINO",
-					"123123");
+	// 		servicioPaciente.crearPaciente(
+	// 				"mauricio1990arg@gmail.com",
+	// 				"123456",
+	// 				"Mauricio",
+	// 				"Mauricio",
+	// 				"11111111",
+	// 				new Date(),
+	// 				"MASCULINO",
+	// 				"123123");
 
-			servicioPaciente.crearPaciente(
-					"Leandro@mail.com",
-					"123456",
-					"Leandro",
-					"Leandro",
-					"88888888",new Date(),
-					"MASCULINO",
-					"123123");
+	// 		servicioPaciente.crearPaciente(
+	// 				"Ayelen@mail.com",
+	// 				"123456",
+	// 				"Ayelen",
+	// 				"Ayelen",
+	// 				"22222222",new Date(),
+	// 				"FEMENINO",
+	// 				"3333333");
 
-		};
-	}
+	// 		servicioPaciente.crearPaciente(
+	// 				"Maria@mail.com",
+	// 				"123456",
+	// 				"Maria",
+	// 				"Maria",
+	// 				"33333333",new Date(),
+	// 				"FEMENINO",
+	// 				"123123");
+
+	// 		servicioPaciente.crearPaciente(
+	// 				"antonio@mail.com",
+	// 				"123456",
+	// 				"Antonio",
+	// 				"Antonio",
+	// 				"44444444",new Date(),
+	// 				"MASCULINO",
+	// 				"123123");
+
+	// 		servicioPaciente.crearPaciente(
+	// 				"Araceli@mail.com",
+	// 				"123456",
+	// 				"Araceli",
+	// 				"Araceli",
+	// 				"55555555",new Date(),
+	// 				"FEMENINO",
+	// 				"123123");
+
+	// 		servicioPaciente.crearPaciente(
+	// 				"Lucas@mail.com",
+	// 				"123456",
+	// 				"Lucas",
+	// 				"Lucas",
+	// 				"66666666",new Date(),
+	// 				"MASCULINO",
+	// 				"123123");
+
+	// 		servicioPaciente.crearPaciente(
+	// 				"Ramiro@mail.com",
+	// 				"123456",
+	// 				"Ramiro",
+	// 				"Ramiro",
+	// 				"77777777",new Date(),
+	// 				"MASCULINO",
+	// 				"123123");
+
+	// 		servicioPaciente.crearPaciente(
+	// 				"Leandro@mail.com",
+	// 				"123456",
+	// 				"Leandro",
+	// 				"Leandro",
+	// 				"88888888",new Date(),
+	// 				"MASCULINO",
+	// 				"123123");
+			
+	// 	};
+	// }
 
 }

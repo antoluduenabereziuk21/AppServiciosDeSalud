@@ -1,13 +1,25 @@
-
-footer{
-    margin-top: 100%;
-    align-items: end;
-    background-color: rgba(114, 169, 114, 0.25);
-    color: green;
+footer {
+  position: sticky;
+  align-items: end;
+  background-color: rgba(16, 104, 16, 0.363);
+  color: black;
 }
+
 
 .footer_textos {
-    display: flex;
-    margin:auto;
-    justify-content: space-between;
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
 }
+
+a {
+  color: rgb(66, 94, 58);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.titulos {
+  font-size: 25px;
+}
+

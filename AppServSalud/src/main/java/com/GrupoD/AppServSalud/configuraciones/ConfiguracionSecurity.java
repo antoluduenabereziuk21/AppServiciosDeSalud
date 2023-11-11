@@ -2,7 +2,6 @@ package com.GrupoD.AppServSalud.configuraciones;
 
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -28,8 +27,9 @@ public class ConfiguracionSecurity extends WebSecurityConfigurerAdapter {
                 /* en este ant mach van todos las rutas de los archivos que usamos para el proyecto */
                 .antMatchers("/css/*", "/js/*", "/img/*","/assets/**","/styles/**").permitAll()
                 /* desde aqui colocaremos las rutas para configurarlas */
-                .antMatchers(HttpMethod.GET, "/","/paciente/registro").permitAll()
-                .antMatchers(HttpMethod.POST, "/paciente/registro").permitAll()
+
+                .antMatchers(HttpMethod.GET, "/","/paciente/registro","/recuperarCuenta/**","/recuperar","/infoTurnos","/especialidades","/tarjetaProfesional/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/paciente/registro","/recuperarCuenta").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
