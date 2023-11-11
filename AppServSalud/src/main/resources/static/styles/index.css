@@ -1,6 +1,6 @@
 body {
     min-height: auto;
-    background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.jpg);
+    background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
