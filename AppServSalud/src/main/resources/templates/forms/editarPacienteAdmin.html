@@ -37,6 +37,7 @@
                                 name="nombre"
                                 id="pacienteNombre"
                                 th:value="${paciente.nombre}"
+                                autofocus
                             >
                         </div>
                     </div>
@@ -98,9 +99,18 @@
                                 id="profesionalSexo"
                                 name="sexo"
                             >
-                                <option th:selected="${paciente.sexo.name == 'MASCULINO'}" value="MASCULINO">Masculino</option>
-                                <option th:selected="${paciente.sexo.name == 'FEMENINO'}" value="FEMENINO">Femenino</option>
-                                <option th:selected="${paciente.sexo.name == 'X'}" value="X">X</option>
+                                <option
+                                    th:selected="${paciente.sexo.name == 'MASCULINO'}"
+                                    value="MASCULINO"
+                                >Masculino</option>
+                                <option
+                                    th:selected="${paciente.sexo.name == 'FEMENINO'}"
+                                    value="FEMENINO"
+                                >Femenino</option>
+                                <option
+                                    th:selected="${paciente.sexo.name == 'X'}"
+                                    value="X"
+                                >X</option>
                             </select>
                         </div>
                     </div>
@@ -140,61 +150,105 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
-                        <div class="input-group mb-3"> 
-                        <label
+                        <div class="input-group mb-3">
+                            <label
                                 class="input-group-text"
                                 for="obraSocial"
                             >Obra Social</label>
                             <select
-                                    id="obraSocial"
-                                    class="form-select"
-                                    name="obraSocial"
+                                id="obraSocial"
+                                class="form-select"
+                                name="obraSocial"
                             >
-                                <option th:selected="${paciente.obraSocial.name == 'OSPE'}" value="OSPE"> OSPE</option>
-                                <option th:selected="${paciente.obraSocial.name == 'SWISS_MEDICAL'}" value="SWISS_MEDICAL">SwissMedical</option>
-                                <option th:selected="${paciente.obraSocial.name == 'SANCORSALUD'}" value="SANCORSALUD">SancorSalud</option>
-                                <option th:selected="${paciente.obraSocial.name == 'OSPRERA'}" value="OSPRERA">OSPRERA</option>
-                                <option th:selected="${paciente.obraSocial.name == 'UPCN'}" value="UPCN">UPCN</option>
-                                <option th:selected="${paciente.obraSocial.name == 'OSDE'}" value="OSDE">OSDE</option>
-                                <option th:selected="${paciente.obraSocial.name == 'PARTICULAR'}" value="PARTICULAR">Particular</option>
-                            </select>   
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'OSPE'}"
+                                    value="OSPE"
+                                > OSPE</option>
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'SWISS_MEDICAL'}"
+                                    value="SWISS_MEDICAL"
+                                >SwissMedical</option>
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'SANCORSALUD'}"
+                                    value="SANCORSALUD"
+                                >SancorSalud</option>
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'OSPRERA'}"
+                                    value="OSPRERA"
+                                >OSPRERA</option>
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'UPCN'}"
+                                    value="UPCN"
+                                >UPCN</option>
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'OSDE'}"
+                                    value="OSDE"
+                                >OSDE</option>
+                                <option
+                                    th:selected="${paciente.obraSocial.name == 'PARTICULAR'}"
+                                    value="PARTICULAR"
+                                >Particular</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-5">
                     <div class="col-lg-4 d-grid">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Editar
-                    </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                        >
+                            Editar
+                        </button>
                     </div>
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                >
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h1
+                                    class="modal-title fs-5"
+                                    id="exampleModalLabel"
+                                >Modal title</h1>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
                             </div>
                             <div class="modal-body">
                                 <div class="input-group mb-3">
                                     <label
-                                            class="input-group-text"
-                                            for="contrasenha"
+                                        class="input-group-text"
+                                        for="contrasenha"
                                     >Contraseña</label>
                                     <input
-                                            type="password"
-                                            class="form-control"
-                                            name="password"
-                                            placeholder="********"
-                                            id="password"
+                                        type="password"
+                                        class="form-control"
+                                        name="password"
+                                        placeholder="********"
+                                        id="password"
                                     >
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <button
-                                        type="submit"
-                                        class="btn btn-primary"
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >Cancelar</button>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
                                 >Confirmar</button>
                             </div>
                         </div>
