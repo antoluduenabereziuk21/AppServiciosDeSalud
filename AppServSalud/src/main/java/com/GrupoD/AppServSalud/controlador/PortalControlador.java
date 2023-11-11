@@ -2,7 +2,6 @@
 package com.GrupoD.AppServSalud.controlador;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
-import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;

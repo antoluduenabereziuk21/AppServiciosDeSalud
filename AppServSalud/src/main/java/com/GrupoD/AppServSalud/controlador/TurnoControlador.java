@@ -1,7 +1,6 @@
 package com.GrupoD.AppServSalud.controlador;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
