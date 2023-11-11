@@ -36,24 +36,24 @@ public class TurnoControlador {
         return "index.html";
     }
 
-    // @GetMapping("/misTurnos/{email}")
-    // public String misTurnos(@PathVariable String email, ModelMap modelo){
-    //     try {
-    //         modelo.put("turnos", turnoServicio.listarTurnosPorPaciente(email));
-    //     } catch (MiExcepcion e) {
-    //         return "redirect:/?error="+URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
-    //     }
-    //     return "turnosPaciente.html";
-    // }
+    @GetMapping("/misTurnos/{email}")
+    public String misTurnos(@PathVariable String email, ModelMap modelo){
+        try {
+            modelo.put("turnos", turnoServicio.listarTurnosPorPaciente(email));
+        } catch (MiExcepcion e) {
+            return "redirect:/?error="+URLEncoder.encode(e.getMessage());
+        }
+        return "turnosPaciente.html";
+    }
 
-    // @GetMapping("/aceptarTurno/{idTurno}")
-    // public String aceptarTurno(@PathVariable String idTurno, ModelMap modelo){
-    //     try {
-    //         turnoServicio.aceptarTurno(idTurno);
-    //     } catch (MiExcepcion e) {
-    //         return "redirect:/profesional/dashboard?error="+URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
-    //     }
-    //     return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("Turno aceptado con exito", StandardCharsets.UTF_8);
-    // }
+    @GetMapping("/aceptarTurno/{idTurno}")
+    public String aceptarTurno(@PathVariable String idTurno, ModelMap modelo){
+        try {
+            turnoServicio.aceptarTurno(idTurno);
+        } catch (MiExcepcion e) {
+            return "redirect:/profesional/dashboard?error="+URLEncoder.encode(e.getMessage());
+        }
+        return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("Turno aceptado con exito");
+    }
     
 }
