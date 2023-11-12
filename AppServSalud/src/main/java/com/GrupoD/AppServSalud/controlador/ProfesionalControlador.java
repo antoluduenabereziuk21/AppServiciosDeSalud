@@ -24,10 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
+import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
 import com.GrupoD.AppServSalud.dominio.servicios.TurnoServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 @Controller
@@ -46,6 +48,9 @@ public class ProfesionalControlador {
   @Autowired
   private TurnoServicio turnoServicio;
 
+  @Autowired
+  UsuarioServicio usuarioServicio;
+
   @GetMapping("/dashboard")
   public String homeProfesional(@RequestParam(name = "exito", required = false) String exito,
       @RequestParam(name = "error", required = false) String error, ModelMap modelo) {
@@ -55,7 +60,8 @@ public class ProfesionalControlador {
     List<Oferta> ofertas = ofertaServicio.listarOfertasProfesional(profesional.getId());
     modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
     modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
-    modelo.put("profesional", profesional);
+    modelo.put("profesional", profesional);// eliminar la variable de las vistas y usar usuario para unificar código
+    modelo.put("usuario", profesional);
     modelo.put("ofertas", ofertas);
     modelo.put("turnos", turnoServicio.listarTurnosPorProfesional(profesional.getId()));
     modelo.put("exito", exito != null ? exito : null);
@@ -79,7 +85,10 @@ public class ProfesionalControlador {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/registro")
-  public String registroProfesional() {
+  public String registroProfesional(ModelMap modelo) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+    modelo.put("usuario", usuario);
     return "forms/registroProfesional.html";
   }
 
@@ -89,6 +98,8 @@ public class ProfesionalControlador {
       String fechaDeNacimiento, String email,
       String sexo, String telefono, String password,
       String matriculaProfesional, String especialidad, ModelMap modelo) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
 
     try {
       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -101,31 +112,25 @@ public class ProfesionalControlador {
       profesionalServicio.crearProfesional(nombre, apellido, dni, fechaNacimiento, email, sexo, telefono, password,
           matriculaProfesional, especialidad);
       modelo.put("exito", "Usuario Profesional creado correctamente");
-
+      modelo.put("usuario", usuario);
       return "forms/registroProfesional.html";
 
     } catch (MiExcepcion e) {
       Logger.getLogger(PacienteControlador.class.getName()).log(Level.SEVERE, null, e);
       modelo.put("error", e.getMessage());
-
+      modelo.put("usuario", usuario);
       return "forms/registroProfesional.html";
     }
 
   }
 
   @PreAuthorize("hasRole('ROLE_MEDICO')")
-  @GetMapping("/perfil/{email}")
-  public String perfil(ModelMap modelo, @PathVariable String email) {
-    Profesional profesional = profesionalServicio.buscarPorEmail(email);
-    modelo.put("usuario", profesional);
-    return "vistaPerfil.html";
-  }
-
-  @PreAuthorize("hasRole('ROLE_MEDICO')")
-  @GetMapping("/modificar/{email}")
-  public String modificarProfesional(@PathVariable String email, ModelMap modelo) {
-    Profesional profesional = profesionalServicio.buscarPorEmail(email);
+  @GetMapping("/modificar")
+  public String modificarProfesional(ModelMap modelo) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Profesional profesional = profesionalServicio.buscarPorEmail(userDetails.getUsername());
     modelo.put("profesional", profesional);
+    modelo.put("usuario", profesional);
     return "forms/editarProfesional.html";
   }
 
@@ -134,14 +139,17 @@ public class ProfesionalControlador {
   public String modificarProfesional(MultipartFile archivo, @PathVariable String email, String nombre,
       String apellido, String sexo, String telefono, String descripcion,
       ModelMap modelo) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Profesional profesional = profesionalServicio.buscarPorEmail(userDetails.getUsername());
     try {
       profesionalServicio.modificarProfesional(archivo, email, nombre, apellido, sexo, telefono, descripcion);
       modelo.put("exito", "Datos modificados exitosamente");
-      modelo.put("usuario", profesionalServicio.buscarPorEmail(email));
+      modelo.put("usuario", profesional);
       return "vistaPerfil.html";
     } catch (MiExcepcion e) {
       modelo.put("error", e.getMessage());
-      modelo.put("profesional", profesionalServicio.buscarPorEmail(email));
+      modelo.put("profesional", profesional);
+      modelo.put("usuario", profesional);
       return "forms/editarProfesional.html";
     }
 
@@ -157,8 +165,11 @@ public class ProfesionalControlador {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/todos")
   public String listarProfesionales(ModelMap modelo) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
     modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
     modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
+    modelo.put("usuario", usuario);
     return "profesionales.html";
   }
 

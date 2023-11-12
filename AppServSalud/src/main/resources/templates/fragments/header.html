@@ -1,4 +1,7 @@
-<header style="background-color: rgba(164, 215, 164, 0.959);">
+<header
+    style="background-color: rgba(164, 215, 164, 0.959);"
+    class="px-5"
+>
     <div class="container-fluid d-flex justify-content-between">
         <div class="mt-2">
             <a
@@ -59,6 +62,25 @@
                                     Iniciar sesión
                                 </a>
                             </li>
+                            <!-- LOGUEADO ICONO NOTIFICACION -->
+                            <li sec:authorize="isAuthenticated()">
+                                <button
+                                    type="button"
+                                    class="nav-link p-2 mx-2"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#notificacionesModal"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="1.2em"
+                                        viewBox="0 0 448 512"
+                                    ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
+                                        />
+                                    </svg>
+                                </button>
+                            </li>
                             <!-- LOGUEADO COMO ADMIN -->
                             <li
                                 class="nav-item dropdown"
@@ -79,7 +101,10 @@
                                         class="dropdown-menu dropdown-menu-lg-end dropdown-menu-lg-start mt-2"
                                         style="background-color: rgba(164, 215, 164, 0.959);"
                                     >
-                                        <li sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')" style="width: 200px;">
+                                        <li
+                                            sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')"
+                                            style="width: 200px;"
+                                        >
                                             <a
                                                 class="nav-link"
                                                 href="/profesional/registro"
@@ -126,6 +151,26 @@
                                     Panel Profesional
                                 </a>
                             </li>
+                            <!-- LOGUEADO COMO PACIENTE -->
+                            <li
+                                class="nav-item"
+                                sec:authorize="hasRole('ROLE_PACIENTE')"
+                            >
+                                <div>
+                                    <ul class="navbar-nav mx-3">
+
+                                        <li>
+                                            <a
+                                                class="nav-link active"
+                                                th:href="@{/turno/misTurnos}"
+                                                sec:authorize="hasRole('ROLE_PACIENTE')"
+                                            >
+                                                Mis Turnos
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                             <!-- DESPLEGABLE DEL PERFIL -->
                             <li
                                 class="nav-item"
@@ -133,76 +178,52 @@
                             >
                                 <div class="btn-group">
                                     <button
-                                        class="nav-link dropdown-toggle active"
+                                        class="nav-link dropdown-toggle active text-capitalize"
                                         href="#"
                                         type="button"
                                         role="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
-                                    >
-                                        Perfil
-                                    </button>
+                                        th:text="${usuario.nombre}"
+                                    ></button>
                                     <ul
                                         class="dropdown-menu dropdown-menu-lg-end mt-2 p-1"
                                         style="background-color: rgba(164, 215, 164, 0.959);"
                                     >
-                                        <li>
+                                        <li> <!-- PERFIL -->
                                             <a
                                                 class="nav-link active"
-                                                th:href="@{/turno/misTurnos/__${#httpServletRequest.getRemoteUser()}__}"
-                                                sec:authorize="hasRole('ROLE_PACIENTE')"
+                                                th:href="@{/perfil}"
                                             >
-                                                Mis Turnos
-                                            </a>
+                                                Perfil</a>
                                         </li>
-                                        <li>
+                                        <li> <!-- EDITAR PERFIL Mover a un botón directamente en el perfil -->
                                             <a
                                                 class="nav-link active"
-                                                th:href="@{/paciente/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                                sec:authorize="hasRole('ROLE_PACIENTE')"
-                                            >
-                                                Ver Mi Perfil</a>
-                                            <a
-                                                class="nav-link active"
-                                                th:href="@{/profesional/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                                sec:authorize="hasRole('ROLE_MEDICO')"
-                                            >
-                                                Ver Mi Perfil</a>
-                                            <a
-                                                class="nav-link active"
-                                                th:href="@{/admin/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                                sec:authorize="hasRole('ROLE_ADMIN')"
-                                            >
-                                                Ver Mi Perfil
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                class="nav-link active"
-                                                th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                                th:href="@{/paciente/modificar}"
                                                 sec:authorize="hasRole('ROLE_PACIENTE')"
                                             >
                                                 Editar Perfil
                                             </a>
                                             <a
                                                 class="nav-link active"
-                                                th:href="@{/profesional/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                                th:href="@{/profesional/modificar}"
                                                 sec:authorize="hasRole('ROLE_MEDICO')"
                                             >
                                                 Editar Perfil
                                             </a>
                                             <a
                                                 class="nav-link active"
-                                                th:href="@{/admin/modificar/__${#httpServletRequest.getRemoteUser()}__}"
+                                                th:href="@{/admin/modificar}"
                                                 sec:authorize="hasRole('ROLE_ADMIN')"
                                             >
                                                 Editar Perfil
                                             </a>
                                         </li>
-                                        <li>
+                                        <li> <!-- DIVISOR -->
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li>
+                                        <li> <!-- LOGOUT -->
                                             <form
                                                 th:action="@{/logout}"
                                                 method="post"
@@ -231,11 +252,38 @@
                             </li>
                         </ul>
                     </div>
-
-
-
-
                 </nav>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL NOTIFICACIONES -->
+    <div
+        class="modal fade"
+        id="notificacionesModal"
+        tabindex="-1"
+        aria-labelledby="notificacionesModalLabel"
+        aria-hidden="true"
+        th:if="${usuario != null}"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1
+                        class="modal-title fs-5"
+                        id="exampleModalLabel"
+                    >Notificaciones</h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <ul th:each="notificacion : ${usuario.notificaciones}">
+                        <li th:text="${notificacion.mensaje}"></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

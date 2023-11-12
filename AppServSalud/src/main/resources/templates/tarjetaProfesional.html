@@ -10,36 +10,36 @@
         </header>
 
 
-        <!--<div class="row justify-content-center aling-items-center" >-->
-        <!--    <div th:each="profesional : ${profesionales}" class="col-sm-3 mb-3">-->
-        <!--        <div class="card" style="width: 18rem;">-->
-        <!--            <img th:src="@{/assets/cardiologia.jpg}" alt="...">-->
-        <!--            <div class="card-body">-->
-        <!--                <h5 th:text="${'Dr/a.'+profesional.apellido}" class="card-title">Dr.Menganito</h5>-->
-        <!--                <h7 th:text="${profesional.especialidad}">Especialidad</h7>-->
-        <!--                &lt;!&ndash;<p th:text="${profesional.descripcion}"class="card-text"></p>&ndash;&gt;-->
-        <!--                <p class="card-text">-->
-        <!--                    El Doctor menganito cuanta con mas 15 años de experiencia en su area.-->
-        <!--                    El mismo atiende de manera presencial como virtual.-->
-        <!--                    para acceder a una consulta con el Haz click en el boton-->
-        <!--                </p>-->
-        <!--                <span>Reputacion</span>-->
-        <!--                <div class="rating" style="font-size: 48px;">-->
-        <!--                    <span class="fa fa-star" style="color: gold"></span>-->
-        <!--                    <span class="fa fa-star" style="color: gold"></span>-->
-        <!--                    <span class="fa fa-star" style="color: gold"></span>-->
-        <!--                    <span class="fa fa-half-star" style="color: gold"></span>-->
-        <!--                </div>-->
-        <!--                <a href="#"  class="btn btn-primary">Solcitar Turno</a>-->
-        <!--                &lt;!&ndash;<a th:href="@{/turno/__${profesional.id}__}"  class="btn btn-primary">Solcitar Turno</a>&ndash;&gt;-->
-        <!--                &lt;!&ndash;<li><a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/autor/registrar}">Crear Autor</a></li>-->
-        <!--                <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}"-->
-        <!--                href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-        <!--                &ndash;&gt;-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
-        <!--</div>-->
+        <!-- <div class="row justify-content-center aling-items-center" >
+           <div th:each="profesional : ${profesionales}" class="col-sm-3 mb-3">
+               <div class="card" style="width: 18rem;">
+                   <img th:src="@{/assets/cardiologia.jpg}" alt="...">
+                   <div class="card-body">
+                       <h5 th:text="${'Dr/a.'+profesional.apellido}" class="card-title">Dr.Menganito</h5>
+                       <h7 th:text="${profesional.especialidad}">Especialidad</h7>
+                       &lt;!&ndash;<p th:text="${profesional.descripcion}"class="card-text"></p>&ndash;&gt;
+                       <p class="card-text">
+                           El Doctor menganito cuanta con mas 15 años de experiencia en su area.
+                           El mismo atiende de manera presencial como virtual.
+                           para acceder a una consulta con el Haz click en el boton
+                       </p>
+                       <span>Reputacion</span>
+                       <div class="rating" style="font-size: 48px;">
+                           <span class="fa fa-star" style="color: gold"></span>
+                           <span class="fa fa-star" style="color: gold"></span>
+                           <span class="fa fa-star" style="color: gold"></span>
+                           <span class="fa fa-half-star" style="color: gold"></span>
+                       </div>
+                       <a href="#"  class="btn btn-primary">Solcitar Turno</a>
+                       &lt;!&ndash;<a th:href="@{/turno/__${profesional.id}__}"  class="btn btn-primary">Solcitar Turno</a>&ndash;&gt;
+                       &lt;!&ndash;<li><a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/autor/registrar}">Crear Autor</a></li>
+                       <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}"
+                       href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       &ndash;&gt;
+                   </div>
+               </div>
+           </div>
+        </div> -->
         <div class="row justify-content-center align-items-center">
             <div
                 th:each="profesional : ${profesionales}"
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div
+                <!-- <div
                     class="modal fade modal-general"
                     th:id="'modal-'+${profesional.id}"
                     tabindex="-1"
@@ -203,7 +203,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Modal para iniciar sesión -->

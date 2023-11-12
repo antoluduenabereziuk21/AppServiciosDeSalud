@@ -25,17 +25,17 @@
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
         <main>
-            <div class="container">
+            <div class="container"> <!-- FORMULARIO DE EDICION DE PERFIL -->
                 <form
                     class="formulario"
-                    th:action="@{/paciente/modificar/__${paciente.email}__}"
+                    th:action="@{/paciente/modificar/__${paciente.id}__}"
                     method="POST"
                     enctype="multipart/form-data"
                 >
                     <input
                         hidden
                         th:value="${paciente.id}"
-                        name="id"
+                        name="idPaciente"
                     >
 
                     <div class="text-center mb-2 mt-5">
@@ -50,12 +50,14 @@
                                         alt="Avatar"
                                         class="rounded-circle col-sm-8"
                                         th:if="${paciente.imagen != null}"
+                                        id="imagenPrevisualizacionExistente"
                                     >
                                     <img
                                         th:src="@{/assets/avatar.png}"
                                         alt="Avatar"
                                         class="rounded-circle col-sm-8"
                                         th:if="${paciente.imagen == null}"
+                                        id="imagenPrevisualizacionDefault"
                                     >
                                 </div>
                                 <label
@@ -70,6 +72,7 @@
                                     hidden
                                 >
                             </div>
+
                         </div>
                         <div class="col-lg-7 mt-4">
                             <div class="input-group mb-3">
@@ -214,63 +217,62 @@
                             </button>
                         </div>
                     </div>
-
-                </form>
-            </div>
-            <div class="container">
-                <div
-                    class="modal fade rounded-2"
-                    id="exampleModal"
-                    style="background-color: rgba(17, 34, 17, 0.356);"
-                >
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="container"> <!-- MODAL CONFIRMAR CAMBIOS -->
                         <div
-                            class="modal-content p-3"
-                            style="background-color: rgba(164, 215, 164, 0.959);"
+                            class="modal fade rounded-2"
+                            id="exampleModal"
+                            style="background-color: rgba(17, 34, 17, 0.356);"
                         >
-                            <div class="modal-header">
-                                <h5
-                                    class="modal-title"
-                                    id="exampleModalLabel"
-                                >Confirmar Cambios</h5>
-                                <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                ></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <label
-                                        class="input-group-text"
-                                        for="contrasenha"
-                                    >Contraseña</label>
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        name="password"
-                                        placeholder="********"
-                                        id="contrasenha"
-                                    >
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div
+                                    class="modal-content p-3"
+                                    style="background-color: rgba(164, 215, 164, 0.959);"
+                                >
+                                    <div class="modal-header">
+                                        <h5
+                                            class="modal-title"
+                                            id="exampleModalLabel"
+                                        >Confirmar Cambios</h5>
+                                        <button
+                                            type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
+                                        ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group mb-3">
+                                            <label
+                                                class="input-group-text"
+                                                for="contrasenha"
+                                            >Contraseña</label>
+                                            <input
+                                                type="password"
+                                                class="form-control"
+                                                name="password"
+                                                placeholder="********"
+                                                id="contrasenha"
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                        >Cancelar</button>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                        >Confirmar</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button
-                                    type="button"
-                                    class="btn btn-secondary"
-                                    data-bs-dismiss="modal"
-                                >Cancelar</button>
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary"
-                                >Confirmar</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-            <div class="container">
+            <div class="container"> <!-- MODAL CAMBIAR CONTRASEÑA -->
                 <div
                     class="modal fade"
                     id="cambiarContrasenha"

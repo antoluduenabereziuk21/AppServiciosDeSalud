@@ -74,4 +74,12 @@ public class UsuarioServicio implements UserDetailsService {
         usuarioRepositorio.save(usuario);
     }
 
+    public Usuario getUsuario(String email){
+        Optional<Usuario> respuesta = usuarioRepositorio.buscarPorEmail(email);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
+    }
+
 }
