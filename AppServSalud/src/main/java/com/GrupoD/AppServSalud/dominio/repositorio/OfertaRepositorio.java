@@ -3,7 +3,12 @@ package com.GrupoD.AppServSalud.dominio.repositorio;
 import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
+import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroOferta;
+
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,5 +28,14 @@ public interface OfertaRepositorio extends JpaRepository<Oferta, String> {
 
     @Query("SELECT o FROM Oferta o WHERE o.profesional.id = :id")
     List<Oferta> buscarPorProfesional(@Param("id") String id);
+
+    @Query("SELECT o FROM Oferta o WHERE " +
+            "(:#{#filtro.apellido} is null or o.profesional.apellido like %:#{#filtro.apellido}%) and " +
+            "(:#{#filtro.especialidad} is null or o.profesional.especialidad = :#{#filtro.especialidad}) and " +
+            "(:#{#filtro.fecha} is null or o.fecha = :#{#filtro.fecha}) and " +
+            "(:#{#filtro.horarios} is null or o.horario in :#{#filtro.horarios}) and " +
+            "(:#{#filtro.reservado} is null or o.reservado = :#{#filtro.reservado})"
+    )
+    Page<Oferta> buscarPorFiltro(@Param("filtro") FiltroOferta filtro,Pageable pageable);
     
 }

@@ -81,7 +81,7 @@
                         <label class="input-group-text" for="permisos">Permisos</label>
 
                         <div class="btn-group m-1" role="group" aria-label="Basic checkbox toggle button group"
-                            th:each="permiso : ${permisos}">
+                            th:each="permiso : ${session.usuario.permisos}">
                             <input class="btn-check" type="checkbox" name="permisos" th:id="${permiso.permiso.name}" th:value="${permiso.permiso.name}">
                             <label class="btn btn-outline-primary" th:text="${permiso.permiso.name}"
                                 th:for="${permiso.permiso.name}"></label>

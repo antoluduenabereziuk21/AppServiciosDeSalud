@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,9 +53,17 @@ public class AdminController {
   private BCryptPasswordEncoder passwordEncoder;
 
   @GetMapping("/perfil/{email}")
-  public String perfil(@PathVariable String email, ModelMap modelo, HttpSession session) {
+  public String perfil(@PathVariable String email, ModelMap modelo, HttpSession session,
+      @RequestParam(required = false) String error, 
+      @RequestParam(required = false) String exito) {
     Usuario usuario = (Usuario) session.getAttribute("usuario");
     modelo.addAttribute("usuario", adminServicio.buscarPorEmail(usuario.getEmail()));
+    if (error != null) {
+      modelo.addAttribute("error", error);
+    }
+    if (exito != null) {
+      modelo.addAttribute("exito", exito);
+    }
     return "vistaPerfil.html";
   }
 
@@ -82,10 +91,33 @@ public class AdminController {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/modificar/{email}")
-  public String vistaModificarAdmin(@PathVariable String email, ModelMap modelo, HttpSession session) {
+  public String vistaModificarAdmin(@PathVariable String email, ModelMap modelo, 
+      @RequestParam(required = false) String error, @RequestParam(required = false) String exito, 
+      HttpSession session) {
     Admin admin = adminServicio.buscarPorEmail(email);
     modelo.put("admin", admin);
+    if(error != null){
+      modelo.addAttribute("error", error);
+    }
+    if(exito != null){
+      modelo.addAttribute("exito", exito);
+    }
     return "forms/editarAdmin.html";
+  }
+
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PostMapping("/modificar/{emailPath}")
+  public String modificarAdmin(@PathVariable String emailPath, String nombre, String apellido,
+      String dni, String sexo, String email, String telefono, ModelMap modelo) {
+    
+    try {
+      adminServicio.modificarAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono);
+      return "redirect:/admin/perfil/" + email+"?exito=Administrador modificado correctamente";
+    } catch (MiExcepcion e) {
+      modelo.put("error", e.getMessage());
+      modelo.put("admin", adminServicio.buscarPorEmail(emailPath));
+      return "forms/editarAdmin.html";
+    }
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -161,7 +193,7 @@ public class AdminController {
 
     try {
       profesionalServicio.modificarProfesionalAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono, dateFecha,
-        matriculaProfesional,especialidad);
+          matriculaProfesional, especialidad);
       modelo.put("exito", "Profesional modificado correctamente");
       modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
       modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
