@@ -3,6 +3,7 @@ package com.GrupoD.AppServSalud.controlador;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
+import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
@@ -86,11 +87,17 @@ public class PortalControlador {
 
     @GetMapping("/infoTurnos")
     public String infoTurno(ModelMap modelo) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-        modelo.put("usuario", usuario);
-        return "infoTurnos.html";
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+            modelo.put("usuario", usuario);
+            return "infoTurnos.html";
+        } catch (Exception e) {
+            modelo.put("usuario", null);
+            return "infoTurnos.html";
+        }
+
     }
 
     @GetMapping("/especialidades")

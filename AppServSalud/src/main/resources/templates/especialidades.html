@@ -4,191 +4,186 @@
     xmlns:th="http://www.thymeleaft.org"
 >
     <head th:replace="/fragments/head :: head"></head>
+
     <body>
+
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
-        <div class="container ">
-            <div class="col-md-12">
-                <h1 style="color: #EE7734">Servicios Médicos</h1>
-                <p>Trabajamos para construir una cultura cuyos valores primordiales sean el
-                    compromiso con la atención centrada en el paciente y su familia, la gestión del conocimiento,
-                    el bienestar y la seguridad de los pacientes y del equipo de salud.
-                    <br>Encontrá aquí toda la información sobre nuestras especialidades y nuestro profesionales.
-                </p>
-            </div>
 
-
-            <div class="row justify-content-center aling-items-center">
-                <div class="col-sm-3 mb-3">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            th:src="@{/assets/cardiologia.jpg}"
-                            alt="..."
-                        >
-                        <div class="card-body">
-                            <h5 class="card-title">Cardiología</h5>
-                            <p class="text-container">
-                                <span
-                                    class="limited-text"
-                                    id="myParagraph"
-                                >
-                                    Cuenta con recursos tecnológicos de avanzada,
-                                    y especialistas con amplia experiencia y reconocida trayectoria
-                                    que nos permiten alcanzar los más altos estándares de calidad
-                                    en la prevención, diagnóstico y tratamiento de las enfermedades cardíacas.
-                                </span>
-                                <span
-                                    class="full-text"
-                                    id="fullText"
-                                >
-                                    Cuenta con recursos tecnológicos de avanzada,
-                                    y especialistas con amplia experiencia y reconocida trayectoria
-                                    que nos permiten alcanzar los más altos estándares de calidad
-                                    en la prevención, diagnóstico y tratamiento de las enfermedades cardíacas.
-                                </span>
-                                <a
-                                    th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'cardiologia'})}"
-                                    class="btn btn-primary"
-                                >Profesionales en Cardiologia</a>
-                            </p>
-
-                        </div>
-                    </div>
+        <main id="main-especialidades">
+            <div class="container mt-5 mb-5">
+                <div class="col-md-12">
+                    <h1 style="color: #EE7734">Servicios Médicos</h1>
+                    <p>Trabajamos para construir una cultura cuyos valores primordiales sean el
+                        compromiso con la atención centrada en el paciente y su familia, la gestión del conocimiento,
+                        el bienestar y la seguridad de los pacientes y del equipo de salud.
+                        <br>Encontrá aquí toda la información sobre nuestras especialidades y nuestro profesionales.
+                    </p>
                 </div>
-
-                <div class="col-sm-3 mb-3">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            th:src="@{/assets/profSalud.jpg}"
-                            alt="..."
+                <div class="row justify-content-center aling-items-center">
+                    <div class="col-sm-3 mb-3">
+                        <a
+                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'cardiologia'})}"
+                            class="link-underline link-underline-opacity-0"
                         >
-                        <div class="card-body">
-                            <h5 class="card-title">Clinica</h5>
-                            <p class="text-container">
-                                <span
-                                    class="limited-text"
-                                    id="myParagraph"
+                            <div class="card tarjetas-especialidad">
+                                <img
+                                    th:src="@{/assets/cardiologia.jpg}"
+                                    alt="..."
+                                    class="card-img-top"
+                                    style="max-height: 145px;"
                                 >
-                                    El área de Clínica Médica está inspirado en una forma de ver la medicina con foco en
-                                    el paciente y su familia.
-                                    Cuenta con profesionales de amplia experiencia y promueve su formación médica
-                                    continua con ateneos y cursos interdisciplinarios
-                                    enfocados a mejorar el servicio y compromiso asumido. En el área ambulatoria se
-                                    brinda atención clínica integral y consultorio
-                                    de atención post alta para pacientes recientemente externados que requieran control
-                                    rápido antes de ver a su médico de cabecera.
-                                </span>
-                                <span
-                                    class="full-text"
-                                    id="fullText"
-                                >
-                                    El área de Clínica Médica está inspirado en una forma de ver la medicina con foco en
-                                    el paciente y su familia.
-                                    Cuenta con profesionales de amplia experiencia y promueve su formación médica
-                                    continua con ateneos y cursos interdisciplinarios
-                                    enfocados a mejorar el servicio y compromiso asumido. En el área ambulatoria se
-                                    brinda atención clínica integral y consultorio
-                                    de atención post alta para pacientes recientemente externados que requieran control
-                                    rápido antes de ver a su médico de cabecera.
-                                </span>
-                                <a
-                                    th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'clinica'})}"
-                                    class="btn btn-primary"
-                                >Profesionales en Medicina Clinica</a>
-                            </p>
-
-                        </div>
+                                <h5 class="card-header">Cardiología</h5>
+                                <div class="card-body">
+                                    <p class="text-container">
+                                        <span
+                                            class="texto-card-especialidad"
+                                        >
+                                            Cuenta con recursos tecnológicos de avanzada,
+                                            y especialistas con amplia experiencia y reconocida trayectoria
+                                            que nos permiten alcanzar los más altos estándares de calidad
+                                            en la prevención, diagnóstico y tratamiento de las enfermedades cardíacas.
+                                        </span>
+                                        <span
+                                            class="texto-card-especialidad-full d-none"
+                                        >
+                                            Cuenta con recursos tecnológicos de avanzada,
+                                            y especialistas con amplia experiencia y reconocida trayectoria
+                                            que nos permiten alcanzar los más altos estándares de calidad
+                                            en la prevención, diagnóstico y tratamiento de las enfermedades cardíacas.
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-
-                <div class="col-sm-3 mb-3">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            th:src="@{/assets/pediatria.jpg}"
-                            alt="..."
+                    <div class="col-sm-3 mb-3">
+                        <a
+                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'clinica'})}"
+                            class="link-underline link-underline-opacity-0"
                         >
-                        <div class="card-body">
-                            <h5 class="card-title">Pediatria</h5>
-                            <p class="text-container">
-                                <span
-                                    class="limited-text"
-                                    id="myParagraph"
+                            <div class="card tarjetas-especialidad">
+                                <img
+                                    th:src="@{/assets/profSalud.jpg}"
+                                    alt="..."
+                                    class="card-img-top"
+                                    style="max-height: 145px;"
                                 >
-                                    Excelencia médica y calidad al servicio de los más pequeños,
-                                    en un ambiente especialmente diseñado para ellos.
-                                </span>
-                                <span
-                                    class="full-text"
-                                    id="fullText"
-                                >
-                                    Excelencia médica y calidad al servicio de los más pequeños,
-                                    en un ambiente especialmente diseñado para ellos.
-                                </span>
-                                <a
-                                    th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'pediatria'})}"
-                                    class="btn btn-primary"
-                                >Profesionales en Pediatría</a>
-                            </p>
-
-                        </div>
+                                <h5 class="card-header">Clinica</h5>
+                                <div class="card-body">
+                                    <p class="text-container">
+                                        <span
+                                            class="texto-card-especialidad"
+                                        >
+                                            El área de Clínica Médica está inspirado en una forma de ver la medicina con foco en el paciente y su familia.
+                                            Cuenta con profesionales de amplia experiencia y promueve su formación
+                                            médica continua con ateneos y cursos interdisciplinarios enfocados a mejorar el servicio y compromiso asumido. En el área ambulatoria
+                                            se brinda atención clínica integral y consultorio de atención post alta para pacientes recientemente externados que requieran control rápido antes de ver a su médico de cabecera.
+                                        </span>
+                                        <span
+                                            class="texto-card-especialidad-full d-none"
+                                        >
+                                            El área de Clínica Médica está inspirado en una forma de ver la medicina con
+                                            foco en
+                                            el paciente y su familia.
+                                            Cuenta con profesionales de amplia experiencia y promueve su formación
+                                            médica
+                                            continua con ateneos y cursos interdisciplinarios
+                                            enfocados a mejorar el servicio y compromiso asumido. En el área ambulatoria
+                                            se
+                                            brinda atención clínica integral y consultorio
+                                            de atención post alta para pacientes recientemente externados que requieran
+                                            control
+                                            rápido antes de ver a su médico de cabecera.
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-
-                <div class="col-sm-3 mb-3 ">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            th:src="@{/assets/ginecologia.jpg}"
-                            alt="..."
+                    <div class="col-sm-3 mb-3">
+                        <a
+                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'pediatria'})}"
+                            class="link-underline link-underline-opacity-0"
                         >
-                        <div class="card-body">
-                            <h5 class="card-title">Ginecologia</h5>
-                            <p class="text-container">
-                                <span
-                                    class="limited-text"
-                                    id="myParagraph"
+                            <div class="card tarjetas-especialidad">
+                                <img
+                                    th:src="@{/assets/pediatria.jpg}"
+                                    alt="..."
+                                    class="card-img-top"
+                                    style="max-height: 145px;"
                                 >
-                                    Promueve el cuidado de la salud integral de la mujer.
-                                    Con profesionales altamente capacitados, logra satisfacer las demandas que los
-                                    avances de las ciencias biomédicas y la tecnología imponen,
-                                    siempre dentro de un ambiente cálido de respeto a la paciente.
-                                    Cuenta con distintas secciones avocadas a la prevención primaria y secundaria, así
-                                    como también en el tratamiento de las enfermedades avanzadas.
-                                </span>
-                                <span
-                                    class="full-text"
-                                    id="fullText"
+                                <h5 class="card-header">Pediatria</h5>
+                                <div class="card-body">
+                                    <p class="text-container">
+                                        <span
+                                            class="texto-card-especialidad"
+                                        >
+                                            Excelencia médica y calidad al servicio de los más pequeños,
+                                            en un ambiente especialmente diseñado para ellos.
+                                        </span>
+                                        <span
+                                            class="texto-card-especialidad-full d-none"
+                                        >
+                                            Excelencia médica y calidad al servicio de los más pequeños,
+                                            en un ambiente especialmente diseñado para ellos.
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 mb-3 ">
+                        <a
+                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'ginecologia'})}"
+                            class="link-underline link-underline-opacity-0"
+                        >
+                            <div class="card tarjetas-especialidad">
+                                <img
+                                    th:src="@{/assets/ginecologia.jpg}"
+                                    alt="..."
+                                    class="card-img-top"
+                                    style="max-height: 145px;"
                                 >
-                                    Promueve el cuidado de la salud integral de la mujer.
-                                    Con profesionales altamente capacitados, logra satisfacer las demandas que los
-                                    avances de las ciencias biomédicas y la tecnología imponen,
-                                    siempre dentro de un ambiente cálido de respeto a la paciente.
-                                    Cuenta con distintas secciones avocadas a la prevención primaria y secundaria, así
-                                    como también en el tratamiento de las enfermedades avanzadas.
-                                </span>
-                                <a
-                                    th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'ginecologia'})}"
-                                    class="btn btn-primary"
-                                >Profesionales en Ginecologia</a>
-                            </p>
-
-                        </div>
+                                <h5 class="card-header">Ginecologia</h5>
+                                <div class="card-body">
+                                    <p class="text-container">
+                                        <span
+                                            class="texto-card-especialidad"
+                                        >
+                                            Promueve el cuidado de la salud integral de la mujer.
+                                            Con profesionales altamente capacitados, logra satisfacer las demandas que
+                                            los
+                                            avances de las ciencias biomédicas y la tecnología imponen,
+                                            siempre dentro de un ambiente cálido de respeto a la paciente.
+                                            Cuenta con distintas secciones avocadas a la prevención primaria y
+                                            secundaria,
+                                            así
+                                            como también en el tratamiento de las enfermedades avanzadas.
+                                        </span>
+                                        <span
+                                            class="texto-card-especialidad-full d-none"
+                                        >
+                                            Promueve el cuidado de la salud integral de la mujer.
+                                            Con profesionales altamente capacitados, logra satisfacer las demandas que
+                                            los
+                                            avances de las ciencias biomédicas y la tecnología imponen,
+                                            siempre dentro de un ambiente cálido de respeto a la paciente.
+                                            Cuenta con distintas secciones avocadas a la prevención primaria y
+                                            secundaria, así
+                                            como también en el tratamiento de las enfermedades avanzadas.
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
+
         <footer th:replace="/fragments/footer :: footer"></footer>
+
         <script th:src="@{/js/limitadorTexto.js}"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

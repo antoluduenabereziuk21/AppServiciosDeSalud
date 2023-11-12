@@ -11,6 +11,17 @@ body {
   background-attachment: fixed;
 }
 
+/* TARJETAS DE ESPECIALIDADES */
+.tarjetas-especialidad .card-body {
+  min-height: 190px;
+  transition: min-height 0.4s ease;
+}
+
+.tarjetas-especialidad:hover {
+  transform: scale(1.025);
+}
+
+/* SPINER */
 #spinner {
   width: 100vw;
   height: 100vh;
