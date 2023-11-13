@@ -60,6 +60,23 @@ public class AdminServicio {
         admin.setPermisos(permisosAdmin);
         adminRepositorio.save(admin);
     }
+
+    public void modificarAdmin(String emailPath, String email, String nombre, String apellido, 
+            String dni, String sexo, String telefono) throws MiExcepcion {
+
+        Validacion.validarStrings(nombre, apellido, email, dni, sexo, telefono);
+        Admin respuesta = adminRepositorio.buscarPorEmail(emailPath)
+                .orElseThrow(() -> new MiExcepcion("Invalid user Id:" + emailPath));
+        
+        respuesta.setEmail(email);
+        respuesta.setNombre(nombre);
+        respuesta.setApellido(apellido);
+        respuesta.setDni(dni);
+        respuesta.setSexo(Sexo.valueOf(sexo));
+        respuesta.setTelefono(telefono);
+
+        adminRepositorio.save(respuesta);
+    }
    
     @Transactional
     public void modficarDatosAdmin(String idAdmin,String email, String password, String nombre, String apellido, String role,List<String> permisos) throws MiExcepcion{
@@ -108,5 +125,7 @@ public class AdminServicio {
     public List<Admin> listarAdministradoresActivos(){
         return adminRepositorio.buscarInctivos();
     }*/
+
+    
    
 }

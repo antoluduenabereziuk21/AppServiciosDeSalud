@@ -28,7 +28,7 @@ public class ConfiguracionSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/*", "/js/*", "/img/*","/assets/**","/styles/**").permitAll()
                 /* desde aqui colocaremos las rutas para configurarlas */
 
-                .antMatchers(HttpMethod.GET, "/","/paciente/registro","/recuperarCuenta/**","/recuperar","/infoTurnos","/especialidades","/tarjetaProfesional/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/","/paciente/registro","/recuperarCuenta/**","/recuperar","/infoTurnos","/especialidades","/tarjetaProfesional/**","/prueba/**","/oferta/listar").permitAll()
                 .antMatchers(HttpMethod.POST, "/paciente/registro","/recuperarCuenta").permitAll()
                 .anyRequest().authenticated()
                 .and()
