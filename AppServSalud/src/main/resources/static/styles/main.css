@@ -36,6 +36,15 @@ body {
   display: none;
 }
 
+/* ERROR 404 y 403 */
+.error404, .error403 {
+  font-size: 155px;
+}
+
+.info404, .info403 {
+  font-size: 35px;
+}
+
 footer {
   background-color: rgba(164, 215, 164, 0.959);
 }

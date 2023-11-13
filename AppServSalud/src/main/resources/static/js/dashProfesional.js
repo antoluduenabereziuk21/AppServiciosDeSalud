@@ -1,5 +1,5 @@
 function showFragment(fragmentName) {
-    const fragments = ['principalFragment', 'pacientesFragment', 'turnosFragment', 'misDatosFragment', 'detallePacienteFragment'];
+    const fragments = ['principalFragment', 'pacientesFragment', 'turnosFragment', 'detallePacienteFragment'];
     fragments.forEach(fragmentId => {
         const fragment = document.getElementById(fragmentId);
         if (fragmentId === `${fragmentName}Fragment`) {
