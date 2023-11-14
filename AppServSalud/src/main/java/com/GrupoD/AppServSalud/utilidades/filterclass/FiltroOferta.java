@@ -10,13 +10,17 @@ import lombok.Data;
 
 @Data
 public class FiltroOferta {
+    private String idProfesional;
+
     private String apellido;
 
     private EspecialidadEnum especialidad;
 
     private Date fecha;
 
+    private Date fechaSiguiente;
+
     private Boolean reservado;
 
-    private List<HorarioEnum> horarios;
+    private HorarioEnum[] horarios;
 }

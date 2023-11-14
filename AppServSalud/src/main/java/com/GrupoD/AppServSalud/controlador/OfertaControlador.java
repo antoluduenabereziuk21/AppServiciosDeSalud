@@ -1,14 +1,20 @@
 package com.GrupoD.AppServSalud.controlador;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 import java.net.URLEncoder;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,16 +29,30 @@ public class OfertaControlador {
     @Autowired
     private OfertaServicio ofertaServicio;
 
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
     @GetMapping("/listar")
-    public String listarOfertas(@RequestParam Integer page, @RequestParam Integer size,
+    public String listarOfertas(
+            @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
             @RequestParam(required = false) String apellido, @RequestParam(required = false) String especialidad,
             @RequestParam(required = false) String fecha, @RequestParam(required = false) String desde,
             @RequestParam(required = false) String hasta, ModelMap modelo) throws MiExcepcion {
+        
+        if (page == null){
+            page = 0;
+        }
+        if (size == null || size == 0){
+            size = 12;
+        }
         Pageable pageable = PageRequest.of(page, size,
             Sort.by("fecha").ascending()
                 .and(Sort.by("horario").ascending()));
         modelo.put("ofertas", ofertaServicio.listarOfertas(pageable, apellido, especialidad, fecha, desde, hasta));
         modelo.put("especialidades", ofertaServicio.listarEspecialidades());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+        modelo.put("usuario", usuario);
         return "ofertas.html";
     }
 

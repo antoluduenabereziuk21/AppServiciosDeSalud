@@ -4,14 +4,18 @@ package com.GrupoD.AppServSalud.controlador;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
+import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
+import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -53,9 +57,26 @@ public class PortalControlador {
     }
 
     @GetMapping("/login")
-    public String login(ModelMap modelo) {
+    public String login(ModelMap modelo, Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "redirect:/"; // Redirigir a la página principal si ya ha iniciado sesión
+        }
         modelo.put("usuario", null);
         return "login.html";
+    }
+
+    @GetMapping("/validar-usuario")
+    public String redireccionLogin(ModelMap modelo){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+        modelo.put("usuario", usuario);
+        if (usuario.getRol().equals(RolEnum.PACIENTE)){
+            return "redirect:/oferta/listar";
+        }
+        if (usuario.getRol().equals(RolEnum.MEDICO)){
+            return "redirect:/profesional/dashboard";
+        }
+        return "redirect:/";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MEDICO') or hasRole('ROLE_PACIENTE')")

@@ -170,6 +170,7 @@
             <div class="mb-3">
                 <label for="especialidad" class="form-label">Especialidad:</label>
                 <select class="form-control form-control-lg" name="especialidad" id="especialidad">
+                    <option value=""> Selecciona Especialidad</option>
                     <option th:each="especialidad : ${especialidades}" th:text="${especialidad.name}"
                         th:value="${especialidad.name}"></option>
                 </select>
@@ -244,6 +245,48 @@
         <a th:if="${!ofertas.last}" th:href="@{/oferta/listar(page=${ofertas.number} + 1,size=12)}">Siguiente</a>
     </div>
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="especialidad" class="form-label">Especialidad:</label>
+                        <select class="form-control form-control-lg" name="especialidad" id="especialidad-crear">
+                            <option value=""> Selecciona Especialidad</option>
+                            <option th:each="especialidad : ${especialidades}" th:text="${especialidad.name}"
+                                th:value="${especialidad.name}"></option>
+                        </select>
+                        <select class="form-control form-control-lg" name="idProfesional"
+                            id="profesional-crear"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Fecha Del Turno</label>
+                        <input class="form-control form-control-lg" type="date" placeholder=".form-control-lg"
+                            aria-label=".form-control-lg example" name="fecha" id="fecha-crear">
+                    </div>
+                    <div class="mb-3">
+                        <label for="especialidad" class="form-label">Especialidad:</label>
+                        <select class="form-control form-control-lg" name="especialidad" id="horarios-crear">
+                            <option value=""> Selecciona Horario</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer th:replace="/fragments/footer :: footer"></footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -303,6 +346,45 @@
                 e.style.padding = "10px";
             });
             document.getElementById("show-buscador").style.display = "none";
+        })
+
+        document.getElementById("especialidad-crear").addEventListener("change", e => {
+            fetch(
+                `http://localhost:8080/datos/listarPorEspecialidad?especialidad=${e.target.value}`
+            ).then(res => res.json()).then(data => {
+                const select = document.getElementById("profesional-crear");
+                select.innerHTML = "";
+                data.forEach(profesional => {
+                    const option = document.createElement("option");
+                    option.value = profesional.id;
+                    option.innerText = `${profesional.nombre} ${profesional.apellido}`;
+                    select.appendChild(option);
+                })
+            }
+            )
+        })
+        document.getElementById("fecha-crear").addEventListener("change", e => {
+            fetch(
+                `http://localhost:8080/datos/ofertas?fecha=${e.target.value}&idProfesional=${document.getElementById("profesional-crear").value}`
+            ).then(res => res.json()).then(data => {
+                const select = document.getElementById("horarios-crear");
+                select.innerHTML = "";
+                if (data.length != 0) {
+                    data.forEach(horario => {
+                        const option = document.createElement("option");
+                        option.value = horario;
+                        option.innerText = horario;
+                        select.appendChild(option);
+                    })
+                }else {
+                    const option = document.createElement("option");
+                    option.innerText="No hay turnos para el dia seleccionado";
+                    select.appendChild(option);
+                }
+            }
+            )
+
+
         })
     </script>
 </body>
