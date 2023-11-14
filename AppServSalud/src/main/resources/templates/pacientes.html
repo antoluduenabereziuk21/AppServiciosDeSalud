@@ -1,168 +1,168 @@
 <!DOCTYPE html>
 <html
-        lang="en"
-        xmlns:th="http://www.thymeleaft.org"
+    lang="en"
+    xmlns:th="http://www.thymeleaft.org"
 >
-<head th:replace="/fragments/head :: head"></head>
-<body>
-<header th:replace="/fragments/header :: header"></header>
-<div th:replace="/fragments/toast :: div"></div>
-<main class="container">
-    <div class="buscador">
-        <h3>Filtar por dato:</h3>
-        <form
-                th:action="@{/paciente/filtrarPacientes}"
-                method="get"
-        >
-            <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    autocomplete="off"
-            >
-            <input
-                    type="text"
-                    name="apellido"
-                    placeholder="Apellido"
-                    autocomplete="off"
-            >
-            <input
-                    type="text"
-                    name="email"
-                    placeholder="Email"
-                    autocomplete="off"
-            >
-            <input
-                    type="text"
-                    name="dni"
-                    placeholder="DNI"
-                    autocomplete="off"
-            >
-            <button type="submit">Buscar</button>
-        </form>
-        <a href="/paciente/todos">Mostrar todos</a>
-    </div>
+    <head th:replace="/fragments/head :: head"></head>
+    <body>
+        <header th:replace="/fragments/header :: header"></header>
+        <div th:replace="/fragments/toast :: div"></div>
+        <main class="container">
+            <div class="buscador">
+                <h3>Filtar por dato:</h3>
+                <form
+                    th:action="@{/paciente/filtrarPacientes}"
+                    method="get"
+                >
+                    <input
+                        type="text"
+                        name="nombre"
+                        placeholder="Nombre"
+                        autocomplete="off"
+                    >
+                    <input
+                        type="text"
+                        name="apellido"
+                        placeholder="Apellido"
+                        autocomplete="off"
+                    >
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        autocomplete="off"
+                    >
+                    <input
+                        type="text"
+                        name="dni"
+                        placeholder="DNI"
+                        autocomplete="off"
+                    >
+                    <button type="submit">Buscar</button>
+                </form>
+                <a href="/paciente/todos">Mostrar todos</a>
+            </div>
 
-    <h2>Listado de pacientes</h2>
-    <hr>
-    <div>
-        <h3>Pacientes Activos</h3>
-        <table class="table container">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>email</th>
-                <th>Obra social</th>
-                <th>telefono</th>
-                <th>Estado</th>
-                <th>Modificar</th>
-            </tr>
-            </thead>
-            <tbody th:if="${pacientesActivos != null || !pacientesActivos.isEmpty}">
-            <tr th:each="paciente : ${pacientesActivos}">
-                <td th:text="${paciente.nombre}"></td>
-                <td th:text="${paciente.apellido}"></td>
-                <td th:text="${paciente.dni}"></td>
-                <td th:text="${paciente.email}"></td>
-                <td th:text="${paciente.obraSocial}"></td>
-                <td th:text="${paciente.telefono}"></td>
-                <td>
-                    <form
-                            th:action="@{/paciente/baja}"
-                            method="POST"
-                    >
-                        <input
-                                type="text"
-                                style="display: none"
-                                th:value="${paciente.id}"
-                                name="idPaciente"
-                        >
-                        <input type="image" th:src="@{/assets/Altas_y_bajas.png}" width="40" height="30">
-                    </form>
-                </td>
-                <td>
-                    <a th:href="@{/admin/modPaciente/__${paciente.email}__}"> 
-                    <img
-                    th:src="@{/assets/modificar.png}"
-                    alt="modificar"
-                    width="40"
-                    height="30"
-                    >
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-            <tbody th:if="${pacientesActivos == null || pacientesActivos.isEmpty}">
-            <tr>
-                <td colspan="6">
-                    <p>No se encuentran usuarios activos en este momento</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+            <h2>Listado de pacientes</h2>
+            <hr>
+            <div>
+                <h3>Pacientes Activos</h3>
+                <table class="table container">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DNI</th>
+                            <th>email</th>
+                            <th>Obra social</th>
+                            <th>telefono</th>
+                            <th>Estado</th>
+                            <th>Modificar</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${pacientesActivos != null || !pacientesActivos.isEmpty}">
+                        <tr th:each="paciente : ${pacientesActivos}">
+                            <td th:text="${paciente.nombre}"></td>
+                            <td th:text="${paciente.apellido}"></td>
+                            <td th:text="${paciente.dni}"></td>
+                            <td th:text="${paciente.email}"></td>
+                            <td th:text="${paciente.obraSocial}"></td>
+                            <td th:text="${paciente.telefono}"></td>
+                            <td>
+                                <form
+                                    th:action="@{/paciente/baja}"
+                                    method="POST"
+                                >
+                                    <input
+                                        type="text"
+                                        style="display: none"
+                                        th:value="${paciente.id}"
+                                        name="idPaciente"
+                                    >
+                                    <input
+                                        type="image"
+                                        th:src="@{/assets/Altas_y_bajas.png}"
+                                        width="40"
+                                        height="30"
+                                    >
+                                </form>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/modPaciente/__${paciente.email}__}">
+                                    <img
+                                        th:src="@{/assets/modificar.png}"
+                                        alt="modificar"
+                                        width="40"
+                                        height="30"
+                                    >
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${pacientesActivos == null || pacientesActivos.isEmpty}">
+                        <tr>
+                            <td colspan="6">
+                                <p>No se encuentran usuarios activos en este momento</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="tabla-principal">
-        <h3>Pacientes Inactivos</h3>
-        <table class="table container">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>Email</th>
-                <th>Obra social</th>
-                <th>telefono</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody th:if="${pacientesInactivos != null || !pacientesInactivos.isEmpty}">
-            <tr th:each="paciente : ${pacientesInactivos}">
-                <td th:text="${paciente.nombre}"></td>
-                <td th:text="${paciente.apellido}"></td>
-                <td th:text="${paciente.dni}"></td>
-                <td th:text="${paciente.email}"></td>
-                <td th:text="${paciente.obraSocial}"></td>
-                <td th:text="${paciente.telefono}"></td>
-                <td>
-                    <form
-                            th:action="@{/paciente/alta}"
-                            method="POST"
-                    >
-                        <input
-                                type="text"
-                                style="display: none"
-                                th:value="${paciente.id}"
-                                name="idPaciente"
-                        >
-                        <button type="submit">Dar de alta</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-            <tbody th:if="${pacientesInactivos == null || pacientesInactivos.isEmpty}">
-            <tr>
-                <td colspan="6">
-                    <p>No se encuentran usuarios inactivos en este momento</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</main>
-<footer th:replace="/fragments/footer :: footer"></footer>
-<script
-        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"
-></script>
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"
-></script>
-<script th:src="@{/js/toast.js}"></script>
-</body>
+            <div class="tabla-principal">
+                <h3>Pacientes Inactivos</h3>
+                <table class="table container">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DNI</th>
+                            <th>Email</th>
+                            <th>Obra social</th>
+                            <th>telefono</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${pacientesInactivos != null || !pacientesInactivos.isEmpty}">
+                        <tr th:each="paciente : ${pacientesInactivos}">
+                            <td th:text="${paciente.nombre}"></td>
+                            <td th:text="${paciente.apellido}"></td>
+                            <td th:text="${paciente.dni}"></td>
+                            <td th:text="${paciente.email}"></td>
+                            <td th:text="${paciente.obraSocial}"></td>
+                            <td th:text="${paciente.telefono}"></td>
+                            <td>
+                                <form
+                                    th:action="@{/paciente/alta}"
+                                    method="POST"
+                                >
+                                    <input
+                                        type="text"
+                                        style="display: none"
+                                        th:value="${paciente.id}"
+                                        name="idPaciente"
+                                    >
+                                    <button type="submit">Dar de alta</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${pacientesInactivos == null || pacientesInactivos.isEmpty}">
+                        <tr>
+                            <td colspan="6">
+                                <p>No se encuentran usuarios inactivos en este momento</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer th:replace="/fragments/footer :: footer"></footer>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <script th:src="@{/js/toast.js}"></script>
+    </body>
 </html>

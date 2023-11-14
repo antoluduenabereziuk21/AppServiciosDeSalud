@@ -4,6 +4,7 @@ import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.UsuarioRepositorio;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -28,14 +29,14 @@ public class UsuarioServicio implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws AuthenticationException {
 
         Optional<Usuario> userOptional = usuarioRepositorio.buscarPorEmail(email);
         if (userOptional.isPresent()) {
             Usuario user = userOptional.get();
 
             if (!user.getActivo()) {
-                throw new UsernameNotFoundException("Usuario inactivo");
+                throw new AuthenticationException("Usuario inactivo") {};
             }
 
             List<GrantedAuthority> autorizaciones = new ArrayList<>();
@@ -47,7 +48,6 @@ public class UsuarioServicio implements UserDetailsService {
                 user.getPermisos().forEach(
                         permiso -> autorizaciones.add(new SimpleGrantedAuthority("ROLE_"+permiso.getPermiso().name())));
             }
-            System.out.println("Permisos" + autorizaciones);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
             HttpSession session = attr.getRequest().getSession(true);
@@ -56,8 +56,9 @@ public class UsuarioServicio implements UserDetailsService {
             session.setAttribute("role", "ROLE_" + user.getRol().name());
 
             return new User(user.getEmail(), user.getPassword(), autorizaciones);
+        }else{
+            throw new AuthenticationException("Usuario no encontrado") {};
         }
-        return null;
     }
 
     public void createSuperAdminUser(String email, String contrasenha, String nombre, String apellido, String role) {
@@ -72,6 +73,14 @@ public class UsuarioServicio implements UserDetailsService {
                 .build();
                 
         usuarioRepositorio.save(usuario);
+    }
+
+    public Usuario getUsuario(String email){
+        Optional<Usuario> respuesta = usuarioRepositorio.buscarPorEmail(email);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
     }
 
 }

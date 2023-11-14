@@ -1,13 +1,4 @@
-body {
-    min-height: auto;
-    background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-
-}
-
-.progress-bar {
+#index .progress-bar {
     transition: width 1s linear;
 }
 
@@ -23,7 +14,7 @@ body {
     transition: all 1s ease;
 }
 
-.tablas {
+#index .tablas {
     background-color: rgb(23, 104, 38);
     text-align: left;
     width: 70%;
@@ -31,38 +22,31 @@ body {
     ;
 }
 
-.tablas th,
-.tablas td {
+#index .tablas th,
+#index .tablas td {
     border: solid green;
     font-size: 28px;
     margin: 5%
 }
 
-.tabla {
+#index .tabla {
     background-color: rgb(23, 104, 38);
 }
 
-.perfil {
-    width: 70%;
-    text-align: 50%;
-}
 
-.perfil th,
-.perfil td {
+
+#index .perfil th,
+#index .perfil td {
     border-collapse: collapse;
 }
 
-.footer_textos {
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-}
-.contenedor-video {
+#index .contenedor-video {
   margin: 0 auto;
   position: relative !important;
   width: 100%;
   height: 100%;
 }
+
 #video_overlays {
   position: absolute !important;
   background-image: linear-gradient(to right, rgba(114, 169, 114, 0.25), rgba(114, 169, 114, 0.25));
@@ -75,7 +59,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-.row {
+#index .row {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -83,12 +67,12 @@ body {
   margin-right: -15px;
   margin-left: -15px;
 }
-info-home {
-  text-align: center;
+#index .info-home {
   display: flex;
   flex-direction: column;
 }
-.info-home h1 {
+
+#index .info-home h1 {
   font-family: Roboto;
   font-size: 40px;
   font-weight: 400;
@@ -100,11 +84,8 @@ info-home {
   color: white;
   margin-bottom: 30px;
 }
-.buscador-home {
-  display: flex;
-  justify-content: center;
-}
-.contenedor-video video {
+
+#index .contenedor-video video {
   z-index: -1;
   min-width: 100%;
   border: none;

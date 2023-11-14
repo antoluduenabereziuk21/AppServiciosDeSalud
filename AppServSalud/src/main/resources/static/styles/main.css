@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,400;1,900&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+/* TARJETAS DE ESPECIALIDADES */
+.tarjetas-especialidad .card-body {
+  min-height: 190px;
+  transition: min-height 0.4s ease;
+}
+
+.tarjetas-especialidad:hover {
+  transform: scale(1.025);
+}
+
+/* SPINER */
+#spinner {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+footer {
+  background-color: rgba(164, 215, 164, 0.959);
+}

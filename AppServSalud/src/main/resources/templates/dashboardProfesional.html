@@ -16,9 +16,13 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         >
+        <link
+            rel="stylesheet"
+            th:href="@{/styles/main.css}"
+        >
         <style>
-
-            .toast-exito, .toast-error {
+            .toast-exito,
+            .toast-error {
                 position: absolute;
                 top: 0;
                 right: -100%;
@@ -29,21 +33,21 @@
                 gap: 20px;
                 transition: all 1s ease;
             }
-
         </style>
-
+        <script th:src="@{/js/dashProfesional.js}"></script>
     </head>
-    <body style="background-color: rgba(138, 186, 138, 0.75);">
+    <body>
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
 
         <main>
-            <div class="container d-flex mt-3">
+            <div class="container d-flex mt-3 mb-3">
                 <section
                     class="col-10 d-flex justify-content-center"
                     id="tablero"
                     style="height: 600px;"
                 >
+                    <!-- Barra lateral de navegación -->
                     <div class="card justify-content-evenly mx-2">
                         <button
                             onclick="showFragment('principal')"
@@ -106,6 +110,7 @@
                             </svg>
                         </button>
                     </div>
+                    <!-- Fragments de dashboard -->
                     <div
                         id="principalFragment"
                         class="col-sm-11 fragment justify-content-center rounded-2"
@@ -142,17 +147,6 @@
                     >
                         <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
                     </div>
-                    <!-- <div
-                        id="detallePacienteFragment"
-                        class="col-sm-11 fragment justify-content-center d-none modal fade rounded-2"
-                        
-                    >
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div th:replace="/fragments/dashProfesionalDetallePaciente :: detallePaciente"></div>
-                            </div>
-                        </div>
-                    </div> -->
                 </section>
                 <!-- TODO: mostrar el perfil del profesional logueado. -->
                 <aside
@@ -176,8 +170,14 @@
                             >
                         </div>
                         <div>
-                            <span class="text-capitalize" th:text="${profesional.nombre}"></span>
-                            <span class="text-capitalize" th:text="${profesional.apellido}"></span>
+                            <span
+                                class="text-capitalize"
+                                th:text="${profesional.nombre}"
+                            ></span>
+                            <span
+                                class="text-capitalize"
+                                th:text="${profesional.apellido}"
+                            ></span>
                         </div>
                         <div>
                             <br>
@@ -188,40 +188,12 @@
                 </aside>
             </div>
         </main>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Notificaciones
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Notificaciones</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                    <div class="modal-body">
-                        <ul th:each="notificacion : ${profesional.notificaciones}">
-                            <li  th:text="${notificacion.mensaje}"></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
         <footer th:replace="/fragments/footer :: footer"></footer>
         <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"
         ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-        <script th:src="@{/js/dashProfesional.js}"></script>
         <script th:src="@{/js/toast.js}"></script>
     </body>
 </html>

@@ -5,12 +5,14 @@ import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -49,4 +51,12 @@ public class Oferta {
 
     @ManyToOne
     private Profesional profesional;
+
+    @OneToOne(
+        mappedBy = "oferta",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private Turno turno;
+
 }

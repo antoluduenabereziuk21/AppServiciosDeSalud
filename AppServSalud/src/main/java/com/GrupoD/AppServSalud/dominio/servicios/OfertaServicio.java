@@ -17,7 +17,11 @@ import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroOferta;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -250,12 +254,12 @@ public class OfertaServicio {
         return ofertaRepositorio.findAll(pageable);
     }
 
-    public Object listarOfertas(Pageable pageable, String apellido, String especialidad,
+    public Page<Oferta> listarOfertas(Pageable pageable, String apellido, String especialidad,
             String fecha, String desde, String hasta) throws MiExcepcion {
         
         Date fechaOerta = null;
         
-        if (fecha != null && fecha.isEmpty()) {
+        if (fecha != null && !fecha.isEmpty()) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 fechaOerta = dateFormat.parse(fecha);
@@ -271,31 +275,45 @@ public class OfertaServicio {
         }
         filtro.setFecha(fechaOerta);
         if(desde != null && !desde.isEmpty() && hasta != null && !hasta.isEmpty()){
-            filtro.setHorarios(crearHorarios(desde, hasta));
+            filtro.setHorarios(crearHorarios(Integer.valueOf(desde), Integer.valueOf(hasta)));
         }
         return ofertaRepositorio.buscarPorFiltro(filtro, pageable);
     }
 
-    private List<HorarioEnum> crearHorarios(String desde, String hasta) {
-        List<HorarioEnum> horarios = new ArrayList<>();
-        for (int i = Integer.valueOf(desde); i <= Integer.valueOf(hasta); i++) {
+    private HorarioEnum[] crearHorarios(Integer desde, Integer hasta) {
+        HorarioEnum[] horarios = new HorarioEnum[(hasta-desde)*4];
+        int aux = 0;
+        int inc = desde;
+        for (int i = 0; i < (hasta-desde)*4; i+=4) {
             for (int j = 0; j < 60; j += 15) {
-                if (i < 10) {
+                if (inc < 10) {
                     if (j == 0) {
-                        horarios.add(HorarioEnum.valueOf("HORARIO_0" + i + "_00_HS"));
+                        horarios[i+aux] = HorarioEnum.valueOf("HORARIO_0" + (inc) + "_00_HS");
                     } else {
-                        horarios.add(HorarioEnum.valueOf("HORARIO_0" + i + "_" + j + "_HS"));
+                        horarios[i+aux] = HorarioEnum.valueOf("HORARIO_0" + (inc) + "_" + j + "_HS");
                     }
                 } else {
                     if (j == 0) {
-                        horarios.add(HorarioEnum.valueOf("HORARIO_" + i + "_00_HS"));
+                        horarios[i+aux] = HorarioEnum.valueOf("HORARIO_" + (inc) + "_00_HS");
                     } else {
-                        horarios.add(HorarioEnum.valueOf("HORARIO_" + i + "_" + j + "_HS"));
+                        horarios[i+aux] = HorarioEnum.valueOf("HORARIO_" + (inc) + "_" + j + "_HS");
                     }
                 }
+                aux++;
             }
+            inc++;
+            aux = 0;
         }
+        System.out.println(Arrays.toString(horarios));
         return horarios;
+    }
+
+    public List<Oferta> listarOfertasPorFecha(Date fecha,String idProfesional) {
+        FiltroOferta filtro = new FiltroOferta();
+        filtro.setFecha(fecha);
+        filtro.setReservado(false);
+        filtro.setIdProfesional(idProfesional);
+        return ofertaRepositorio.buscarPorFiltroSinPage(filtro);
     }
 
 }

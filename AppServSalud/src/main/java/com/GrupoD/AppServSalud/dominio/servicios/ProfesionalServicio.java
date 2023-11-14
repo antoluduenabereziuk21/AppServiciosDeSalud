@@ -1,10 +1,14 @@
 package com.GrupoD.AppServSalud.dominio.servicios;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Imagen;
+import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.utilidades.*;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,9 @@ public class ProfesionalServicio {
 
   @Autowired
   private ImagenServicio imagenServicio;
+
+  @Autowired
+  private OfertaServicio ofertaServicio;
 
   @Transactional
   public void crearProfesional(String nombre, String apellido, String dni,
@@ -138,7 +145,7 @@ public class ProfesionalServicio {
   }
 
   public void modificarProfesionalAdmin(String emailPath, String email, String nombre, String apellido, String dni,
-      String sexo, String telefono, Date dateFecha, String matricula,String especialidad) throws MiExcepcion {
+      String sexo, String telefono, Date dateFecha, String matricula, String especialidad) throws MiExcepcion {
 
     Validacion.validarStrings(nombre, apellido, email, sexo, telefono);
 
@@ -160,4 +167,21 @@ public class ProfesionalServicio {
     }
   }
 
+  public List<Profesional> listarPorEspecialidad(String especialidad) {
+    return profesionalRepositorio.buscarPorEspecialidad(EspecialidadEnum.valueOf(especialidad));
+  }
+
+  public List<HorarioEnum> devolverHorariosDisponibles(String fecha,String idProfesional) {
+    Date fechaOerta = null;
+    if (fecha != null && !fecha.isEmpty()) {
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      try {
+        fechaOerta = dateFormat.parse(fecha);
+      } catch (ParseException ex) {
+        System.out.println("error al parsear la fecha");
+      }
+    }
+    List<Oferta> ofertas = ofertaServicio.listarOfertasPorFecha(fechaOerta,idProfesional);
+    return ofertas.stream().map(oferta -> oferta.getHorario()).collect(Collectors.toList());
+  }
 }

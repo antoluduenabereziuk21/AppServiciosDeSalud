@@ -8,10 +8,13 @@ import com.GrupoD.AppServSalud.dominio.repositorio.PermisoRepositorio;
 import com.GrupoD.AppServSalud.dominio.servicios.AdminServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
+import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,6 +38,9 @@ import javax.servlet.http.HttpSession;
 public class AdminController {
 
   @Autowired
+  private UsuarioServicio usuarioServicio;
+
+  @Autowired
   private AdminServicio adminServicio;
 
   @Autowired
@@ -52,24 +58,11 @@ public class AdminController {
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
 
-  @GetMapping("/perfil/{email}")
-  public String perfil(@PathVariable String email, ModelMap modelo, HttpSession session,
-      @RequestParam(required = false) String error, 
-      @RequestParam(required = false) String exito) {
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
-    modelo.addAttribute("usuario", adminServicio.buscarPorEmail(usuario.getEmail()));
-    if (error != null) {
-      modelo.addAttribute("error", error);
-    }
-    if (exito != null) {
-      modelo.addAttribute("exito", exito);
-    }
-    return "vistaPerfil.html";
-  }
-
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/registro")
   public String registroAdmin(ModelMap modelo) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    modelo.put("usuario", usuarioServicio.getUsuario(userDetails.getUsername()));
     modelo.put("permisos", permisoRepositorio.findAll());
     return "forms/crearAdmin.html";
   }
@@ -79,29 +72,27 @@ public class AdminController {
   public String registroAdmin(String nombre, String apellido, String email,
       String sexo, String telefono, String password, String[] permisos, ModelMap modelo) {
     System.out.println(Arrays.toString(permisos));
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
     try {
       adminServicio.crearAdmin(email, password, nombre, apellido, sexo, permisos);
+      modelo.put("usuario", usuario);
       modelo.put("exito", "Administrador creado correctamente");
       return "index.html";
     } catch (MiExcepcion e) {
+      modelo.put("usuario", usuario);
       modelo.put("error", e.getMessage());
       return "forms/crearAdmin.html";
     }
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @GetMapping("/modificar/{email}")
-  public String vistaModificarAdmin(@PathVariable String email, ModelMap modelo, 
-      @RequestParam(required = false) String error, @RequestParam(required = false) String exito, 
-      HttpSession session) {
-    Admin admin = adminServicio.buscarPorEmail(email);
+  @GetMapping("/modificar")
+  public String vistaModificarAdmin(ModelMap modelo) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Admin admin = adminServicio.buscarPorEmail(userDetails.getUsername());
     modelo.put("admin", admin);
-    if(error != null){
-      modelo.addAttribute("error", error);
-    }
-    if(exito != null){
-      modelo.addAttribute("exito", exito);
-    }
+    modelo.put("usuario", admin);
     return "forms/editarAdmin.html";
   }
 
@@ -123,8 +114,11 @@ public class AdminController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/modPaciente/{email}")
   public String vistaModificarPaciente(@PathVariable String email, ModelMap modelo, HttpSession session) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
     Paciente paciente = pacienteServicio.buscarPorEmail(email);
     modelo.put("paciente", paciente);
+    modelo.put("usuario", usuario);
     return "forms/editarPacienteAdmin.html";
   }
 
@@ -134,11 +128,14 @@ public class AdminController {
       String telefono, String obraSocial, String email, String password,
       ModelMap modelo, HttpSession session) {
 
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    // Usuario usuario = (Usuario) session.getAttribute("usuario");
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
     if (!passwordEncoder.matches(password, usuario.getPassword())) {
       modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
       modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
       modelo.put("error", "La contraseña ingresada no es correcta");
+      modelo.put("usuario", usuario);
       return "pacientes.html";
     }
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -154,8 +151,10 @@ public class AdminController {
       modelo.put("exito", "Paciente modificado correctamente");
       modelo.put("pacientesActivos", servicioPaciente.listarPacientes(true));
       modelo.put("pacientesInactivos", servicioPaciente.listarPacientes(false));
+      modelo.put("usuario", usuario);
       return "pacientes.html";
     } catch (MiExcepcion e) {
+      modelo.put("usuario", usuario);
       modelo.put("error", e.getMessage());
       return "forms/editarPacienteAdmin.html";
     }
@@ -164,8 +163,11 @@ public class AdminController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/modProfesional/{email}")
   public String vistaModificarProfesional(@PathVariable String email, ModelMap modelo, HttpSession session) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
     Profesional profesional = profesionalServicio.buscarPorEmail(email);
     modelo.put("profesional", profesional);
+    modelo.put("usuario", usuario);
     return "forms/editarProfesionalAdmin.html";
   }
 
@@ -174,12 +176,15 @@ public class AdminController {
       String apellido, String dni, String sexo, String fechaNacimiento,
       String telefono, String matriculaProfesional, String email, String password,
       String especialidad, ModelMap modelo, HttpSession session) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
 
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    // Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (!passwordEncoder.matches(password, usuario.getPassword())) {
       modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
       modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
       modelo.put("error", "La contraseña ingresada no es correcta");
+      modelo.put("usuario", usuario);
       return "profesionales.html";
     }
 
@@ -197,9 +202,11 @@ public class AdminController {
       modelo.put("exito", "Profesional modificado correctamente");
       modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
       modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
+      modelo.put("usuario", usuario);
       return "profesionales.html";
     } catch (MiExcepcion e) {
       modelo.put("error", e.getMessage());
+      modelo.put("usuario", usuario);
       return "forms/editarProfesionalAdmin.html";
     }
 
