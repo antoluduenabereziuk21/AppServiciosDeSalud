@@ -31,9 +31,12 @@ public class HistoriaClinica {
             inverseJoinColumns = @JoinColumn(name = "id_profesional"))
     private List<Profesional> profesional;
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(name = "historia_clinica_paciente",
             joinColumns = @JoinColumn(name = "id_historia_clinica"),
             inverseJoinColumns = @JoinColumn(name = "id_paciente"))
-    private List<Paciente> paciente;
+    private Paciente paciente;
+
+//     @OneToMany
+//     private List<RegistroConsulta>;
 }
