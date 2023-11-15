@@ -4,21 +4,21 @@ package com.GrupoD.AppServSalud.controlador;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
+import com.GrupoD.AppServSalud.dominio.servicios.NotificacionServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -185,6 +185,19 @@ public class PortalControlador {
         session.getAttribute("usuario");
         modelo.put("usuario", usuario);
         return "turnoPaciente.html";
+    }
+    @Autowired
+    private NotificacionServicio notificacionServicio;
+    // Endpoint para marcar una notificación como leída
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MEDICO') or hasRole('ROLE_PACIENTE')")
+    @PostMapping("notificaciones/{idNotificacion}")
+    public ResponseEntity<String> marcarNotificacionComoLeida(@PathVariable String idNotificacion) {
+        try {
+            notificacionServicio.marcarNotificacionComoLeida(idNotificacion);
+            return ResponseEntity.ok("Notificación marcada como leída correctamente.");
+        } catch (MiExcepcion e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

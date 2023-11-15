@@ -293,13 +293,46 @@
                         aria-label="Close"
                     ></button>
                 </div>
+<!--                <div class="modal-body">-->
+<!--                    <ul th:each="notificacion : ${usuario.notificaciones}">-->
+<!--                        <li th:text="${notificacion.mensaje}"></li>-->
+<!--                        <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')">Marcar como leída</button>-->
+
+<!--                    </ul>-->
+<!--                </div>-->
                 <div class="modal-body">
                     <ul th:each="notificacion : ${usuario.notificaciones}">
-                        <li th:text="${notificacion.mensaje}"></li>
-                        <button class="btn btn-primary" id="checkVisto"> marcar Como Leido</button>
+                        <li id="notificacion-${notificacion.id}">
+                            <span th:text="${notificacion.mensaje}"></span>
+                            <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')" th:id="'marcarComoLeida-'+${notificacion.id}">Marcar como leída</button>
+                        </li>
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+    function marcarComoLeida(idNotificacion) {
+        fetch('http://localhost:8080/notificaciones/' + idNotificacion, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Eliminar la notificación del DOM
+                const notificacionElement = document.getElementById('notificacion-' + idNotificacion);
+                if (notificacionElement) {
+                    notificacionElement.remove();
+                } else {
+                    console.error('Elemento de notificación no encontrado en el DOM');
+                }
+            } else {
+                throw new Error('Error al marcar la notificación como leída');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
 </header>

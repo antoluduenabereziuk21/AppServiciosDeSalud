@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.GrupoD.AppServSalud.dominio.repositorio.NotificacionRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,9 @@ public class NotificacionServicio {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private NotificacionRepositorio notificacionRepositorio;
 
     @Transactional
     public void crearNotificacionPedidoTurno(String idUsuario, String idReceptor) throws MiExcepcion {
@@ -90,5 +94,15 @@ public class NotificacionServicio {
                 n.isLeido() == leido
             ).collect(Collectors.toList());
     }
-
+    @Transactional
+    public void marcarNotificacionComoLeida(String idNotificacion) throws MiExcepcion {
+        Optional<Notificacion> notificacionOptional = notificacionRepositorio.findById(idNotificacion);
+        if (notificacionOptional.isPresent()) {
+            Notificacion notificacion = notificacionOptional.get();
+            notificacion.setLeido(true);
+            notificacionRepositorio.save(notificacion);
+        } else {
+            throw new MiExcepcion("La notificación no existe");
+        }
+    }
 }
