@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -30,24 +31,22 @@ public class OfertaControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/listar")
     public String listarOfertas(
             @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
-            @RequestParam(required = false) String apellido, @RequestParam(required = false) String especialidad,
-            @RequestParam(required = false) String fecha, @RequestParam(required = false) String desde,
-            @RequestParam(required = false) String hasta, ModelMap modelo) throws MiExcepcion {
+            ModelMap modelo) throws MiExcepcion {
         
         if (page == null){
             page = 0;
         }
         if (size == null || size == 0){
-            size = 12;
+            size = 30;
         }
         Pageable pageable = PageRequest.of(page, size,
             Sort.by("fecha").ascending()
                 .and(Sort.by("horario").ascending()));
-        modelo.put("ofertas", ofertaServicio.listarOfertas(pageable, apellido, especialidad, fecha, desde, hasta));
-        modelo.put("especialidades", ofertaServicio.listarEspecialidades());
+        modelo.put("ofertas", ofertaServicio.listarOfertas(pageable));
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
         modelo.put("usuario", usuario);
