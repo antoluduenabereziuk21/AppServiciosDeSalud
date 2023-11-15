@@ -19,4 +19,7 @@ public class PruebaMetodos {
     public Paciente buscarPorDni(@PathVariable String dni) {
         return servicioPaciente.buscarPorDni(dni);
     }
+
+   // @GetMapping("/notificacion_leida")
+
 }

@@ -38,17 +38,29 @@ public class PortalControlador {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping("/")
-    public String index(ModelMap modelo) {
-        try {
+    public String index(ModelMap modelo,HttpSession session) {
+//        try {
+//            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+//                    .getPrincipal();
+//            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+//            modelo.put("usuario", usuario);
+//            return "index.html";
+//        } catch (Exception e) {
+//            modelo.put("usuario", null);
+//            return "index.html";
+//        }
+        Usuario usuario= null;
+        if(session.getAttribute("usuario")!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
-            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            modelo.put("usuario", usuario);
-            return "index.html";
-        } catch (Exception e) {
-            modelo.put("usuario", null);
-            return "index.html";
+            usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+
+            int cantidadNotificaciones = usuario.getNotificaciones().size();
+            System.out.println("estoy recibiendo las notificaciones :" +cantidadNotificaciones);
+            modelo.put("cantidadNotificaciones",cantidadNotificaciones);
         }
+        modelo.put("usuario", usuario);
+        return "index.html";
 
     }
 
@@ -72,15 +84,20 @@ public class PortalControlador {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+
         modelo.put("usuario", usuario);
+
         return "error_403.html";
     }
 
     @GetMapping("/error_404")
-    public String error404(ModelMap modelo) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+    public String error404(ModelMap modelo,HttpSession session) {
+        Usuario usuario= null;
+        if(session.getAttribute("usuario")!=null) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+        }
         modelo.put("usuario", usuario);
         return "error_404.html";
     }
