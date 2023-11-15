@@ -315,6 +315,10 @@
                             <span th:text="${notificacion.mensaje}"></span>
                             <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')" th:id="'marcarComoLeida-'+${notificacion.id}">Marcar como leída</button>
                         </li>
+                        <li id="notificacion-${notificacion.id}">
+                            <span th:text="${notificacion.mensaje}"></span>
+                            <button th:class="'btn btn-primary ' + ${notificacion.id} " th:id="'notificacion-'+${notificacion.id}">Marcar como leída</button>
+                        </li>
                     </ul>
                 </div>
 
@@ -322,26 +326,33 @@
         </div>
     </div>
     <script th:inline="javascript">
-    function marcarComoLeida(idNotificacion) {
-        fetch('http://localhost:8080/notificaciones/' + idNotificacion, {
-            method: 'POST'
-        })
-        .then(response => {
-            if (response.ok) {
-                // Eliminar la notificación del DOM
-                const notificacionElement = document.getElementById('notificacion-' + idNotificacion);
-                if (notificacionElement) {
-                    notificacionElement.remove();
-                } else {
-                    console.error('Elemento de notificación no encontrado en el DOM');
-                }
-            } else {
-                throw new Error('Error al marcar la notificación como leída');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+        const botones = document.querySelectorAll('button[id^="notificacion-"]');
+        const botones_array = Array.from(botones);
+        botones_array.forEach(element => {
+            element.addEventListener("click", (e) =>{
+                const idNotificacion = e.target.classList[2];
+                fetch(
+                    `http://localhost:8080/datos/marcarLeida/${idNotificacion}`
+                )
+                .then(response => {
+                    if (response.ok) {
+                        const notificacion_numero = document.getElementById("numeroDeNotificaciones");
+                        const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
+                        notificacion.style.display = "none";
+                        if (parseInt(notificacion_numero.innerText) >= 0){
+                            notificacion_numero.style.display = "none";
+                            document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
+                        }else{
+                            notificacion_numero.innerText = parseInt(notificacion_numero.innerText) - 1;
+                        }
+                    } else {
+                        throw new Error('Error al marcar la notificación como leída');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            })
         });
-    }
     </script>
 </header>
