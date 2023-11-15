@@ -3,11 +3,9 @@ package com.GrupoD.AppServSalud.dominio.servicios;
 import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
-import com.GrupoD.AppServSalud.dominio.entidades.Turno;
 import com.GrupoD.AppServSalud.dominio.repositorio.OfertaRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
-import com.GrupoD.AppServSalud.dominio.repositorio.TurnoRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
@@ -17,11 +15,8 @@ import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroOferta;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +34,9 @@ public class OfertaServicio {
     private NotificacionServicio notificacionServicio;
 
     @Autowired
+    private TurnoServicio turnoServicio;
+
+    @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
 
     @Autowired
@@ -46,9 +44,6 @@ public class OfertaServicio {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
-
-    @Autowired
-    private TurnoRepositorio turnoRepositorio;
 
     public void crearOferta(String tipoConsulta, String detalleOferta, String fechaConsulta,
             String horarioOferta, String ubicacionOferta, Double precioOferta, String idProfesional)
@@ -133,22 +128,8 @@ public class OfertaServicio {
         Paciente paciente = pacienteRepositorio.findById(idPaciente)
                 .orElseThrow(() -> new MiExcepcion("No se encontro ningun paciente"));
 
-        Profesional profesional = profesionalRepositorio.findById(oferta.getProfesional().getId())
-                .orElseThrow(() -> new MiExcepcion("No se encontro ningun profesional"));
 
-        Turno turno = new Turno();
-
-        turno.setFechaAlta(new Date());
-        turno.setFechaTurno(oferta.getFecha());
-        turno.setHoraTurno(oferta.getHorario());
-        turno.setEstado(true);
-        turno.setActivoPaciente(true);
-        turno.setActivoProfesional(false);
-        turno.setProfesional(profesional);
-        turno.setPaciente(paciente);
-        turno.setOferta(oferta);
-
-        turnoRepositorio.save(turno);
+        turnoServicio.crearTurno(oferta,paciente);
 
         oferta.setReservado(true);
         ofertaRepositorio.save(oferta);
@@ -308,7 +289,7 @@ public class OfertaServicio {
         return horarios;
     }
 
-    public List<Oferta> listarOfertasPorFecha(Date fecha,String idProfesional) {
+    public List<Object[]> listarOfertasPorFecha(Date fecha,String idProfesional) {
         FiltroOferta filtro = new FiltroOferta();
         filtro.setFecha(fecha);
         filtro.setReservado(false);

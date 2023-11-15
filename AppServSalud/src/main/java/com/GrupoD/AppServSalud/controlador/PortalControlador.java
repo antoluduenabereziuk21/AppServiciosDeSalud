@@ -1,17 +1,12 @@
 
 package com.GrupoD.AppServSalud.controlador;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
-import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
-import com.GrupoD.AppServSalud.dominio.servicios.OfertaServicio;
-import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,9 +29,6 @@ import java.util.List;
 public class PortalControlador {
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
-
-    @Autowired
-    private OfertaServicio ofertaServicio;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -70,8 +62,8 @@ public class PortalControlador {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
         modelo.put("usuario", usuario);
-        if (usuario.getRol().equals(RolEnum.PACIENTE)) {
-            return "redirect:/oferta/listar";
+        if (usuario.getRol().equals(RolEnum.PACIENTE)){
+            return "redirect:/especialidades";
         }
         if (usuario.getRol().equals(RolEnum.MEDICO)) {
             return "redirect:/profesional/dashboard";
@@ -81,10 +73,11 @@ public class PortalControlador {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MEDICO') or hasRole('ROLE_PACIENTE')")
     @GetMapping("/perfil")
-    public String perfil(ModelMap modelo) {
+    public String perfil(@RequestParam(name = "exito", required = false) String exito, ModelMap modelo) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
         modelo.put("usuario", usuario);
+        modelo.put("exito", exito);
         return "vistaPerfil.html";
     }
 
@@ -152,21 +145,21 @@ public class PortalControlador {
     }
 
     @GetMapping("/tarjetaProfesional/{especialidad}")
-    public String tarjetaProfesional(@PathVariable String especialidad, ModelMap modelo) {
-        try {
-            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                    .getPrincipal();
-            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            modelo.put("usuario", usuario);
-        } catch (Exception e) {
-            modelo.put("usuario", null);
-        }
+    public String tarjetaProfesional(@PathVariable String especialidad, ModelMap modelo,HttpSession session) {
+        modelo.put("especialidad",especialidad);
         String espProf = especialidad.toUpperCase();
         List<Profesional> profesionales = profesionalRepositorio
                 .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
         modelo.addAttribute("profesionales", profesionales);
-        modelo.addAttribute("ofertas", ofertaServicio.listarOferta());
-        return "tarjetaProfesional.html";
+        Usuario usuario = null;
+        if(session.getAttribute("usuario") != null){
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+            modelo.put("usuario", usuario);
+            return "tarjetaProfesional.html";
+        }
+        return "redirect:/login";
     }
 
     @PreAuthorize("hasRole('ROLE_PACIENTE')")

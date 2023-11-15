@@ -1,7 +1,6 @@
 package com.GrupoD.AppServSalud.controlador;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
-import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.GrupoD.AppServSalud.dominio.servicios.ServicioPaciente;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
+
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpSession;
@@ -75,12 +76,12 @@ public class PacienteControlador {
 
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @GetMapping("/modificar")
-    public String vistaModificarPaciente(ModelMap modelo) {
+    public String vistaModificarPaciente(@RequestParam(name = "error", required = false) String error,ModelMap modelo) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Paciente paciente = servicioPaciente.buscarPorEmail(userDetails.getUsername());
         modelo.put("paciente", paciente);
-        //lo ideal sería solo usar usuario, pero habría que refactorizar todas las vistas
         modelo.put("usuario", paciente);
+        modelo.put("error", error);
         return "forms/editarPaciente.html";
     }
 
@@ -168,17 +169,14 @@ public class PacienteControlador {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelo.put("paciente", servicioPaciente.buscarPorEmail(usuario.getEmail()));
         if (!passwordEncoder.matches(password, usuario.getPassword())) {
-            modelo.put("error", "La contraseña ingresada no es correcta");
-            return "forms/editarPaciente.html";
+            return "redirect:/paciente/modificar?error="+URLEncoder.encode("La contraseña ingresada no es correcta");
         }
         if (!newPassword.equals(newPassword2)) {
-            modelo.put("error", "Las contraseñas no coinciden");
-            return "forms/editarPaciente.html";
+            return "redirect:/paciente/modificar?error="+URLEncoder.encode("Las contraseñas no coinciden");
         }
         servicioPaciente.cambiarContrasenha(usuario.getEmail(), newPassword);
-        modelo.put("exito", "Contraseña modificada correctamente");
 
-        return "forms/editarPaciente.html";
+        return "redirect:/perfil?exito="+URLEncoder.encode("Contraseña modificada correctamente");
     }
 
     @GetMapping("/detalles/{id}")
