@@ -293,13 +293,6 @@
                         aria-label="Close"
                     ></button>
                 </div>
-<!--                <div class="modal-body">-->
-<!--                    <ul th:each="notificacion : ${usuario.notificaciones}">-->
-<!--                        <li th:text="${notificacion.mensaje}"></li>-->
-<!--                        <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')">Marcar como leída</button>-->
-
-<!--                    </ul>-->
-<!--                </div>-->
                 <div class="modal-body">
                     <ul th:each="notificacion : ${usuario.notificaciones}">
                         <li id="notificacion-${notificacion.id}">
@@ -322,19 +315,38 @@
                     `http://localhost:8080/datos/marcarLeida/${idNotificacion}`
                 )
                 .then(response => {
-                    if (response.ok) {
-                        const notificacion_numero = document.getElementById("numeroDeNotificaciones");
-                        const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
-                        notificacion.style.display = "none";
-                        if (parseInt(notificacion_numero.innerText) >= 0){
-                            notificacion_numero.style.display = "none";
-                            document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
-                        }else{
-                            notificacion_numero.innerText = parseInt(notificacion_numero.innerText) - 1;
-                        }
-                    } else {
-                        throw new Error('Error al marcar la notificación como leída');
+<!--                    if (response.ok) {-->
+<!--                        const notificacion_numero = document.getElementById("numeroDeNotificaciones");-->
+<!--                        const notificacion = document.getElementById(`notificacion-${idNotificacion}`);-->
+<!--                        notificacion.style.display = "none";-->
+<!--                        if (parseInt(notificacion_numero.innerText) >= 0){-->
+<!--                            notificacion_numero.style.display = "none";-->
+<!--                            document.getElementById("numeroDeNotificacionesFondo").style.display = "none";-->
+<!--                        }else{-->
+<!--                            notificacion_numero.innerText = parseInt(notificacion_numero.innerText) - 1;-->
+<!--                        }-->
+<!--                    } else {-->
+<!--                        throw new Error('Error al marcar la notificación como leída');-->
+<!--                    }-->
+                        if (response.ok) {
+                    const notificacion_numero = document.getElementById("numeroDeNotificaciones");
+                    const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
+                    notificacion.style.display = "none";
+
+                    // Decrementar el número de notificaciones solo si es mayor a cero
+                    const notificacionesNoLeidas = parseInt(notificacion_numero.innerText);
+                    if (notificacionesNoLeidas > 0) {
+                        notificacion_numero.innerText = notificacionesNoLeidas - 1;
                     }
+
+                    // Ocultar el número si ya no quedan notificaciones por leer
+                    if (parseInt(notificacion_numero.innerText) === 0) {
+                        notificacion_numero.style.display = "none";
+                        document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
+                    }
+                } else {
+                    throw new Error('Error al marcar la notificación como leída');
+                }
                 })
                 .catch(error => {
                     console.error('Error:', error);

@@ -2,7 +2,9 @@ package com.GrupoD.AppServSalud.dominio.servicios;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Oferta;
 import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
+import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Turno;
+import com.GrupoD.AppServSalud.dominio.repositorio.OfertaRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.TurnoRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroTurno;
@@ -19,6 +21,9 @@ public class TurnoServicio {
     private TurnoRepositorio turnoRepositorio;
 
     @Autowired
+    private OfertaRepositorio ofertaRepositorio;
+
+    @Autowired
     private NotificacionServicio notificacionServicio;
 
     public List<Turno> listarTurnosPorPaciente(String email) throws MiExcepcion{
@@ -30,6 +35,30 @@ public class TurnoServicio {
 
     public List<Turno> listarTurnosPorProfesional(String idProfesional){
         return turnoRepositorio.listarTurnosPorProfesional(idProfesional);
+    }
+    public void cancelarTurno(String idTurno) throws MiExcepcion {
+        if (idTurno == null) {
+            throw new MiExcepcion("El id del turno no puede ser nulo");
+        }
+
+        Turno turno = turnoRepositorio.findById(idTurno).orElseThrow(
+                () -> new MiExcepcion("No se encontró el turno con id: " + idTurno)
+        );
+
+        Oferta oferta = turno.getOferta();
+
+
+
+        if (oferta != null) {
+            // Asignar nuevamente el turno a la oferta cancelada
+            oferta.setTurno(turno);
+            oferta.setReservado(false); // Asegúrate de que la oferta esté disponible nuevamente si era reservada
+
+            // Guardar la oferta actualizada
+            ofertaRepositorio.save(oferta);
+            notificacionServicio.crearNotificacionCancelacionTurno(turno.getPaciente().getId(),turno.getProfesional().getId());
+            turnoRepositorio.delete(turno);
+        }
     }
 
     public void aceptarTurno(String idTurno) throws MiExcepcion {
@@ -47,6 +76,7 @@ public class TurnoServicio {
 
         notificacionServicio.crearNotificacionEstadoTurno(turno.getPaciente().getId(), turno.getProfesional().getId(), true);
     }
+
 
     public void crearTurno(Oferta oferta, Paciente paciente) throws MiExcepcion {
 
@@ -79,5 +109,6 @@ public class TurnoServicio {
         turnoRepositorio.save(turno);
 
     }
+
 
 }
