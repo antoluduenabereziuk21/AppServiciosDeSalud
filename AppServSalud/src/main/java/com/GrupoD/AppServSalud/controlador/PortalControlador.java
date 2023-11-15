@@ -186,18 +186,5 @@ public class PortalControlador {
         modelo.put("usuario", usuario);
         return "turnoPaciente.html";
     }
-    @Autowired
-    private NotificacionServicio notificacionServicio;
-    // Endpoint para marcar una notificación como leída
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MEDICO') or hasRole('ROLE_PACIENTE')")
-    @PostMapping("notificaciones/{idNotificacion}")
-    public ResponseEntity<String> marcarNotificacionComoLeida(@PathVariable String idNotificacion) {
-        try {
-            notificacionServicio.marcarNotificacionComoLeida(idNotificacion);
-            return ResponseEntity.ok("Notificación marcada como leída correctamente.");
-        } catch (MiExcepcion e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 
 }
