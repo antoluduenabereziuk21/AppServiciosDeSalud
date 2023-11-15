@@ -71,7 +71,7 @@ public class PortalControlador {
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
         modelo.put("usuario", usuario);
         if (usuario.getRol().equals(RolEnum.PACIENTE)){
-            return "redirect:/oferta/listar";
+            return "redirect:/";
         }
         if (usuario.getRol().equals(RolEnum.MEDICO)){
             return "redirect:/profesional/dashboard";
