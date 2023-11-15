@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -66,5 +67,9 @@ public class Usuario {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Notificacion> notificaciones;
+
+    public List<Notificacion> getNotificaionesNoLeidas(){
+     return this.notificaciones.stream().filter(x->!x.isLeido()).collect(Collectors.toList());
+    }
 
 }
