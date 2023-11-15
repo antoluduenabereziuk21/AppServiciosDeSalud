@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,400;1,900&display=swap');
 
+:root {
+    --verde-fondo: #rgba(164, 215, 164, 0.959);
+}
+
 * {
   font-family: 'Roboto', sans-serif;
 }
@@ -9,6 +13,10 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
+}
+
+footer {
+  background-color: var(--verde-fondo);
 }
 
 /* TARJETAS DE ESPECIALIDADES */
@@ -36,15 +44,50 @@ body {
   display: none;
 }
 
-/* ERROR 404 y 403 */
-.error404, .error403 {
+/* MENSAJES DE EXITO O ERROR */
+.toast-exito,
+.toast-error {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  border-radius: 10px;
+  margin: 10px;
+  z-index: 9999;
+  display: flex;
+  gap: 20px;
+  transition: all 1s ease;
+}
+
+/* ERROR e INFO 403-404 */
+.error404,
+.error403 {
   font-size: 155px;
 }
 
-.info404, .info403 {
+.info404,
+.info403 {
   font-size: 35px;
 }
 
-footer {
-  background-color: rgba(164, 215, 164, 0.959);
+/* DASHBOARD PROFESIONAL */
+#dashboardProfesional{
+  #tablero{
+    height: 100%;
+  }
+
+  .dashboardProfesionalFragments , #DashboardPerfil{
+    background-color: rgba(164, 215, 164, 0.596); 
+    border: 1px solid #DDD;
+    height: 100%;
+  }
+
+  .dashboardContenedorOfertas{
+    max-height: 350px;
+   background-color: rgba(164, 215, 164, 0.75); 
+   border: 1px solid #DDD;
+  }
+
+  .tablaTurnosProfesional{
+    background-color: rgba(164, 215, 164, 0.75); 
+  }
 }

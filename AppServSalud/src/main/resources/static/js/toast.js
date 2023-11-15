@@ -62,4 +62,8 @@ window.onload = function () {
     setInterval(function () {
         decrementar2();
     }, 80);
+    setTimeout(() => {
+        toastExito.style.display = 'none';
+    }, 7000);
+
 }

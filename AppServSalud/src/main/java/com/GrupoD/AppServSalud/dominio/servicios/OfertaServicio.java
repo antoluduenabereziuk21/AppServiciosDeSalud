@@ -65,7 +65,7 @@ public class OfertaServicio {
             throw new MiExcepcion("Error al parsear la fecha");
         }
 
-        validarFecha(fechaOerta, HorarioEnum.valueOf("_" + horarioOferta + "HS"), idProfesional);
+        validarFecha(fechaOerta, HorarioEnum.valueOf("HORARIO_" + horarioOferta + "_00_HS"), idProfesional);
 
         Profesional profesional = profesionalRepositorio.findById(idProfesional)
                 .orElseThrow(() -> new MiExcepcion("No se encontro ningun profesional"));

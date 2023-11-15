@@ -45,20 +45,23 @@
                         <div class="col-lg-3">
                             <div class="d-flex flex-column">
                                 <div class="d-flex m-3 justify-content-center">
-                                    <img
-                                        th:src="@{/imagen/perfil/__${paciente.id}__}"
-                                        alt="Avatar"
-                                        class="rounded-circle col-sm-8"
-                                        th:if="${paciente.imagen != null}"
-                                        id="imagenPrevisualizacionExistente"
-                                    >
-                                    <img
-                                        th:src="@{/assets/avatar.png}"
-                                        alt="Avatar"
-                                        class="rounded-circle col-sm-8"
-                                        th:if="${paciente.imagen == null}"
-                                        id="imagenPrevisualizacionDefault"
-                                    >
+                                    <div class="avatar rounded-circle" style="width: 180px; height: 180px; overflow: hidden;">
+                                        <img
+                                            th:src="@{/imagen/perfil/__${paciente.id}__}"
+                                            alt="Avatar"
+                                            class=""
+                                            th:if="${paciente.imagen != null}"
+                                            id="imagenPrevisualizacionExistente"
+                                            style="width: 100%;"
+                                        >
+                                        <img
+                                            th:src="@{/assets/avatar.png}"
+                                            alt="Avatar"
+                                            class=""
+                                            th:if="${paciente.imagen == null}"
+                                            id="imagenPrevisualizacionDefault"
+                                        >
+                                    </div>
                                 </div>
                                 <label
                                     for="fotoPerfil"

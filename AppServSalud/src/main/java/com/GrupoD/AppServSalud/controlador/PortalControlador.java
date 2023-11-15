@@ -66,14 +66,14 @@ public class PortalControlador {
     }
 
     @GetMapping("/validar-usuario")
-    public String redireccionLogin(ModelMap modelo){
+    public String redireccionLogin(ModelMap modelo) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
         modelo.put("usuario", usuario);
-        if (usuario.getRol().equals(RolEnum.PACIENTE)){
+        if (usuario.getRol().equals(RolEnum.PACIENTE)) {
             return "redirect:/oferta/listar";
         }
-        if (usuario.getRol().equals(RolEnum.MEDICO)){
+        if (usuario.getRol().equals(RolEnum.MEDICO)) {
             return "redirect:/profesional/dashboard";
         }
         return "redirect:/";
@@ -90,20 +90,30 @@ public class PortalControlador {
 
     @GetMapping("/error_403")
     public String error403(ModelMap modelo) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-        modelo.put("usuario", usuario);
-        return "error_403.html";
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+            modelo.put("usuario", usuario);
+            return "error_403.html";
+        } catch (Exception e) {
+            modelo.put("usuario", null);
+            return "error_403.html";
+        }
     }
 
     @GetMapping("/error_404")
     public String error404(ModelMap modelo) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-        modelo.put("usuario", usuario);
-        return "error_404.html";
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+            modelo.put("usuario", usuario);
+            return "error_404.html";
+        } catch (Exception e) {
+            modelo.put("usuario", null);
+            return "error_404.html";
+        }
     }
 
     @GetMapping("/infoTurnos")
@@ -124,29 +134,21 @@ public class PortalControlador {
     @GetMapping("/especialidades")
     public String especialidades(@RequestParam(required = false) String error,
             @RequestParam(required = false) String exito, ModelMap modelo) {
+        Usuario usuario = null;
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
-            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            if (error != null) {
-                modelo.addAttribute("error", error);
-            }
-            if (exito != null) {
-                modelo.addAttribute("exito", exito);
-            }
+            usuario = usuarioServicio.getUsuario(userDetails.getUsername());
             modelo.put("usuario", usuario);
-            return "especialidades.html";
-        } catch (Exception e) {
-            if (error != null) {
-                modelo.addAttribute("error", error);
-            }
-            if (exito != null) {
-                modelo.addAttribute("exito", exito);
-            }
-            modelo.put("usuario", null);
-            return "especialidades.html";
+        } catch (Exception e) {}
+        if (error != null) {
+            modelo.addAttribute("error", error);
         }
-
+        if (exito != null) {
+            modelo.addAttribute("exito", exito);
+        }
+        modelo.put("usuario", usuario);
+        return "especialidades.html";
     }
 
     @GetMapping("/tarjetaProfesional/{especialidad}")
@@ -155,22 +157,16 @@ public class PortalControlador {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            String espProf = especialidad.toUpperCase();
-            List<Profesional> profesionales = profesionalRepositorio
-                    .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
-            modelo.addAttribute("profesionales", profesionales);
-            modelo.addAttribute("ofertas", ofertaServicio.listarOferta());
             modelo.put("usuario", usuario);
-            return "tarjetaProfesional.html";
         } catch (Exception e) {
-            String espProf = especialidad.toUpperCase();
-            List<Profesional> profesionales = profesionalRepositorio
-                    .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
-            modelo.addAttribute("profesionales", profesionales);
-            modelo.addAttribute("ofertas", ofertaServicio.listarOferta());
             modelo.put("usuario", null);
-            return "tarjetaProfesional.html";
         }
+        String espProf = especialidad.toUpperCase();
+        List<Profesional> profesionales = profesionalRepositorio
+                .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
+        modelo.addAttribute("profesionales", profesionales);
+        modelo.addAttribute("ofertas", ofertaServicio.listarOferta());
+        return "tarjetaProfesional.html";
     }
 
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
