@@ -171,7 +171,7 @@ public class ProfesionalServicio {
     return profesionalRepositorio.buscarPorEspecialidad(EspecialidadEnum.valueOf(especialidad));
   }
 
-  public List<HorarioEnum> devolverHorariosDisponibles(String fecha,String idProfesional) {
+  public List<Object[]> devolverIdyHorariosDisponibles(String fecha,String idProfesional) {
     Date fechaOerta = null;
     if (fecha != null && !fecha.isEmpty()) {
       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -181,7 +181,7 @@ public class ProfesionalServicio {
         System.out.println("error al parsear la fecha");
       }
     }
-    List<Oferta> ofertas = ofertaServicio.listarOfertasPorFecha(fechaOerta,idProfesional);
-    return ofertas.stream().map(oferta -> oferta.getHorario()).collect(Collectors.toList());
+    List<Object[]> ofertas = ofertaServicio.listarOfertasPorFecha(fechaOerta,idProfesional);
+    return ofertas;
   }
 }

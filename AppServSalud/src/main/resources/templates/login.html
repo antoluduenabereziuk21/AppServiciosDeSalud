@@ -5,23 +5,6 @@
 >
 
     <head th:replace="/fragments/head :: head"></head>
-    <head>
-        <style>
-            #spinner {
-                width: 100vw;
-                height: 100vh;
-                background-color: rgba(0, 0, 0, 0.5);
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 1000;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                display: none;
-            }
-        </style>
-    </head>
 
     <body>
         <header th:replace="/fragments/header :: header"></header>
@@ -32,6 +15,7 @@
                 <form
                     th:action="@{/login}"
                     method="post"
+                    id="login"
                 >
                     <div class="row justify-content-center">
                         <div class="col-lg-5">
@@ -124,7 +108,7 @@
                             >
                             </button>
                         </div>
-                        <form th:action="@{/recuperarCuenta}">
+                        <form th:action="@{/recuperarCuenta}" id="recuperar">
                             <div class="modal-body row">
                                 <div class="input-group">
                                     <label
@@ -148,7 +132,6 @@
                                 >Cancelar</button>
                                 <button
                                     type="submit"
-                                    id="recuperar"
                                     class="btn btn-primary"
                                 >Recuperar cuenta</button>
                             </div>
@@ -156,18 +139,10 @@
                     </div>
                 </div>
             </div>
-
-            <div id="spinner">
-                <div
-                    class="spinner-border"
-                    role="status"
-                >
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
         </main>
 
         <footer th:replace="/fragments/footer :: footer"></footer>
+        <div th:replace="/fragments/spinner :: div"></div>
 
         <script
             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -186,8 +161,11 @@
         ></script>
         <script th:src="@{/js/toast.js}"></script>
         <script>
-            document.getElementById("recuperar").addEventListener("click", function () {
+            document.getElementById("recuperar").addEventListener("submit", function () {
                 document.getElementById("exampleModalCenter").style.display = "none";
+                document.getElementById("spinner").style.display = "flex";
+            });
+            document.getElementById("login").addEventListener("submit", function () {
                 document.getElementById("spinner").style.display = "flex";
             });
         </script>

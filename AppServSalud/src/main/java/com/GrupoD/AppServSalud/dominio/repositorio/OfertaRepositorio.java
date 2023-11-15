@@ -40,10 +40,10 @@ public interface OfertaRepositorio extends JpaRepository<Oferta, String> {
                         "(:#{#filtro.reservado} is null or o.reservado = :#{#filtro.reservado})")
         Page<Oferta> buscarPorFiltro(@Param("filtro") FiltroOferta filtro, Pageable pageable);
 
-        @Query("SELECT o FROM Oferta o WHERE " +
+        @Query("SELECT o.id,o.horario FROM Oferta o WHERE " +
                         "(:#{#filtro.idProfesional} is null or o.profesional.id = :#{#filtro.idProfesional}) and " +
                         "(:#{#filtro.fecha} is null or o.fecha = :#{#filtro.fecha}) and " +
                         "(:#{#filtro.reservado} is null or o.reservado = :#{#filtro.reservado})")
-        List<Oferta> buscarPorFiltroSinPage(@Param("filtro") FiltroOferta filtro);
+        List<Object[]> buscarPorFiltroSinPage(@Param("filtro") FiltroOferta filtro);
 
 }
