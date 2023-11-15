@@ -77,6 +77,7 @@
                         <!-- LOGUEADO ICONO NOTIFICACION -->
                         <li sec:authorize="isAuthenticated()">
                             <button
+                                id="btnNotificaciones"
                                 type="button"
                                 class="nav-link p-2 mx-2"
                                 data-bs-toggle="modal"
@@ -91,6 +92,9 @@
                                         d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
                                     />
                                 </svg>
+                                <span th:if="${usuario != null and usuario.notificaciones != null and #lists.size(usuario.getNotificaionesNoLeidas) gt 0}" class="badge rounded-pill bg-danger">
+                                    <span th:text="${#lists.size(usuario.getNotificaionesNoLeidas)}"></span>
+                                    </span>
                             </button>
                         </li>
                         <!-- LOGUEADO COMO ADMIN -->
@@ -196,7 +200,7 @@
                             class="nav-item"
                             sec:authorize="isAuthenticated()"
                         >
-                            <div class="btn-group">
+                            <div class="btn-group" th:if="${usuario != null}">
                                 <button
                                     class="nav-link dropdown-toggle active text-capitalize"
                                     href="#"
@@ -298,12 +302,46 @@
                         aria-label="Close"
                     ></button>
                 </div>
+<!--                <div class="modal-body">-->
+<!--                    <ul th:each="notificacion : ${usuario.notificaciones}">-->
+<!--                        <li th:text="${notificacion.mensaje}"></li>-->
+<!--                        <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')">Marcar como leída</button>-->
+
+<!--                    </ul>-->
+<!--                </div>-->
                 <div class="modal-body">
                     <ul th:each="notificacion : ${usuario.notificaciones}">
-                        <li th:text="${notificacion.mensaje}"></li>
+                        <li id="notificacion-${notificacion.id}">
+                            <span th:text="${notificacion.mensaje}"></span>
+                            <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')" th:id="'marcarComoLeida-'+${notificacion.id}">Marcar como leída</button>
+                        </li>
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+    function marcarComoLeida(idNotificacion) {
+        fetch('http://localhost:8080/notificaciones/' + idNotificacion, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Eliminar la notificación del DOM
+                const notificacionElement = document.getElementById('notificacion-' + idNotificacion);
+                if (notificacionElement) {
+                    notificacionElement.remove();
+                } else {
+                    console.error('Elemento de notificación no encontrado en el DOM');
+                }
+            } else {
+                throw new Error('Error al marcar la notificación como leída');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
 </header>

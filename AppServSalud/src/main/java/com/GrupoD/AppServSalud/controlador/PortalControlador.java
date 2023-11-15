@@ -4,21 +4,21 @@ package com.GrupoD.AppServSalud.controlador;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
+import com.GrupoD.AppServSalud.dominio.servicios.NotificacionServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
+import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,17 +34,29 @@ public class PortalControlador {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping("/")
-    public String index(ModelMap modelo) {
-        try {
+    public String index(ModelMap modelo,HttpSession session) {
+//        try {
+//            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+//                    .getPrincipal();
+//            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+//            modelo.put("usuario", usuario);
+//            return "index.html";
+//        } catch (Exception e) {
+//            modelo.put("usuario", null);
+//            return "index.html";
+//        }
+        Usuario usuario= null;
+        if(session.getAttribute("usuario")!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
-            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            modelo.put("usuario", usuario);
-            return "index.html";
-        } catch (Exception e) {
-            modelo.put("usuario", null);
-            return "index.html";
+            usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+
+            int cantidadNotificaciones = usuario.getNotificaciones().size();
+            System.out.println("estoy recibiendo las notificaciones :" +cantidadNotificaciones);
+            modelo.put("cantidadNotificaciones",cantidadNotificaciones);
         }
+        modelo.put("usuario", usuario);
+        return "index.html";
 
     }
 
@@ -170,6 +182,19 @@ public class PortalControlador {
         session.getAttribute("usuario");
         modelo.put("usuario", usuario);
         return "turnoPaciente.html";
+    }
+    @Autowired
+    private NotificacionServicio notificacionServicio;
+    // Endpoint para marcar una notificación como leída
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MEDICO') or hasRole('ROLE_PACIENTE')")
+    @PostMapping("notificaciones/{idNotificacion}")
+    public ResponseEntity<String> marcarNotificacionComoLeida(@PathVariable String idNotificacion) {
+        try {
+            notificacionServicio.marcarNotificacionComoLeida(idNotificacion);
+            return ResponseEntity.ok("Notificación marcada como leída correctamente.");
+        } catch (MiExcepcion e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }
