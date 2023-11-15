@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaft.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<head>
+    <style>
+        #buscador {
+            padding-top: 80px;
+            position: fixed;
+            width: 0%;
+            height: 100vh;
+            top: 0;
+            background-color: rgba(46, 39, 39, 0.603);
+            z-index: 1000000;
+            transition: all 0.5s linear;
+        }
+
+        #close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #buscador>form>div>input,
+        #buscador>form>div>select {
+            position: relative;
+            width: 0px;
+            transition: all 0.5s linear;
+            padding: 0px !important;
+        }
+
+        #buscador>form>div>label {
+            width: fit-content;
+            position: relative;
+            transition: all 0.5s linear;
+            overflow: hidden;
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        #buscador>form>div>div {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #buscador>form>div>div>select {
+            position: relative;
+            width: 0px;
+            transition: all 0.5s linear;
+            padding: 0px !important;
+        }
+
+        #buscador>form>div>div>label {
+            width: fit-content;
+            position: relative;
+            transition: all 0.5s linear;
+            overflow: hidden;
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+
+        #show-buscador {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: fixed;
+            top: 65px;
+            left: 10px;
+            z-index: 1000000;
+            background-color: cornflowerblue;
+            border: none;
+        }
+
+        svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        #turnos {
+            transition: linear 0.5s ease-in-out;
+        }
+
+        #form-container {
+            width: 80%;
+            margin: auto;
+        }
+
+        #turnos {
+            padding: 20px 25px 10px 40px;
+            transition: linear 0.5s ease-in-out;
+        }
+
+        #turnos>div {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            transition: linear 0.5s ease-in-out;
+        }
+
+        #card-oferta {
+            background-color: #f1f1f181;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+        }
+
+        #paginacion {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #paginacion>a {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: cornflowerblue;
+            color: white;
+            text-decoration: none;
+        }
+
+        #numeros {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #numeros>a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: cornflowerblue;
+            color: white;
+            text-decoration: none;
+            transition: all 0.5s linear;
+        }
+
+        #numeros>a:hover {
+            background-color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body>
+    <header th:replace="/fragments/header :: header"></header>
+    <div th:replace="/fragments/toast :: div"></div>
+    <button id="show-buscador">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+            viewBox="0 0 16 16">
+            <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg>
+    </button>
+
+    <div class="buscador" id="buscador">
+        <div class="btn btn-primary" id="close">x</div>
+        <form id="form-container" method="get" th:action="@{/oferta/listar}">
+            <input type="hidden" value="0" name="page">
+            <input type="hidden" value="12" name="size">
+            <div class="mb-3">
+                <input class="form-control form-control-lg" type="text" placeholder="Nombre del profesional"
+                    aria-label=".form-control-lg example" name="apellido">
+            </div>
+            <div class="mb-3">
+                <label for="especialidad" class="form-label">Especialidad:</label>
+                <select class="form-control form-control-lg" name="especialidad" id="especialidad">
+                    <option value=""> Selecciona Especialidad</option>
+                    <option th:each="especialidad : ${especialidades}" th:text="${especialidad.name}"
+                        th:value="${especialidad.name}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Fecha Del Turno</label>
+                <input class="form-control form-control-lg" type="date" placeholder=".form-control-lg"
+                    aria-label=".form-control-lg example" name="fecha">
+            </div>
+            <div class="mb-3 tiempo">
+                <label for="exampleFormControlInput1" class="form-label">Hora Del Turno</label>
+                <div>
+                    <select class="form-select form-select-lg" aria-label=".form-select-lg example" name="desde">
+                        <option value="" disabled selected>DESDE</option>
+                        <script>
+                            for (let i = 8; i <= 21; i++) {
+                                const hora = `${i < 10 ? '0' : ''}${i}`;
+                                document.write(`<option value="${hora}">${hora}</option>`);
+                            }
+                        </script>
+                    </select>
+
+                    <label for="exampleFormControlInput1" class="form-label">A</label>
+                    <select class="form-select form-select-lg" aria-label=".form-select-lg example" name="hasta">
+                        <option value="" disabled selected>HASTA</option>
+                        <script>
+                            for (let i = 8; i <= 21; i++) {
+                                const hora = `${i < 10 ? '0' : ''}${i}`;
+                                document.write(`<option value="${hora}">${hora}</option>`);
+                            }
+                        </script>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="buscar" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+    <div id="turnos">
+        <div>
+            <div th:if="${ofertas.content != null && !ofertas.content.isEmpty}" th:each="oferta : ${ofertas.content}"
+                id="card-oferta">
+                <p>Especialidad: <span th:text="${oferta.profesional.especialidad.name}"></span></p>
+                <p>Profesional: <span
+                        th:text="${oferta.profesional.nombre} + ' ' + ${oferta.profesional.apellido}"></span></p>
+                <p>Fecha: <span th:text="${#dates.format(oferta.fecha, 'dd/MM/yyyy')}"></span></p>
+                <p>Hora: <span th:text="${oferta.horario.name}"></span></p>
+                <p>Ubicacion: <span th:text="${oferta.ubicacion}"></span></p>
+                <p>Detalle: <span th:text="${oferta.detalle}"></span></p>
+                <p>Precio: <span th:text="${oferta.precio}"></span></p>
+                <div th:if="${session.usuario != null}">
+                    <form th:if="${!oferta.reservado}" th:action="@{/oferta/reservar}" method="post">
+                        <input type="hidden" th:value="${session.usuario.id}" name="idPaciente">
+                        <input type="hidden" th:value="${oferta.id}" name="idOferta">
+                        <input type="submit" value="Reservar" class="btn btn-primary reservar">
+                    </form>
+                    <button disabled th:if="${oferta.reservado}" class="btn btn-secondary">Reservado</button>
+                </div>
+                <a th:href="@{/login}" th:if="${session.usuario == null}" class="btn btn-primary">Iniciar sesion</a>
+            </div>
+        </div>
+        <div th:if="${ofertas.content == null || ofertas.content.isEmpty}" class="container">
+            <p>No hay ofertas disponibles</p>
+        </div>
+    </div>
+    <div id="paginacion" class="container">
+        <a disabled="true" th:href="@{/oferta/listar(page=${ofertas.number} - 1,size=12)}">Anterior</a>
+        <div th:each="i : ${#numbers.sequence(0, ofertas.totalPages - 1)}" id="numeros">
+            <a th:href="@{/oferta/listar(page=${i}, size=12)}" th:text="${i + 1}"></a>
+        </div>
+        <a th:if="${!ofertas.last}" th:href="@{/oferta/listar(page=${ofertas.number} + 1,size=12)}">Siguiente</a>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="especialidad" class="form-label">Especialidad:</label>
+                        <select class="form-control form-control-lg" name="especialidad" id="especialidad-crear">
+                            <option value=""> Selecciona Especialidad</option>
+                            <option th:each="especialidad : ${especialidades}" th:text="${especialidad.name}"
+                                th:value="${especialidad.name}"></option>
+                        </select>
+                        <select class="form-control form-control-lg" name="idProfesional"
+                            id="profesional-crear"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Fecha Del Turno</label>
+                        <input class="form-control form-control-lg" type="date" placeholder=".form-control-lg"
+                            aria-label=".form-control-lg example" name="fecha" id="fecha-crear">
+                    </div>
+                    <div class="mb-3">
+                        <label for="especialidad" class="form-label">Especialidad:</label>
+                        <select class="form-control form-control-lg" name="especialidad" id="horarios-crear">
+                            <option value=""> Selecciona Horario</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script th:src="@{/js/toast.js}"></script>
+    <script>
+        document.getElementById("close").addEventListener("click", () => {
+            document.getElementById("buscador").style.width = "0";
+            document.querySelectorAll("#buscador>form >div> input").forEach((e) => {
+                e.style.width = "0px";
+                e.style.padding = "0px";
+            });
+            document.querySelectorAll("#buscador>form >div>div> label").forEach((e) => {
+                e.style.width = "0px";
+                e.style.padding = "0px";
+            });
+            document.querySelectorAll("#buscador>form >div>div> select").forEach((e) => {
+                e.style.width = "0px";
+                e.style.padding = "0px";
+            });
+            document.querySelectorAll("#buscador>form >div> label").forEach((e) => {
+                e.style.width = "0px";
+                e.style.padding = "0px";
+            });
+            document.querySelectorAll("#buscador>form>div>select").forEach((e) => {
+                e.style.width = "0px";
+                e.style.padding = "0px";
+            });
+            document.getElementById("show-buscador").style.display = "block";
+        })
+
+        document.getElementById("show-buscador").addEventListener("click", () => {
+            document.getElementById("buscador").style.width = "30%";
+            document.querySelectorAll("#buscador>form >div> input").forEach((e) => {
+                e.style.width = "100%";
+                e.style.padding = "10px";
+            });
+            document.querySelectorAll("#buscador>form >div>div> label").forEach((e) => {
+                e.style.display = "block";
+                e.style.width = "100%";
+                e.style.padding = "10px";
+            });
+            document.querySelectorAll("#buscador>form >div>div> select").forEach((e) => {
+                e.style.width = "100%";
+                e.style.padding = "10px";
+            });
+            document.querySelectorAll("#buscador>form >div> label").forEach((e) => {
+                e.style.display = "block";
+                e.style.width = "100%";
+                e.style.padding = "10px";
+            });
+            document.querySelectorAll("#buscador>form>div>select").forEach((e) => {
+                e.style.width = "100%";
+                e.style.padding = "10px";
+            });
+            document.getElementById("show-buscador").style.display = "none";
+        })
+
+        document.getElementById("especialidad-crear").addEventListener("change", e => {
+            fetch(
+                `http://localhost:8080/datos/listarPorEspecialidad?especialidad=${e.target.value}`
+            ).then(res => res.json()).then(data => {
+                const select = document.getElementById("profesional-crear");
+                select.innerHTML = "";
+                data.forEach(profesional => {
+                    const option = document.createElement("option");
+                    option.value = profesional.id;
+                    option.innerText = `${profesional.nombre} ${profesional.apellido}`;
+                    select.appendChild(option);
+                })
+            }
+            )
+        })
+        document.getElementById("fecha-crear").addEventListener("change", e => {
+            fetch(
+                `http://localhost:8080/datos/ofertas?fecha=${e.target.value}&idProfesional=${document.getElementById("profesional-crear").value}`
+            ).then(res => res.json()).then(data => {
+                const select = document.getElementById("horarios-crear");
+                select.innerHTML = "";
+                if (data.length != 0) {
+                    data.forEach(horario => {
+                        const option = document.createElement("option");
+                        option.value = horario;
+                        option.innerText = horario;
+                        select.appendChild(option);
+                    })
+                }else {
+                    const option = document.createElement("option");
+                    option.innerText="No hay turnos para el dia seleccionado";
+                    select.appendChild(option);
+                }
+            }
+            )
+
+
+        })
+    </script>
+</body>
+
+</html>

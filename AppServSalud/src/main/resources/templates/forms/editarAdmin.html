@@ -11,7 +11,7 @@
         <div class="container">
             <form
                 class="formulario"
-                th:action="@{/admin/modificar}"
+                th:action="@{/admin/modificar/__${admin.email}__}"
                 method="POST"
             >
                 <div class="text-center mb-5">
@@ -73,17 +73,17 @@
                         <div class="input-group mb-3">
                             <label
                                 class="input-group-text"
-                                for="profesionalSexo"
+                                for="adminSexo"
                             >Sexo</label>
                             <select
                                 class="form-select"
-                                id="profesionalSexo"
+                                id="adminSexo"
                                 name="sexo"
                             >
-                                <option selected>Elige una opción</option>
-                                <option value="MASCULINO">Masculino</option>
-                                <option value="FEMENINO">Femenino</option>
-                                <option value="X">X</option>
+                            <option th:selected="${admin.sexo.name == 'MASCULINO'}" value="MASCULINO">Masculino
+                            </option>
+                            <option th:selected="${admin.sexo.name == 'FEMENINO'}" value="FEMENINO">Femenino</option>
+                            <option th:selected="${admin.sexo.name == 'X'}" value="X">X</option>
                             </select>
                         </div>
                     </div>

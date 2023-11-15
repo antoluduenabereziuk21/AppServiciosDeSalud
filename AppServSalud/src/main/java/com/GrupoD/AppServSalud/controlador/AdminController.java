@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,7 +96,20 @@ public class AdminController {
     return "forms/editarAdmin.html";
   }
 
-  //FALTA EL POST DE MODIFICAR ADMIN PATH "admin/modificar"
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PostMapping("/modificar/{emailPath}")
+  public String modificarAdmin(@PathVariable String emailPath, String nombre, String apellido,
+      String dni, String sexo, String email, String telefono, ModelMap modelo) {
+    
+    try {
+      adminServicio.modificarAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono);
+      return "redirect:/admin/perfil/" + email+"?exito=Administrador modificado correctamente";
+    } catch (MiExcepcion e) {
+      modelo.put("error", e.getMessage());
+      modelo.put("admin", adminServicio.buscarPorEmail(emailPath));
+      return "forms/editarAdmin.html";
+    }
+  }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/modPaciente/{email}")
@@ -184,7 +198,7 @@ public class AdminController {
 
     try {
       profesionalServicio.modificarProfesionalAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono, dateFecha,
-        matriculaProfesional,especialidad);
+          matriculaProfesional, especialidad);
       modelo.put("exito", "Profesional modificado correctamente");
       modelo.put("profesionalesActivos", profesionalServicio.listarProfesionales(true));
       modelo.put("profesionalesInactivos", profesionalServicio.listarProfesionales(false));
