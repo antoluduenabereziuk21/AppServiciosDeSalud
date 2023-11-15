@@ -46,21 +46,21 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3">
                             <div class="d-flex flex-column">
-                                <div class="d-flex m-3 justify-content-center">
+                                <div class="d-flex m-3 justify-content-center rounded-circle" id="divParaImagen">
                                     <img
                                         th:src="@{/imagen/perfil/__${paciente.id}__}"
                                         alt="Avatar"
-                                        class="rounded-circle col-sm-8"
+                                        class="rounded-circle col-sm-8 imagen-perfil-muestra"
                                         th:if="${paciente.imagen != null}"
                                         id="imagenPrevisualizacionExistente"
                                     >
                                     <img
                                         th:src="@{/assets/avatar.png}"
                                         alt="Avatar"
-                                        class="rounded-circle col-sm-8"
+                                        class="rounded-circle col-sm-8 imagen-perfil-muestra"
                                         th:if="${paciente.imagen == null}"
                                         id="imagenPrevisualizacionDefault"
-                                    >
+                                    > 
                                 </div>
                                 <label
                                     for="fotoPerfil"
@@ -375,6 +375,22 @@
         ></script>
         <script th:src="@{/js/toast.js}"></script>
         <script>
+            // COdigo para que cuando cargue una foto se muestre en el div
+            // var input = document.getElementById('fotoPerfil');
+            // var div = document.getElementById('divParaImagen');
+
+            
+            // input.addEventListener('change', function() {
+                
+            //     if (this.files && this.files[0]) {
+            //         var file = this.files[0];
+            //         var reader = new FileReader();
+            //         reader.addEventListener('load', function() {
+            //             div.style.backgroundImage = 'url(' + reader.result + ')';
+            //         }, false);
+            //         reader.readAsDataURL(file);
+            //     }
+            // }, false);
             document.getElementById("cambiarContrasenhaForm").addEventListener("submit", () =>{
                 document.getElementById("spinner").style.display = "flex";
             });

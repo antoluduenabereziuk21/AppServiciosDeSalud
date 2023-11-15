@@ -14,31 +14,6 @@
     display: flex;
 }
 
-#index .tablas {
-    background-color: rgb(23, 104, 38);
-    text-align: left;
-    width: 70%;
-    margin: 0.2%;
-    ;
-}
-
-#index .tablas th,
-#index .tablas td {
-    border: solid green;
-    font-size: 28px;
-    margin: 5%
-}
-
-#index .tabla {
-    background-color: rgb(23, 104, 38);
-}
-
-
-
-#index .perfil th,
-#index .perfil td {
-    border-collapse: collapse;
-}
 
 #index .contenedor-video {
   margin: 0 auto;
@@ -90,4 +65,136 @@
   min-width: 100%;
   border: none;
   display: block;
+}
+
+.efectos-card-propios{
+  background-color: rgba(255, 255, 255, 0.61);
+  transition: all 0.5s ease;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.efectos-card-propios:hover{
+  transform: scale(1.07);
+}
+
+#con-nosotros{
+  margin: 0px !important;
+}
+
+#trabaja-con-nosotros-1{
+  height: 400px;
+  background-image: url("../assets/trabaja-con.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#trabaja-con-nosotros-2{
+  height: 400px;
+  background-image: url("../assets/trabaja-con2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: grid;
+  place-content: center;
+}
+
+#trabaja-con-nosotros-tittle{
+  font-family: Roboto;
+  font-size: 40px;
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.imagenes-circulares{
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: grid;
+  place-content: center;
+  transition: all 0.5s ease;
+}
+
+.imagenes-circulares>img{
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: grid;
+  place-content: center;
+  transition: all 0.5s ease;
+  position: absolute;
+  transition: all 0.5s ease;
+}
+
+.imagenes-circulares>div{
+  background-color: rgba(0, 0, 0, 0.253);
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: grid;
+  place-content: center;
+  transition: all 0.5s ease;
+  position: absolute;
+}
+
+.imagenes-circulares>div>p{
+  position: sticky;
+  font-family: Roboto;
+  font-size: 26px;
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  text-align: center;
+  color: white;
+  display: none;
+  transition: all 0.5s ease;
+}
+
+.imagenes-circulares:hover>div{
+  background-color: rgba(0, 0, 0, 0.61);
+}
+
+.imagenes-circulares:hover>div>p{
+  display: flex;
+}
+
+.imagenes-circulares:hover{
+  fill-opacity: calc(.5);
+  transform: scale(1.07);
+}
+
+#testimonios{
+  background-color: rgba(0, 0, 0, 0.329);
+  padding: 50px 0px;
+  width: 100%;
+  height: 500px;
+  display: grid;
+  place-content: center;
+}
+
+#testimonios>h3{
+  font-family: Roboto;
+  font-size: 40px;
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
 }
