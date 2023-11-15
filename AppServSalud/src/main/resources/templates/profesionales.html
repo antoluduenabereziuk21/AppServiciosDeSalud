@@ -1,164 +1,164 @@
 <!DOCTYPE html>
 <html
-        lang="en"
-        xmlns:th="http://www.thymeleaft.org"
+    lang="en"
+    xmlns:th="http://www.thymeleaft.org"
 >
-<head th:replace="/fragments/head :: head"></head>
-<body>
-<header th:replace="/fragments/header :: header"></header>
-<div th:replace="/fragments/toast :: div"></div>
-<main>
-    <div class="buscador">
-        <h3>Filtar por dato:</h3>
-        <form
-                th:action="@{/profesional/filtrar}"
-                method="get"
-        >
-            <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    autocomplete="off"
-            >
-            <input
-                    type="text"
-                    name="apellido"
-                    placeholder="Apellido"
-                    autocomplete="off"
-            >
-            <input
-                    type="text"
-                    name="email"
-                    placeholder="Email"
-                    autocomplete="off"
-            >
-            <input
-                    type="text"
-                    name="dni"
-                    placeholder="DNI"
-                    autocomplete="off"
-            >
-            <button type="submit">Buscar</button>
-        </form>
-        <a href="/profesional/todos">Mostrar todos</a>
-    </div>
-
-    <h2>Listado de Profesionales</h2>
-
-    <div>
-        <h3>Profesionales Activos</h3>
-        <table class="table container">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>Matricula</th>
-                <th>Especialidad</th>
-                <th>Estado</th>
-                <th>Modificar</th>
-            </tr>
-            </thead>
-            <tbody th:if="${profesionalesActivos != null || !profesionalesActivos.isEmpty}">
-            <tr th:each="profesional : ${profesionalesActivos}">
-                <td th:text="${profesional.nombre}"></td>
-                <td th:text="${profesional.apellido}"></td>
-                <td th:text="${profesional.dni}"></td>
-                <td th:text="${profesional.matriculaProfesional}"></td>
-                <td th:text="${profesional.especialidad}"></td>
-                <td>
-                    <form
-                            th:action="@{/profesional/baja}"
-                            method="POST"
+    <head th:replace="/fragments/head :: head"></head>
+    <body>
+        <header th:replace="/fragments/header :: header"></header>
+        <div th:replace="/fragments/toast :: div"></div>
+        <main>
+            <div class="buscador">
+                <h3>Filtar por dato:</h3>
+                <form
+                    th:action="@{/profesional/filtrar}"
+                    method="get"
+                >
+                    <input
+                        type="text"
+                        name="nombre"
+                        placeholder="Nombre"
+                        autocomplete="off"
                     >
-                        <input
-                                type="text"
-                                style="display: none"
-                                th:value="${profesional.id}"
-                                name="idProfesional"
-                        >
-                        <input type="image" th:src="@{/assets/Altas_y_bajas.png}" width="40" height="30">
-                    </form>
-                </td>
-                <td>
-                    <a th:href="@{/admin/modProfesional/__${profesional.email}__}"> 
-                    <img
-                    th:src="@{/assets/modificar.png}"
-                    alt="modificar"
-                    width="40"
-                    height="30"
+                    <input
+                        type="text"
+                        name="apellido"
+                        placeholder="Apellido"
+                        autocomplete="off"
                     >
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-            <tbody th:if="${profesionalesActivos == null || profesionalesActivos.isEmpty}">
-            <tr>
-                <td colspan="6">
-                    <p>No se encuentran Profesionales activos en este momento</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        autocomplete="off"
+                    >
+                    <input
+                        type="text"
+                        name="dni"
+                        placeholder="DNI"
+                        autocomplete="off"
+                    >
+                    <button type="submit">Buscar</button>
+                </form>
+                <a href="/profesional/todos">Mostrar todos</a>
+            </div>
 
-    <div class="tabla-principal">
-        <h3>Profesionales Inactivos</h3>
-        <table class="table container">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>Matricula</th>
-                <th>Especialidad</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody th:if="${profesionalesInactivos != null || !profesionalesInactivos.isEmpty}">
-            <tr th:each="profesional : ${profesionalesInactivos}">
-                <td th:text="${profesional.nombre}"></td>
-                <td th:text="${profesional.apellido}"></td>
-                <td th:text="${profesional.dni}"></td>
-                <td th:text="${profesional.matriculaProfesional}"></td>
-                <td th:text="${profesional.especialidad}"></td>
-                <td>
-                    <form
-                            th:action="@{/profesional/alta}"
-                            method="POST"
-                    >
-                        <input
-                                type="text"
-                                style="display: none"
-                                th:value="${profesional.id}"
-                                name="idProfesional"
-                        >
-                        <button type="submit">Dar de alta</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-            <tbody th:if="${profesionalesInactivos == null || profesionalesInactivos.isEmpty}">
-            <tr>
-                <td colspan="6">
-                    <p>No se encuentran Profesionales inactivos en este momento</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</main>
-<footer th:replace="/fragments/footer :: footer"></footer>
-<script
-        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"
-></script>
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"
-></script>
-<script th:src="@{/js/toast.js}"></script>
-</body>
+            <h2>Listado de Profesionales</h2>
+
+            <div>
+                <h3>Profesionales Activos</h3>
+                <table class="table container">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DNI</th>
+                            <th>Matricula</th>
+                            <th>Especialidad</th>
+                            <th>Estado</th>
+                            <th>Modificar</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${profesionalesActivos != null || !profesionalesActivos.isEmpty}">
+                        <tr th:each="profesional : ${profesionalesActivos}">
+                            <td th:text="${profesional.nombre}"></td>
+                            <td th:text="${profesional.apellido}"></td>
+                            <td th:text="${profesional.dni}"></td>
+                            <td th:text="${profesional.matriculaProfesional}"></td>
+                            <td th:text="${profesional.especialidad}"></td>
+                            <td>
+                                <form
+                                    th:action="@{/profesional/baja}"
+                                    method="POST"
+                                >
+                                    <input
+                                        type="text"
+                                        style="display: none"
+                                        th:value="${profesional.id}"
+                                        name="idProfesional"
+                                    >
+                                    <input
+                                        type="image"
+                                        th:src="@{/assets/Altas_y_bajas.png}"
+                                        width="40"
+                                        height="30"
+                                    >
+                                </form>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/modProfesional/__${profesional.email}__}">
+                                    <img
+                                        th:src="@{/assets/modificar.png}"
+                                        alt="modificar"
+                                        width="40"
+                                        height="30"
+                                    >
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${profesionalesActivos == null || profesionalesActivos.isEmpty}">
+                        <tr>
+                            <td colspan="6">
+                                <p>No se encuentran Profesionales activos en este momento</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tabla-principal">
+                <h3>Profesionales Inactivos</h3>
+                <table class="table container">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DNI</th>
+                            <th>Matricula</th>
+                            <th>Especialidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody th:if="${profesionalesInactivos != null || !profesionalesInactivos.isEmpty}">
+                        <tr th:each="profesional : ${profesionalesInactivos}">
+                            <td th:text="${profesional.nombre}"></td>
+                            <td th:text="${profesional.apellido}"></td>
+                            <td th:text="${profesional.dni}"></td>
+                            <td th:text="${profesional.matriculaProfesional}"></td>
+                            <td th:text="${profesional.especialidad}"></td>
+                            <td>
+                                <form
+                                    th:action="@{/profesional/alta}"
+                                    method="POST"
+                                >
+                                    <input
+                                        type="text"
+                                        style="display: none"
+                                        th:value="${profesional.id}"
+                                        name="idProfesional"
+                                    >
+                                    <button type="submit">Dar de alta</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${profesionalesInactivos == null || profesionalesInactivos.isEmpty}">
+                        <tr>
+                            <td colspan="6">
+                                <p>No se encuentran Profesionales inactivos en este momento</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer th:replace="/fragments/footer :: footer"></footer>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <script th:src="@{/js/toast.js}"></script>
+    </body>
 </html>

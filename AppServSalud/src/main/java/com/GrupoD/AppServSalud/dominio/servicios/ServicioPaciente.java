@@ -97,12 +97,12 @@ public class ServicioPaciente {
     }
 
     @Transactional
-    public void modificarPaciente(MultipartFile archivo, String email, String nombre, String apellido,
+    public void modificarPaciente(MultipartFile archivo, String idPaciente, String nombre, String apellido,
             String sexo, String telefono, String obraSocial) throws MiExcepcion {
         // , String idHistoriaClinica, String idProfesional, String idTurno
         Validacion.validarStrings(nombre, apellido, sexo, telefono, obraSocial);
 
-        Optional<Paciente> respuestaPaciente = pacienteRepositorio.buscarPorEmail(email);
+        Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
         /*
          * Optional<HistoriaClinica> respuestaHistoriaClinica =
          * historiaClinicaRepositorio.findById(idHistoriaClinica);

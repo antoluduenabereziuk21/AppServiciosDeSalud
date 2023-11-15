@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaft.org">
     <head th:replace="/fragments/head :: head">
-<body>
-    <header th:replace="/fragments/header :: header"></header>
-    <div th:replace="/fragments/toast :: div"></div>
+    <body>
+        <header th:replace="/fragments/header :: header"></header>
+        <div th:replace="/fragments/toast :: div"></div>
 
-    <div class="container">
-        <h3>Mis Turnos</h3>
-        <table class="table container">
-            <thead>
-            <tr>
-                <th>Doctor/ra</th>
-                <th>Fecha del turno</th>
-                <th>Hora del turno</th>
-                <th>Detalle</th>
-                <th>Estado del turno</th>
-                <th>Aceptado por Profesional</th>
-                <th>Ubicacion</th>
-                <th>Precio</th>
-            </tr>
-            </thead>
-            <tbody th:if="${turnos != null || !turnos.isEmpty}">
-            <tr th:each="turno : ${turnos}">
-                <td th:text="${turno.profesional.nombre} +' ' + ${turno.profesional.apellido}"></td>
-                <td th:text="${turno.fechaTurno}"></td>
-                <td th:text="${turno.horaTurno}"></td>
-                <td th:text="${turno.oferta.detalle}"></td>
-                <td th:text="${turno.estado == true} ? 'Activo' : 'Inactivo'"></td>
-                <td th:text="${turno.activoProfesional == true} ? 'Aceptado' : 'En Progreso'"></td>
-                <td th:text="${turno.oferta.ubicacion}"></td>
-                <td th:text="${turno.oferta.precio}"></td>
-            </tr>
-            </tbody>
-            <tbody th:if="${turnos == null || turnos.isEmpty}">
-            <tr>
-                <td colspan="6">
-                    <p>No se encuentran usuarios activos en este momento</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="container">
+            <h3>Mis Turnos</h3>
+            <table class="table container">
+                <thead>
+                    <tr>
+                        <th>Doctor/ra</th>
+                        <th>Fecha del turno</th>
+                        <th>Hora del turno</th>
+                        <th>Detalle</th>
+                        <th>Estado del turno</th>
+                        <th>Aceptado por Profesional</th>
+                        <th>Ubicacion</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody th:if="${turnos != null || !turnos.isEmpty}">
+                    <tr th:each="turno : ${turnos}">
+                        <td th:text="${turno.profesional.nombre} +' ' + ${turno.profesional.apellido}"></td>
+                        <td th:text="${turno.fechaTurno}"></td>
+                        <td th:text="${turno.horaTurno}"></td>
+                        <td th:text="${turno.oferta.detalle}"></td>
+                        <td th:text="${turno.estado == true} ? 'Activo' : 'Inactivo'"></td>
+                        <td th:text="${turno.activoProfesional == true} ? 'Aceptado' : 'En Progreso'"></td>
+                        <td th:text="${turno.oferta.ubicacion}"></td>
+                        <td th:text="${turno.oferta.precio}"></td>
+                    </tr>
+                </tbody>
+                <tbody th:if="${turnos == null || turnos.isEmpty}">
+                    <tr>
+                        <td colspan="6">
+                            <p>No se encuentran usuarios activos en este momento</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
-    <footer th:replace="/fragments/footer :: footer"></footer>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
-    <script th:src="@{/js/toast.js}"></script>
-</body>
+        <footer th:replace="/fragments/footer :: footer"></footer>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <script th:src="@{/js/toast.js}"></script>
+    </body>
 </html>

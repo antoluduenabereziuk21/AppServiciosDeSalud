@@ -35,4 +35,12 @@ public class Validacion {
         }
     }
 
+    public static void validarInteger(Integer... nums) throws MiExcepcion{
+        for (Integer num : nums) {
+            if (num == null || num < 0) {
+                throw new MiExcepcion("Error: Todos los campos son obligatorios");
+            }
+        }
+    }
+
 }

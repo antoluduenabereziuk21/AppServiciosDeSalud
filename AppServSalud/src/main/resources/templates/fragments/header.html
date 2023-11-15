@@ -1,4 +1,7 @@
-<header style="background-color: rgba(164, 215, 164, 0.75);">
+<header
+    style="background-color: rgba(164, 215, 164, 0.959);"
+    class="px-5"
+>
     <div class="container-fluid d-flex justify-content-between">
         <div class="mt-2">
             <a
@@ -8,14 +11,12 @@
                 <img
                     th:src="@{/assets/clinica-img.png}"
                     alt="logo"
-                    width="50"
-                    height="40"
+                    height="35"
                 >
                 Medi Ya!
             </a>
         </div>
         <div class="d-flex">
-
             <div>
                 <nav
                     class="navbar navbar-expand-lg"
@@ -37,141 +38,252 @@
                         id="navbarColor03"
                     >
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active"
-                                    aria-current="page"
-                                    href="/"
-                                >Inicio</a>
-                            </li>
-                            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a
-                                    class="nav-link dropdown-toggle active"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Administracion
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li
-                                    sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')"
-                                    ><a
-                                            class="dropdown-item"
-                                            href="/profesional/registro"
-                                    >Registrar Profesional</a></li>
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="/admin/registro"
-                                    >Crear administrador</a></li>
-                                    <li><a
-                                            class="dropdown-item"
-                                            href="/paciente/todos"
-                                        >Todos Los Pacientes</a></li>
-                                    <li><a
-                                            class="dropdown-item"
-                                            href="/profesional/todos"
-                                    >Todos Los Profesionales</a></li>
-                                    <li><a
-                                            class="dropdown-item"
-                                            href="#"
-                                    >----</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <!-- NO LOGEADO -->
+                            <li
+                                class="nav-item"
+                                sec:authorize="!isAuthenticated()"
+                            >
                                 <a
                                     class="nav-link active"
                                     aria-current="page"
                                     href="/paciente/registro"
-                                >Registrarse</a>
+                                >
+                                    Registrarse
+                                </a>
                             </li>
-                            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <li
+                                class="nav-item"
+                                sec:authorize="!isAuthenticated()"
+                            >
                                 <a
                                     class="nav-link active"
                                     href="/login"
-                                >Iniciar sesión</a>
+                                >
+                                    Iniciar sesión
+                                </a>
                             </li>
+                            <!-- LOGUEADO ICONO NOTIFICACION -->
+                            <li sec:authorize="isAuthenticated()">
+                                <button
+                                    type="button"
+                                    class="nav-link p-2 mx-2"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#notificacionesModal"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="1.2em"
+                                        viewBox="0 0 448 512"
+                                    ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
+                                        />
+                                    </svg>
+                                </button>
+                            </li>
+                            <!-- LOGUEADO COMO ADMIN -->
                             <li
-                                    class="nav-item"
-                                    sec:authorize="hasRole('ROLE_MEDICO')"
+                                class="nav-item dropdown"
+                                sec:authorize="hasRole('ROLE_ADMIN')"
+                            >
+                                <div class="btn-group">
+                                    <button
+                                        class="nav-link dropdown-toggle active"
+                                        href="#"
+                                        type="button"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Administracion
+                                    </button>
+                                    <ul
+                                        class="dropdown-menu dropdown-menu-lg-end dropdown-menu-lg-start mt-2"
+                                        style="background-color: rgba(164, 215, 164, 0.959);"
+                                    >
+                                        <li
+                                            sec:authorize="hasRole('ROLE_ADD_PROFESIONAL')"
+                                            style="width: 200px;"
+                                        >
+                                            <a
+                                                class="nav-link"
+                                                href="/profesional/registro"
+                                            >
+                                                Registrar Profesional
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="nav-link"
+                                                href="/admin/registro"
+                                            >
+                                                Crear administrador
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="nav-link"
+                                                href="/paciente/todos"
+                                            >
+                                                Todos Los Pacientes
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="nav-link"
+                                                href="/profesional/todos"
+                                            >
+                                                Todos Los Profesionales
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!-- LOGUEADO COMO PROFESIONAL -->
+                            <li
+                                class="nav-item"
+                                sec:authorize="hasRole('ROLE_MEDICO')"
                             >
                                 <a
-                                        class="nav-link active"
-                                        href="/profesional/dashboard"
-                                >Panel Profesional</a>
-                            </li>
-                           <li class="nav-item" sec:authorize="isAuthenticated()">
-                                <a
-                                    class="nav-link dropdown-toggle active"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                Perfil
-                                </a>
-               
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="nav-link active"
-                                       th:href="@{/turno/misTurnos/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_PACIENTE')"
-                                    >
-                                    Mis Turnos
-                                    </a>
-                                </li>
-                                <li>
-                                 <a class="nav-link active"
-                                    th:href="@{/paciente/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                    sec:authorize="hasRole('ROLE_PACIENTE')"
-                                 >
-                                  Ver Mi Perfil</a>
-                                    <a class="nav-link active"
-                                       th:href="@{/profesional/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_MEDICO')"
-                                    >
-                                        Ver Mi Perfil</a>
-                                    <a class="nav-link active"
-                                       th:href="@{/admin/perfil/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_ADMIN')"
-                                    >
-                                        Ver Mi Perfil</a>
-                                </li>
-                                <li>
-                                <a class="nav-link active" 
-                                   th:href="@{/paciente/modificar/__${#httpServletRequest.getRemoteUser()}__}"
-                                   sec:authorize="hasRole('ROLE_PACIENTE')"
-                                   >Editar Perfil</a>
-                                   <a class="nav-link active" 
-                                   th:href="@{/profesional/modificar/__${#httpServletRequest.getRemoteUser()}__}"
-                                   sec:authorize="hasRole('ROLE_MEDICO')"
-                                   >Editar Perfil</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link active" 
-                                       th:href="@{/admin/modificar/__${#httpServletRequest.getRemoteUser()}__}"
-                                       sec:authorize="hasRole('ROLE_ADMIN')"
-                                       >Editar Perfil</a>
-                                </li>
-                               <li class="nav-item" sec:authorize="isAuthenticated()">
-                                <form
-                                    th:action="@{/logout}"
-                                    method="post"
+                                    class="nav-link active"
+                                    href="/profesional/dashboard"
                                 >
-                                    <input
-                                        class="nav-link active"
-                                        type="submit"
-                                        value="Cerrar sesión"
-                                    >
-                                </form>
-                               </li>
-                             </ul>
+                                    Panel Profesional
+                                </a>
+                            </li>
+                            <!-- LOGUEADO COMO PACIENTE -->
+                            <li
+                                class="nav-item"
+                                sec:authorize="hasRole('ROLE_PACIENTE')"
+                            >
+                                <div>
+                                    <ul class="navbar-nav mx-3">
 
-                           </li>
+                                        <li>
+                                            <a
+                                                class="nav-link active"
+                                                th:href="@{/turno/misTurnos}"
+                                                sec:authorize="hasRole('ROLE_PACIENTE')"
+                                            >
+                                                Mis Turnos
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!-- DESPLEGABLE DEL PERFIL -->
+                            <li
+                                class="nav-item"
+                                sec:authorize="isAuthenticated()"
+                            >
+                                <div class="btn-group">
+                                    <button
+                                        class="nav-link dropdown-toggle active text-capitalize"
+                                        href="#"
+                                        type="button"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        th:text="${usuario.nombre}"
+                                    ></button>
+                                    <ul
+                                        class="dropdown-menu dropdown-menu-lg-end mt-2 p-1"
+                                        style="background-color: rgba(164, 215, 164, 0.959);"
+                                    >
+                                        <li> <!-- PERFIL -->
+                                            <a
+                                                class="nav-link active"
+                                                th:href="@{/perfil}"
+                                            >
+                                                Perfil</a>
+                                        </li>
+                                        <li> <!-- EDITAR PERFIL Mover a un botón directamente en el perfil -->
+                                            <a
+                                                class="nav-link active"
+                                                th:href="@{/paciente/modificar}"
+                                                sec:authorize="hasRole('ROLE_PACIENTE')"
+                                            >
+                                                Editar Perfil
+                                            </a>
+                                            <a
+                                                class="nav-link active"
+                                                th:href="@{/profesional/modificar}"
+                                                sec:authorize="hasRole('ROLE_MEDICO')"
+                                            >
+                                                Editar Perfil
+                                            </a>
+                                            <a
+                                                class="nav-link active"
+                                                th:href="@{/admin/modificar}"
+                                                sec:authorize="hasRole('ROLE_ADMIN')"
+                                            >
+                                                Editar Perfil
+                                            </a>
+                                        </li>
+                                        <li> <!-- DIVISOR -->
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li> <!-- LOGOUT -->
+                                            <form
+                                                th:action="@{/logout}"
+                                                method="post"
+                                                class="p-0 nav-link"
+                                            >
+                                                <button
+                                                    class="btn btn-sm nav-link"
+                                                    type="submit"
+                                                    value="Cerrar sesión"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        height="1.15em"
+                                                        viewBox="0 0 512 512"
+                                                    ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                        <path
+                                                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                                                        />
+                                                    </svg>
+                                                    (Cerrar Sesión)
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </nav>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL NOTIFICACIONES -->
+    <div
+        class="modal fade"
+        id="notificacionesModal"
+        tabindex="-1"
+        aria-labelledby="notificacionesModalLabel"
+        aria-hidden="true"
+        th:if="${usuario != null}"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1
+                        class="modal-title fs-5"
+                        id="exampleModalLabel"
+                    >Notificaciones</h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <ul th:each="notificacion : ${usuario.notificaciones}">
+                        <li th:text="${notificacion.mensaje}"></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
