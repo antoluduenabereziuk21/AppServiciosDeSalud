@@ -5,11 +5,12 @@
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
 
-        <div class="container">
+        <div class="m-3">
             <h3>Mis Turnos</h3>
-            <table class="table container">
+            <table class="table">
                 <thead>
                     <tr>
+                        <th>Especialidad</th>
                         <th>Doctor/ra</th>
                         <th>Fecha del turno</th>
                         <th>Hora del turno</th>
@@ -22,8 +23,9 @@
                 </thead>
                 <tbody th:if="${turnos != null || !turnos.isEmpty}">
                     <tr th:each="turno : ${turnos}">
+                        <td th:text="${turno.profesional.especialidad}"></td>
                         <td th:text="${turno.profesional.nombre} +' ' + ${turno.profesional.apellido}"></td>
-                        <td th:text="${turno.fechaTurno}"></td>
+                        <td th:text="${turno.oferta.fecha}"></td>
                         <td th:text="${turno.horaTurno}"></td>
                         <td th:text="${turno.oferta.detalle}"></td>
                         <td th:text="${turno.estado == true} ? 'Activo' : 'Inactivo'"></td>

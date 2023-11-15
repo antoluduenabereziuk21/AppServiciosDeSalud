@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.servicios.ProfesionalServicio;
-import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 
 @RestController
 @RequestMapping("/datos")
@@ -25,8 +24,8 @@ public class Datos {
     }
 
     @GetMapping("/ofertas")
-    public List<HorarioEnum> listarOfertas(@RequestParam("fecha") String fecha,
+    public List<Object[]> listarOfertas(@RequestParam("fecha") String fecha,
                                       @RequestParam("idProfesional") String idProfesional) {
-        return profesionalServicio.devolverHorariosDisponibles(fecha, idProfesional);
+        return profesionalServicio.devolverIdyHorariosDisponibles(fecha, idProfesional);
     }
 }

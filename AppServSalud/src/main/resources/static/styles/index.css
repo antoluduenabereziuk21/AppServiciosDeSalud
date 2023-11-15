@@ -3,15 +3,15 @@
 }
 
 .toast-exito, .toast-error {
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: -100%;
+    right: -50%;
     border-radius: 10px;
     margin: 10px;
     z-index: 9999;
-    display: flex;
     gap: 20px;
     transition: all 1s ease;
+    display: flex;
 }
 
 #index .tablas {
