@@ -1,31 +1,56 @@
-<div class="px-3 container-fluid" th:fragment="principal">
+<div
+  class="px-3 container-fluid"
+  th:fragment="principal"
+>
   <div class="container rounded-3 px-5 p-2 text-end">
     <p class="fw-bold fs-4 m-0">
-      Bienvenido, <span class="text-capitalize" th:text="${profesional.nombre}"></span>
+      Bienvenido, <span
+        class="text-capitalize"
+        th:text="${profesional.nombre}"
+      ></span>
     </p>
     <p class="m-0">Tenga un buen día</p>
   </div>
   <hr class="p-0 m-0">
   <section class="row">
     <!-- CONTENEDOR "OFERTAS" -->
-    <div class="col-sm-6 d-grid" th:if="${!ofertas.isEmpty}">
-      <div id="dash-titulo" class="mt-2">
+    <div
+      class="col-sm-5 d-grid"
+      th:if="${!ofertas.isEmpty}"
+    >
+      <div
+        id="dash-titulo"
+        class="mt-2"
+      >
         <h5>Ofertas</h5>
       </div>
       <div class="overflow-auto rounded-2 d-flex justify-content-center dashboardContenedorOfertas">
-        <div class="row rounded-2 pt-3 justify-content-center" style="width: 100%;">
+        <div
+          class="row rounded-2 pt-3 justify-content-center"
+          style="width: 100%;"
+        >
           <div class="row">
-            <div class="col-lg-6 px-2 mb-3" th:each="oferta : ${ofertas}">
+            <div
+              class="col-lg-6 px-2 mb-3"
+              th:each="oferta : ${ofertas}"
+            >
               <div class="card">
-                <p
-                  th:text="${oferta.fecha} + ' ' + ${oferta.horario} + ' ' + (${oferta.reservado} ? RESERVADO : LIBRE)">
+                <p th:text="${oferta.fecha}">
                 </p>
+                <p th:text="${oferta.horario}"></p>
+                <p th:text="(${oferta.reservado} ? RESERVADO : LIBRE)"></p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <button class="btn btn-primary mt-1" type="button" data-bs-toggle="modal" data-bs-target="#nuevaOferta" href="#">
+      <button
+        class="btn btn-primary mt-1"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#nuevaOferta"
+        href="#"
+      >
         <div class="d-flex justify-content-center align-items-center text-withe">
           <i class="fa-solid fa-plus"></i>
           <p class="px-2 m-0">Agregar Oferta</p>
@@ -33,21 +58,35 @@
       </button>
     </div>
     <!-- CONTENEDOR "SIN OFERTAS" -->
-    <div class="col-sm-6" th:if="${ofertas.isEmpty}">
-      <div id="dash-titulo" class="mt-2 mb-2">
+    <div
+      class="col-sm-5"
+      th:if="${ofertas.isEmpty}"
+    >
+      <div
+        id="dash-titulo"
+        class="mt-2 mb-2"
+      >
         <h5>Ofertas</h5>
       </div>
       <div class="row mt-2 rounded-2 pt-3 bg-warning">
         <div class="container-fluid">
           <div class="row">
-            <div class="text-center" style="margin-left: 25px;">
+            <div
+              class="text-center"
+              style="margin-left: 25px;"
+            >
               <p>Aún no ha creado ninguna oferta</p>
             </div>
           </div>
         </div>
         <div class="row d-grid">
-          <button class="btn btn-primary mt-1" type="button" data-bs-toggle="modal" data-bs-target="#nuevaOferta"
-            href="#">
+          <button
+            class="btn btn-primary mt-1"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#nuevaOferta"
+            href="#"
+          >
             <div class="d-flex justify-content-center align-items-center text-withe">
               <i class="fa-solid fa-plus"></i>
               <p class="px-2 m-0">Agregar Oferta</p>
@@ -57,57 +96,124 @@
       </div>
     </div>
     <!-- FORMULARIO PARA CREAR UNA NUEVA OFERTA -->
-    <div id="nuevaOferta" class="modal fade rounded-2" style="background-color: rgba(17, 34, 17, 0.356);">
+    <div
+      id="nuevaOferta"
+      class="modal fade rounded-2"
+      style="background-color: rgba(17, 34, 17, 0.356);"
+    >
       <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content p-5" style="width: 850px; background-color: rgb(98, 175, 98);">
+        <div
+          class="modal-content p-5"
+          style="width: 850px; background-color: rgb(98, 175, 98);"
+        >
 
-          <form th:action="@{/oferta/enviar-oferta}" method="POST">
+          <form
+            th:action="@{/oferta/enviar-oferta}"
+            method="POST"
+          >
             <div class="text-center mb-5">
               <h3 class="card-title">Nueva Oferta</h3>
             </div>
             <div class="row justify-content-center">
               <div class="col-lg-12">
                 <div class="input-group mb-3">
-                  <label for="detalleOferta" class="input-group-text">Detalle</label>
-                  <textarea name="detalleOferta" id="detalleOferta" cols="80" rows="3" class="form-control"></textarea>
+                  <label
+                    for="detalleOferta"
+                    class="input-group-text"
+                  >Detalle</label>
+                  <textarea
+                    name="detalleOferta"
+                    id="detalleOferta"
+                    cols="80"
+                    rows="3"
+                    class="form-control"
+                  ></textarea>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-lg-6">
                 <div class="input-group mb-3">
-                  <label class="input-group-text" for="fechaConsulta">Fecha Consulta</label>
-                  <input class="form-control" type="date" name="fechaConsulta" id="fechaConsulta" />
+                  <label
+                    class="input-group-text"
+                    for="fechaConsulta"
+                  >Fecha Consulta</label>
+                  <input
+                    class="form-control"
+                    type="date"
+                    name="fechaConsulta"
+                    id="fechaConsulta"
+                  />
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="input-group mb-3">
-                  <label for="horarioOferta" class="input-group-text">Horario</label>
-                  <input type="number" class="form-control" id="horarioOferta" name="horarioOferta">
+                  <label
+                    for="horarioOferta"
+                    class="input-group-text"
+                  >Horario</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="horarioOferta"
+                    name="horarioOferta"
+                  >
                 </div>
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-lg-12">
                 <div class="input-group mb-3">
-                  <label for="ubicacionOferta" class="input-group-text">Ubicación</label>
-                  <input type="text" class="form-control" id="ubicacionOferta" name="ubicacionOferta">
+                  <label
+                    for="ubicacionOferta"
+                    class="input-group-text"
+                  >Ubicación</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="ubicacionOferta"
+                    name="ubicacionOferta"
+                  >
                 </div>
               </div>
             </div>
             <div class="row justify-content-between">
               <div class="col-lg-5">
                 <div class="input-group mb-3">
-                  <label for="precioOferta" class="input-group-text">Precio Consulta</label>
-                  <input type="number" class="form-control" id="precioOferta" name="precioOferta">
+                  <label
+                    for="precioOferta"
+                    class="input-group-text"
+                  >Precio Consulta</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="precioOferta"
+                    name="precioOferta"
+                  >
                 </div>
-                <label for="profesionalOferta" hidden>Profesional</label>
-                <input type="text" th:value="${profesional.id}" id="profesionalOferta" name="profesionalOferta" hidden>
+                <label
+                  for="profesionalOferta"
+                  hidden
+                >Profesional</label>
+                <input
+                  type="text"
+                  th:value="${profesional.id}"
+                  id="profesionalOferta"
+                  name="profesionalOferta"
+                  hidden
+                >
               </div>
               <div class="col-lg-7">
                 <div class="input-group mb-3">
-                  <label for="tipoConsulta" class="input-group-text">Tipo de consulta</label>
-                  <select class="form-select" id="tipoConsulta" name="tipoConsulta">
+                  <label
+                    for="tipoConsulta"
+                    class="input-group-text"
+                  >Tipo de consulta</label>
+                  <select
+                    class="form-select"
+                    id="tipoConsulta"
+                    name="tipoConsulta"
+                  >
                     <option value="TELEMEDICINA">Telemedicina</option>
                     <option value="PRESENCIAL">Presencial</option>
                   </select>
@@ -115,7 +221,10 @@
               </div>
               <div class="col-lg-4">
                 <div class="input-group mb-3 d-grid">
-                  <button type="submit" class="btn btn-primary">Crear</button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                  >Crear</button>
                 </div>
               </div>
             </div>
@@ -124,39 +233,67 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-7">
       <!-- PROXIMOS TURNOS -->
       <div class="">
         <div class="mt-2 mb-2">
           <h5>Próximos Turnos</h5>
         </div>
         <div class="">
-          <div class="row d-grid" style="border:1px solid #DDD;">
+          <div
+            class="row d-grid"
+            style="border:1px solid #DDD;"
+          >
             <table class="table-sm tablaTurnosProfesional rounded-2">
               <thead>
                 <tr>
                   <th>Fecha</th>
                   <th>Paciente</th>
                   <th>Hora</th>
-                  <th>Acciones</th>
+                  <th class="text-end">Acciones</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider">
-                <tr th:each="turno : ${turnos}" th:if="${turno.estado.name == 'CONFIRMADO'}">
+                <tr
+                  th:each="turno : ${turnos}"
+                  th:if="${turno.estado.name == 'CONFIRMADO'}"
+                >
                   <td th:text="${turno.fechaTurno}">fecha</td>
                   <td th:text="${turno.paciente.nombre} + ' ' +${turno.paciente.apellido} ">paciente</td>
                   <!-- <td th:text="${turno.horaTurno}">hora</td> -->
                   <td>13:00Hs</td>
-                  <td>
+                  <td class="text-end">
                     <div class="btn-group">
-                      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                      <button
+                        class="btn btn-sm btn-outline-primary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
                         Opciones
                       </button>
-                      <ul class="dropdown-menu bg-transparent">
-                        <li><button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#crearRegistro">Crear Registro</button></li>
-                        <li><button type="button" class="btn btn-secondary">Cancelar Turno</button></li>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#crearRegistro"
+                            th:data-id-paciente="${turno.paciente.id}"
+                            th:data-id-profesional="${usuario.id}"
+                            th:data-dni-paciente="${turno.paciente.dni}"
+                            th:data-nombre-paciente="${turno.paciente.nombre}"
+                            th:data-apellido-paciente="${turno.paciente.apellido}"
+                            th:data-obraSocial-paciente="${turno.paciente.obraSocial}"
+                            onclick="setFormValues(this)"
+                          >
+                            Crear Registro
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item btn">
+                            Cancelar Turno
+                          </a>
+                        </li>
                       </ul>
                     </div>
                   </td>
@@ -166,53 +303,64 @@
           </div>
         </div>
       </div>
-      <!-- MODAL CREAR REGISTROS -->
-      <div class="modal fade" id="crearRegistro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Registro</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form class="form-floating">
-                <textarea class="form-control" placeholder="Escriba el registro aqui" id="floatingTextarea"></textarea>
-                <label for="floatingTextarea">Registro</label>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- TURNOS A CONFIRMAR -->
       <div class="">
         <div class="mt-2 mb-2">
           <h5>Turnos A Confirmar</h5>
         </div>
         <div class="">
-          <div class="row d-grid" style="border:1px solid #DDD;">
+          <div
+            class="row d-grid"
+            style="border:1px solid #DDD;"
+          >
             <table class="table-sm tablaTurnosProfesional rounded-2">
               <thead>
                 <tr>
                   <th>Fecha</th>
-                  <th>Hora</th>
                   <th>Paciente</th>
+                  <th>Hora</th>
                   <!-- <th>Obra Social</th> -->
                   <th>Estado</th>
-                  <th>Acciones</th>
+                  <th class="text-end">Acciones</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider">
-                <tr th:each="turno : ${turnos}" th:if="${turno.estado.name == 'EN_ESPERA'}">
+                <tr
+                  th:each="turno : ${turnos}"
+                  th:if="${turno.estado.name == 'EN_ESPERA'}"
+                >
                   <td th:text="${turno.fechaTurno}">fecha</td>
-                  <td>09:00Hs</td>
                   <td th:text="${turno.paciente.nombre} + ' ' +${turno.paciente.apellido} ">paciente</td>
+                  <td>09:00Hs</td>
                   <!-- <td th:text="${turno.paciente.obraSocial.name}">obra social</td> -->
                   <td th:text="${turno.estado}">estado</td>
-                  <td><a th:href="@{/turno/aceptarTurno/__${turno.id}__}">Aceptar</a></td>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <button
+                        class="btn btn-sm btn-outline-primary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Opciones
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            th:href="@{/turno/aceptarTurno/__${turno.id}__}"
+                            class="dropdown-item"
+                          >
+                            Aceptar
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item">
+                            Rechazar
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -221,10 +369,97 @@
       </div>
       <!-- TURNOS CANCELADOS -->
       <div class="">
-        <div class="row d-grid text-end" style="border:1px solid #DDD;">
+        <div
+          class="row d-grid text-end"
+          style="border:1px solid #DDD;"
+        >
           <a href="#">Ver Cancelados</a>
         </div>
       </div>
     </div>
   </section>
+  <!-- MODAL CREAR REGISTROS -->
+  <div
+    class="modal fade"
+    id="crearRegistro"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1
+            class="modal-title fs-5"
+            id="exampleModalLabel"
+          >
+            Crear Registro
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+          </button>
+        </div>
+        <div class="modal-body">
+          <form
+            th:action="@{/registroDeConsulta/cargarRegistro}"
+            method="POST"
+          >
+            <p for="dniPaciente">Nombre del Paciente: <span id="nombrePaciente"></span> <span id="apellidoPaciente"></span></p>
+            <p for="dniPaciente">DNI: <span id="dniPaciente"></span></p>
+            <p for="obraSocialPaciente">Obra Social: <span id="obraSocialPaciente"></span></p>
+            <input
+              type="hidden"
+              id="idPacienteInput"
+              name="idPaciente"
+            />
+            <input
+              type="hidden"
+              id="idProfesionalInput"
+              name="idProfesional"
+            />
+
+            <label for="floatingTextarea">Registro</label>
+            <textarea
+              class="form-control"
+              name="detalleConsulta"
+              placeholder="Escriba el registro aqui"
+              id="floatingTextarea"
+              rows="4"
+            ></textarea>
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              Guardar Registro
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:inline="javascript">
+    function setFormValues(button) {
+      var idPaciente = button.getAttribute('data-id-paciente');
+      var idProfesional = button.getAttribute('data-id-profesional');
+      var dniPaciente = button.getAttribute('data-dni-paciente');
+      var nombrePaciente = button.getAttribute('data-nombre-paciente');
+      var apellidoPaciente = button.getAttribute('data-apellido-paciente');
+      var obraSocialPaciente = button.getAttribute('data-obraSocial-paciente');
+
+      document.getElementById('idPacienteInput').value = idPaciente;
+      document.getElementById('dniPaciente').textContent = dniPaciente;
+      document.getElementById('nombrePaciente').textContent = nombrePaciente;
+      document.getElementById('apellidoPaciente').textContent = apellidoPaciente;
+      document.getElementById('obraSocialPaciente').textContent = obraSocialPaciente;
+      document.getElementById('idProfesionalInput').value = idProfesional;
+
+    }
+  </script>
 </div>

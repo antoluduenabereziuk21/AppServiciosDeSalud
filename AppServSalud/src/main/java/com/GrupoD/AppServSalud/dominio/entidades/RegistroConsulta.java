@@ -19,13 +19,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @Embeddable
 public class RegistroConsulta {
-    
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid",strategy = "uuid2")
-    private String id;
-
-    @ManyToOne
     private Profesional profesional;
     private String detalleConsulta;
 }

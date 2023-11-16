@@ -25,4 +25,7 @@ public class Paciente extends Usuario {
     @Enumerated(EnumType.STRING)
     private ObraSocialEnum obraSocial;
 
+    @ManyToOne
+    private HistoriaClinica historiaClinica;
+
 }

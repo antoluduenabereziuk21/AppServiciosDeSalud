@@ -5,11 +5,15 @@
  */
 package com.GrupoD.AppServSalud.controlador;
 
+import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.servicios.RegistroConsultaServicio;
+import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,27 +30,24 @@ public class RegistroConsultaControlador {
 
     @Autowired
     private RegistroConsultaServicio registroConsultaServicio;
-    
-    @GetMapping("/registro")
-    public String registro(){
-    
-        //PONER NOMBRE CORRESPONDIENTE
-        return "registroDeConsulta.html";
-    }
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
     
     @PostMapping("/cargarRegistro")
-    public String cargarRegistro(String idProfesional, String dni, String detalleConsulta, ModelMap modelo ){
-    
+    public String cargarRegistro(String idProfesional, String idPaciente, String detalleConsulta, ModelMap modelo ){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+        modelo.put("usuario", usuario);
         try {
-            registroConsultaServicio.crearRegistroDeConsulta(idProfesional, detalleConsulta, dni);
+            registroConsultaServicio.crearRegistroDeConsulta(idProfesional, idPaciente, detalleConsulta);
             modelo.put("exito", "El registro fue guardado correctamente");
         } catch (MiExcepcion ex) {
-            modelo.put("error", ex.getMessage());
-            //PONER NOMBRE CORRESPONDIENTE
+            modelo.put("error", "No se pudo guardar el registro");
             return "registroDeConsulta.html";
         }
         
-        return "index";
+        return "redirect:/profesional/dashboard";
     }
     
     
