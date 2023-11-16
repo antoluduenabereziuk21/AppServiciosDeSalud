@@ -77,19 +77,24 @@
                         class="container col-lg-2 rounded-2"
                     >
                         <div class="container">
-                            <div class="d-flex flex-column text-center">
-                                <div class="d-flex justify-content-center m-3">
+                            <div class="d-flex flex-column text-center align-items-center">
+                                <div
+                                    class="mt-3 mb-3 rounded-circle"
+                                    style="width: 90px; height: 90px;"
+                                >
                                     <img
-                                        th:src="@{/imagen/perfil/__${profesional.id}__}"
+                                        th:src="@{/imagen/perfil/__${usuario.id}__}"
                                         alt="Avatar"
-                                        class="rounded-circle col-sm-6"
-                                        th:if="${profesional.imagen != null}"
+                                        class="img-fluid rounded-circle imagen-redonda"
+                                        th:if="${usuario.imagen != null}"
+                                        id="imagenPerfilFormulario"
                                     >
                                     <img
                                         th:src="@{/assets/avatar.png}"
                                         alt="Avatar"
-                                        class="rounded-circle col-sm-6"
-                                        th:if="${profesional.imagen == null}"
+                                        class="img-fluid rounded-circle imagen-redonda"
+                                        th:if="${usuario.imagen == null}"
+                                        id="imagenPerfilFormulario"
                                     >
                                 </div>
                                 <div>
