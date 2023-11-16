@@ -10,13 +10,13 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
+
 @Entity
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class HistoriaClinica {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -25,15 +25,12 @@ public class HistoriaClinica {
     
     private String historia;
      
-    @ManyToMany
+    @ManyToOne
     private Profesional profesional;
 
     @ManyToOne
     private Paciente paciente;
     
-    @ManyToMany
-    @JoinTable(name = "historiaClinica_registroConsulta",
-            joinColumns = @JoinColumn(name = "id_historiaClinica"),
-            inverseJoinColumns = @JoinColumn(name = "id_registroConsulta"))
+    @Embedded
     private List<RegistroConsulta> registroConsulta;
 }

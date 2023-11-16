@@ -13,7 +13,6 @@ import com.GrupoD.AppServSalud.dominio.repositorio.HistoriaClinicaRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.PacienteRepositorio;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
 import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
-import com.GrupoD.AppServSalud.utilidades.Validacion;
 
 @Service
 public class HistoriaClinicaServicio {
@@ -50,7 +49,7 @@ public class HistoriaClinicaServicio {
 
     @Transactional
     public void modificarHistoriaClinica (String mailPaciente, Paciente paciente, Profesional profesional ){
-
+/*
         Optional<HistoriaClinica> historiaRespuesta = historiaClinicaRepositorio.buscarPorPaciente(mailPaciente);
 
         if (historiaRespuesta.isPresent()) {
@@ -62,6 +61,6 @@ public class HistoriaClinicaServicio {
 
             historiaClinicaRepositorio.save(historiaClinica);
         }
-        
+        */
     }
 }

@@ -12,7 +12,7 @@ import com.GrupoD.AppServSalud.dominio.entidades.HistoriaClinica;
 
 @Repository
 public interface HistoriaClinicaRepositorio extends JpaRepository <HistoriaClinica, String> {
-    
+    /*
     @Query("SELECT h FROM HistoriaClinica h WHERE h.Profesional.email = :email")
     List<HistoriaClinica> buscarPorProfesional (@Param("email")String email);
 
@@ -20,5 +20,5 @@ public interface HistoriaClinicaRepositorio extends JpaRepository <HistoriaClini
     Optional<HistoriaClinica> buscarPorPaciente (@Param("email")String email);
     
     @Query("SELECT h FROM HistoriaClinica h WHERE h.paciente.dni =: dni")
-    Optional <HistoriaClinica> buscarPacientePorDni (@Param ("dni") String dni);
+    Optional <HistoriaClinica> buscarPacientePorDni (@Param ("dni") String dni);*/
 }
