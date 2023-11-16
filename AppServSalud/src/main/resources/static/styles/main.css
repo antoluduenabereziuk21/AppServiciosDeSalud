@@ -169,3 +169,28 @@ footer {
     display: block;
   }
 }
+
+/* especialidades */
+
+.card-width-propio{
+  width: 23%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1000px) {
+  .card-width-propio{
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card-width-propio{
+    width: 46%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .card-width-propio{
+    width: 98%;
+  }
+}

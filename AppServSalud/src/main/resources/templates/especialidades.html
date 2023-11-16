@@ -20,18 +20,17 @@
                         <br>Encontrá aquí toda la información sobre nuestras especialidades y nuestro profesionales.
                     </p>
                 </div>
-                <div class="row justify-content-center aling-items-center">
-                    <div class="col-sm-3 mb-3" th:each="especialidad : ${especialidades}">
+                <div class="d-flex align-content-around flex-wrap">
+                    <div class="card-width-propio" th:each="especialidad : ${especialidades}">
                         <a
                             th:href="@{'/tarjetaProfesional/'+${especialidad}}"
                             class="link-underline link-underline-opacity-0"
                             th:id="'id-' + ${especialidad.name}"                        >
-                            <div class="card tarjetas-especialidad">
+                            <div class="card tarjetas-especialidad efectos-card-propios">
                                 <img
                                     th:src="@{'/assets/'+ ${especialidad} +'.jpg'}"
                                     alt="..."
                                     class="card-img-top"
-                                    style="max-height: 145px;"
                                 >
                                 <h5 class="card-header" th:text="${especialidad}"></h5>
                                 <div class="card-body">
