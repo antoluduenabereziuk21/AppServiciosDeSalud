@@ -143,6 +143,7 @@ public class PortalControlador {
                     .getPrincipal();
             usuario = usuarioServicio.getUsuario(userDetails.getUsername());
             modelo.put("usuario", usuario);
+            modelo.put("especialidades",EspecialidadEnum.values());
         } catch (Exception e) {
         }
         if (error != null) {

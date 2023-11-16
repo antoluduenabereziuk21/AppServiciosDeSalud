@@ -21,129 +21,47 @@
                     </p>
                 </div>
                 <div class="row justify-content-center aling-items-center">
-                    <div class="col-sm-3 mb-3">
+                    <div class="col-sm-3 mb-3" th:each="especialidad : ${especialidades}">
                         <a
-                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'cardiologia'})}"
+                            th:href="@{'/tarjetaProfesional/'+${especialidad}}"
                             class="link-underline link-underline-opacity-0"
-                        >
+                            th:id="'id-' + ${especialidad.name}"                        >
                             <div class="card tarjetas-especialidad">
                                 <img
-                                    th:src="@{/assets/cardiologia1.jpg}"
+                                    th:src="@{'/assets/'+ ${especialidad} +'.jpg'}"
                                     alt="..."
                                     class="card-img-top"
                                     style="max-height: 145px;"
                                 >
-                                <h5 class="card-header">Cardiología</h5>
+                                <h5 class="card-header" th:text="${especialidad}"></h5>
                                 <div class="card-body">
                                     <p class="text-container">
                                         <span
                                             class="texto-card-especialidad"
+                                            th:if="${especialidad.name == 'CARDIOLOGIA'}"
                                         >
                                             Cuenta con recursos tecnológicos de avanzada,
                                             y especialistas con amplia experiencia.
                                         </span>
                                         <span
-                                            class="texto-card-especialidad-full d-none"
+                                            class="texto-card-especialidad"
+                                            th:if="${especialidad.name == 'CLINICA'}"
                                         >
-                                            Cuenta con recursos tecnológicos de avanzada,
-                                            y especialistas con amplia experiencia.
+                                            El área de Clínica Médica está inspirado en una forma 
+                                            de ver la medicina con foco en el paciente y su familia.
                                         </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-sm-3 mb-3">
-                        <a
-                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'clinica'})}"
-                            class="link-underline link-underline-opacity-0"
-                        >
-                            <div class="card tarjetas-especialidad">
-                                <img
-                                    th:src="@{/assets/medicoclinico.jpg}"
-                                    alt="..."
-                                    class="card-img-top"
-                                    style="max-height: 145px;"
-                                >
-                                <h5 class="card-header">Clinica</h5>
-                                <div class="card-body">
-                                    <p class="text-container">
                                         <span
                                             class="texto-card-especialidad"
+                                            th:if="${especialidad.name == 'GINECOLOGIA'}"
                                         >
-                                            El área de Clínica Médica está inspirado en una forma de ver la medicina con foco en el paciente y su familia.
+                                            Promueve el cuidado de la salud integral de la mujer.
                                         </span>
-                                        <span
-                                            class="texto-card-especialidad-full d-none"
-                                        >
-                                            El área de Clínica Médica está inspirado en una forma de ver la medicina con
-                                            foco en
-                                            el paciente y su familia.
-                                            
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-sm-3 mb-3">
-                        <a
-                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'pediatria'})}"
-                            class="link-underline link-underline-opacity-0"
-                        >
-                            <div class="card tarjetas-especialidad">
-                                <img
-                                    th:src="@{/assets/pediatria.jpg}"
-                                    alt="..."
-                                    class="card-img-top"
-                                    style="max-height: 145px;"
-                                >
-                                <h5 class="card-header">Pediatria</h5>
-                                <div class="card-body">
-                                    <p class="text-container">
                                         <span
                                             class="texto-card-especialidad"
+                                            th:if="${especialidad.name == 'PEDIATRIA'}"
                                         >
                                             Excelencia médica y calidad al servicio de los más pequeños,
                                             en un ambiente especialmente diseñado para ellos. 
-                                        </span>
-                                        <span
-                                            class="texto-card-especialidad-full d-none"
-                                        >
-                                            Excelencia médica y calidad al servicio de los más pequeños,
-                                            en un ambiente especialmente diseñado para ellos.
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-sm-3 mb-3 ">
-                        <a
-                            th:href="@{/tarjetaProfesional/{especialidad}(especialidad=${'ginecologia'})}"
-                            class="link-underline link-underline-opacity-0"
-                        >
-                            <div class="card tarjetas-especialidad">
-                                <img
-                                    th:src="@{/assets/ginecologa1.jpg}"
-                                    alt="..."
-                                    class="card-img-top"
-                                    style="max-height: 145px;"
-                                >
-                                <h5 class="card-header">Ginecologia</h5>
-                                <div class="card-body">
-                                    <p class="text-container">
-                                        <span
-                                            class="texto-card-especialidad"
-                                        >
-                                            Promueve el cuidado de la salud integral de la mujer.
-                                            
-                                        </span>
-                                        <span
-                                            class="texto-card-especialidad-full d-none"
-                                        >
-                                            Promueve el cuidado de la salud integral de la mujer.
-                                            
                                         </span>
                                     </p>
                                 </div>
@@ -153,7 +71,7 @@
                 </div>
             </div>
         </main>
-
+        <div th:replace="/fragments/spinner :: div"></div>
         <footer th:replace="/fragments/footer :: footer"></footer>
 
         <script th:src="@{/js/limitadorTexto.js}"></script>
@@ -163,5 +81,15 @@
             crossorigin="anonymous"
         ></script>
         <script th:src="@{/js/toast.js}"></script>
+        <script>
+            const cards = document.querySelectorAll("[id^='id-']");
+            const cards_array = Array.from(cards);
+
+            cards_array.forEach(element => {
+                element.addEventListener("click", e => {
+                    document.getElementById("spinner").style.display = "flex";
+                });
+            })
+        </script>
     </body>
 </html>
