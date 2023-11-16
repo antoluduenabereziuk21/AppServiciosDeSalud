@@ -99,7 +99,7 @@
                                         style="width: 18px; height: 18px; font-size: 12px;"
                                         id="numeroDeNotificacionesFondo"
                                     >
-                                        <span th:text="${#lists.size(usuario.getNotificaionesNoLeidas)}"></span>
+                                        <span th:text="${#lists.size(usuario.getNotificaionesNoLeidas)}" id="numeroDeNotificaciones"></span>
                                     </div>
                                 </span>
                             </button>
@@ -329,19 +329,6 @@
                     `http://localhost:8080/datos/marcarLeida/${idNotificacion}`
                 )
                     .then(response => {
-                        // if (response.ok) {
-                        //     const notificacion_numero = document.getElementById("numeroDeNotificaciones");
-                        //     const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
-                        //     notificacion.style.display = "none";
-                        //     if (parseInt(notificacion_numero.innerText) >= 0){
-                        //        notificacion_numero.style.display = "none";
-                        //         document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
-                        //     }else{
-                        //         notificacion_numero.innerText = parseInt(notificacion_numero.innerText) - 1;
-                        //     }
-                        // } else {
-                        //     throw new Error('Error al marcar la notificación como leída');-->
-                        // }
                         if (response.ok) {
                             const notificacion_numero = document.getElementById("numeroDeNotificaciones");
                             const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
