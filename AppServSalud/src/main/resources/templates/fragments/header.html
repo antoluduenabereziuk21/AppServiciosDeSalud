@@ -1,6 +1,8 @@
-<header
->
-    <nav class="navbar navbar-expand-lg position-relative px-4 pt-1 pb-1 fixed-top" style="background-color: rgba(164, 215, 164, 0.959);">
+<header>
+    <nav
+        class="navbar navbar-expand-lg position-relative px-4 pt-1 pb-1 fixed-top"
+        style="background-color: rgba(164, 215, 164, 0.959);"
+    >
         <div class="container-fluid">
             <div class="">
                 <a
@@ -15,7 +17,10 @@
                         >
                     </div>
                     <div>
-                        <h1 style="font-size: 1.20em;" class="p-0 m-0 mx-2">Medi Ya!</h1>
+                        <h1
+                            style="font-size: 1.20em;"
+                            class="p-0 m-0 mx-2"
+                        >Medi Ya!</h1>
                     </div>
                 </a>
             </div>
@@ -49,7 +54,7 @@
                     ></button>
                 </div>
                 <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <ul class="navbar-nav justify-content-end  align-items-center flex-grow-1 pe-3">
                         <!-- NO LOGEADO -->
                         <li
                             class="nav-item"
@@ -79,22 +84,25 @@
                             <button
                                 id="btnNotificaciones"
                                 type="button"
-                                class="nav-link p-2 mx-2"
+                                class="nav-link text-dark d-flex align-items-center justify-content-center p-3 px-2 position-relative"
                                 data-bs-toggle="modal"
                                 data-bs-target="#notificacionesModal"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    height="1.2em"
-                                    viewBox="0 0 448 512"
-                                ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                    <path
-                                        d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
-                                    />
-                                </svg>
-                                <span th:if="${usuario != null and usuario.notificaciones != null and #lists.size(usuario.getNotificaionesNoLeidas) gt 0}" class="badge rounded-pill bg-danger">
-                                    <span th:text="${#lists.size(usuario.getNotificaionesNoLeidas)}"></span>
-                                    </span>
+                                <i class="fa-solid fa-bell fa-lg"></i>
+                                <span
+                                    class="position-absolute top-0 end-0"
+                                    id="btnNotificacionesCant"
+                                    th:if="${usuario != null and usuario.notificaciones != null and #lists.size(usuario.getNotificaionesNoLeidas) gt 0}"
+                                >
+                                    <div
+                                        class="d-flex rounded-circle bg-danger align-items-center justify-content-center text-white"
+                                        style="width: 18px; height: 18px; font-size: 12px;"
+                                    >
+                                        <span
+                                            th:text="${#lists.size(usuario.getNotificaionesNoLeidas)}"
+                                        ></span>
+                                    </div>
+                                </span>
                             </button>
                         </li>
                         <!-- LOGUEADO COMO ADMIN -->
@@ -153,13 +161,13 @@
                                         </a>
                                     </li>
                                     <li>
-                                            <a
-                                                class="nav-link"
-                                                href="/oferta/listar"
-                                            >
-                                                Todas Las Ofertas
-                                            </a>
-                                        </li>
+                                        <a
+                                            class="nav-link"
+                                            href="/oferta/listar"
+                                        >
+                                            Todas Las Ofertas
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -181,7 +189,7 @@
                             sec:authorize="hasRole('ROLE_PACIENTE')"
                         >
                             <div>
-                                <ul class="navbar-nav mx-3">
+                                <ul class="navbar-nav mx-2">
 
                                     <li>
                                         <a
@@ -200,7 +208,10 @@
                             class="nav-item"
                             sec:authorize="isAuthenticated()"
                         >
-                            <div class="btn-group" th:if="${usuario != null}">
+                            <div
+                                class="btn-group"
+                                th:if="${usuario != null}"
+                            >
                                 <button
                                     class="nav-link dropdown-toggle active text-capitalize"
                                     href="#"
@@ -258,16 +269,8 @@
                                                 type="submit"
                                                 value="Cerrar sesión"
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    height="1.15em"
-                                                    viewBox="0 0 512 512"
-                                                ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                    <path
-                                                        d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                                                    />
-                                                </svg>
-                                                (Cerrar Sesión)
+                                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                                Cerrar Sesión
                                             </button>
                                         </form>
                                     </li>
@@ -302,22 +305,29 @@
                         aria-label="Close"
                     ></button>
                 </div>
-<!--                <div class="modal-body">-->
-<!--                    <ul th:each="notificacion : ${usuario.notificaciones}">-->
-<!--                        <li th:text="${notificacion.mensaje}"></li>-->
-<!--                        <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')">Marcar como leída</button>-->
+                <!--                <div class="modal-body">-->
+                <!--                    <ul th:each="notificacion : ${usuario.notificaciones}">-->
+                <!--                        <li th:text="${notificacion.mensaje}"></li>-->
+                <!--                        <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')">Marcar como leída</button>-->
 
-<!--                    </ul>-->
-<!--                </div>-->
+                <!--                    </ul>-->
+                <!--                </div>-->
                 <div class="modal-body">
                     <ul th:each="notificacion : ${usuario.notificaciones}">
                         <li id="notificacion-${notificacion.id}">
                             <span th:text="${notificacion.mensaje}"></span>
-                            <button class="btn btn-primary" onclick="marcarComoLeida('${notificacion.id}')" th:id="'marcarComoLeida-'+${notificacion.id}">Marcar como leída</button>
+                            <button
+                                class="btn btn-primary"
+                                onclick="marcarComoLeida('${notificacion.id}')"
+                                th:id="'marcarComoLeida-'+${notificacion.id}"
+                            >Marcar como leída</button>
                         </li>
                         <li id="notificacion-${notificacion.id}">
                             <span th:text="${notificacion.mensaje}"></span>
-                            <button th:class="'btn btn-primary ' + ${notificacion.id} " th:id="'notificacion-'+${notificacion.id}">Marcar como leída</button>
+                            <button
+                                th:class="'btn btn-primary ' + ${notificacion.id} "
+                                th:id="'notificacion-'+${notificacion.id}"
+                            >Marcar como leída</button>
                         </li>
                     </ul>
                 </div>
@@ -329,29 +339,29 @@
         const botones = document.querySelectorAll('button[id^="notificacion-"]');
         const botones_array = Array.from(botones);
         botones_array.forEach(element => {
-            element.addEventListener("click", (e) =>{
+            element.addEventListener("click", (e) => {
                 const idNotificacion = e.target.classList[2];
                 fetch(
                     `http://localhost:8080/datos/marcarLeida/${idNotificacion}`
                 )
-                .then(response => {
-                    if (response.ok) {
-                        const notificacion_numero = document.getElementById("numeroDeNotificaciones");
-                        const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
-                        notificacion.style.display = "none";
-                        if (parseInt(notificacion_numero.innerText) >= 0){
-                            notificacion_numero.style.display = "none";
-                            document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
-                        }else{
-                            notificacion_numero.innerText = parseInt(notificacion_numero.innerText) - 1;
+                    .then(response => {
+                        if (response.ok) {
+                            const notificacion_numero = document.getElementById("numeroDeNotificaciones");
+                            const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
+                            notificacion.style.display = "none";
+                            if (parseInt(notificacion_numero.innerText) >= 0) {
+                                notificacion_numero.style.display = "none";
+                                document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
+                            } else {
+                                notificacion_numero.innerText = parseInt(notificacion_numero.innerText) - 1;
+                            }
+                        } else {
+                            throw new Error('Error al marcar la notificación como leída');
                         }
-                    } else {
-                        throw new Error('Error al marcar la notificación como leída');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             })
         });
     </script>

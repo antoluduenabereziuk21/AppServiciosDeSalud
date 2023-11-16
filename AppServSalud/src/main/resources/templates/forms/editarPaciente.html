@@ -3,25 +3,7 @@
     lang="es"
     xmlns:th="http://www.thymeleaft.org"
 >
-    <head>
-        <meta charset="UTF-8">
-        <title>Clinica House</title>
-        <meta
-            name="logoHouse.ico"
-            content="width=device-width, initial-scale=1.0"
-        >
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        >
-        <link
-            rel="stylesheet"
-            th:href="@{/styles/main.css}"
-        >
-        <link rel="stylesheet" th:href="@{/styles/index.css}">
-    </head>
+    <head th:replace="/fragments/head :: head"></head>
     <body>
         <header th:replace="/fragments/header :: header"></header>
         <div th:replace="/fragments/toast :: div"></div>
@@ -43,43 +25,47 @@
                     <div class="text-center mb-2 mt-5">
                         <h3 class="card-title">Actualizar Datos</h3>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3">
+                    <div class="row justify-content-center mt-5 mb-5">
+                        <div class="col-sm-3 mb-3">
                             <div class="d-flex flex-column">
-                                <div class="d-flex m-3 justify-content-center">
-                                    <div class="avatar rounded-circle" style="width: 180px; height: 180px; overflow: hidden;">
-                                        <img
-                                            th:src="@{/imagen/perfil/__${paciente.id}__}"
-                                            alt="Avatar"
-                                            class=""
-                                            th:if="${paciente.imagen != null}"
-                                            id="imagenPrevisualizacionExistente"
-                                            style="width: 100%;"
+                                <div class="d-flex justify-content-center">
+                                    <div id="contenedor-imagen-formulario">
+                                        <label
+                                            for="fotoPerfil"
+                                            class="etiqueta-icono"
                                         >
-                                        <img
-                                            th:src="@{/assets/avatar.png}"
-                                            alt="Avatar"
-                                            class=""
-                                            th:if="${paciente.imagen == null}"
-                                            id="imagenPrevisualizacionDefault"
-                                        >
+                                            <img
+                                                th:src="@{/imagen/perfil/__${paciente.id}__}"
+                                                alt="Avatar"
+                                                class="img-fluid rounded-circle imagen-redonda"
+                                                th:if="${paciente.imagen != null}"
+                                                id="imagenPerfilFormulario"
+                                            >
+                                            <img
+                                                th:src="@{/assets/avatar.png}"
+                                                alt="Avatar"
+                                                class="img-fluid rounded-circle imagen-redonda"
+                                                th:if="${paciente.imagen == null}"
+                                                id="imagenPerfilFormulario"
+                                            >
+                                            <img
+                                                id="imagenPrevia"
+                                                alt="Avatar"
+                                                class="img-fluid rounded-circle col-sm-8 imagen-redonda d-none"
+                                            >
+                                            <i class="icono-modificar">✎</i>
+                                            <input
+                                                id="fotoPerfil"
+                                                type="file"
+                                                class="form-control-file input-imagen"
+                                                name="archivo"
+                                            >
+                                        </label>
                                     </div>
                                 </div>
-                                <label
-                                    for="fotoPerfil"
-                                    class="rounded-2 bg-white p-1 btn"
-                                >Cambiar foto</label>
-                                <input
-                                    id="fotoPerfil"
-                                    type="file"
-                                    class="form-control-file"
-                                    name="archivo"
-                                    hidden
-                                >
                             </div>
-
                         </div>
-                        <div class="col-lg-7 mt-4">
+                        <div class="col-lg-7">
                             <div class="input-group mb-3">
                                 <label
                                     for="pacienteNombre"

@@ -37,3 +37,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    $("#fotoPerfil").change(function () {
+        previsualizarImagen(this);
+    });
+
+    function previsualizarImagen(input) {
+        var archivo = input.files[0];
+
+        if (archivo) {
+            var lector = new FileReader();
+
+            lector.onload = function (e) {
+                $("#imagenPrevia").attr("src", e.target.result);
+                $("#imagenPrevia").removeClass("d-none");
+                $("#imagenPerfilFormulario").addClass("d-none");
+            };
+
+            lector.readAsDataURL(archivo);
+        }
+    }
+});

@@ -24,35 +24,47 @@
                         name="id"
                     >
                     <div class="row justify-content-center">
+
                         <div class="col-sm-3 mb-3">
                             <div class="d-flex flex-column">
-                                <div class="d-flex m-3 justify-content-center">
-                                    <img
-                                        th:src="@{/imagen/perfil/__${profesional.id}__}"
-                                        alt="Avatar"
-                                        class="rounded-circle col-sm-7"
-                                        th:if="${profesional.imagen != null}"
-                                    >
-                                    <img
-                                        th:src="@{/assets/avatar.png}"
-                                        alt="Avatar"
-                                        class="rounded-circle col-sm-7"
-                                        th:if="${profesional.imagen == null}"
-                                    >
+                                <div class="d-flex justify-content-center">
+                                    <div id="contenedor-imagen-formulario">
+                                        <label
+                                            for="fotoPerfil"
+                                            class="etiqueta-icono"
+                                        >
+                                            <img
+                                                th:src="@{/imagen/perfil/__${profesional.id}__}"
+                                                alt="Avatar"
+                                                class="img-fluid rounded-circle imagen-redonda"
+                                                th:if="${profesional.imagen != null}"
+                                                id="imagenPerfilFormulario"
+                                            >
+                                            <img
+                                                th:src="@{/assets/avatar.png}"
+                                                alt="Avatar"
+                                                class="img-fluid rounded-circle imagen-redonda"
+                                                th:if="${profesional.imagen == null}"
+                                                id="imagenPerfilFormulario"
+                                            >
+                                            <img
+                                                id="imagenPrevia"
+                                                alt="Avatar"
+                                                class="img-fluid rounded-circle col-sm-8 imagen-redonda d-none"
+                                            >
+                                            <i class="icono-modificar">✎</i>
+                                            <input
+                                                id="fotoPerfil"
+                                                type="file"
+                                                class="form-control-file input-imagen"
+                                                name="archivo"
+                                            >
+                                        </label>
+                                    </div>
                                 </div>
-                                <label
-                                    for="fotoPerfil"
-                                    class="rounded-2 bg-white p-1 btn"
-                                >Cambiar foto</label>
-                                <input
-                                    id="fotoPerfil"
-                                    type="file"
-                                    class="form-control-file"
-                                    name="archivo"
-                                    hidden
-                                >
                             </div>
                         </div>
+
                         <div class="col-lg-5">
                             <div class="input-group mb-3">
                                 <label
