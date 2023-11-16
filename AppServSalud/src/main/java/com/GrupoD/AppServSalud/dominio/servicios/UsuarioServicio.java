@@ -4,20 +4,15 @@ import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.UsuarioRepositorio;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -34,14 +29,14 @@ public class UsuarioServicio implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws AuthenticationException {
 
-        Optional<Usuario> userOptional = usuarioRepositorio.findByEmail(email);
-        if(userOptional.isPresent()) {
+        Optional<Usuario> userOptional = usuarioRepositorio.buscarPorEmail(email);
+        if (userOptional.isPresent()) {
             Usuario user = userOptional.get();
 
             if (!user.getActivo()) {
-                throw new UsernameNotFoundException("Usuario inactivo");
+                throw new AuthenticationException("Usuario inactivo") {};
             }
 
             List<GrantedAuthority> autorizaciones = new ArrayList<>();
@@ -49,19 +44,25 @@ public class UsuarioServicio implements UserDetailsService {
             GrantedAuthority autorizacion = new SimpleGrantedAuthority("ROLE_" + user.getRol().name());
             autorizaciones.add(autorizacion);
 
+            if (user.getPermisos() != null && !user.getPermisos().isEmpty()) {
+                user.getPermisos().forEach(
+                        permiso -> autorizaciones.add(new SimpleGrantedAuthority("ROLE_"+permiso.getPermiso().name())));
+            }
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuario", user);
-            session.setAttribute("nombre",user.getNombre());
+            session.setAttribute("nombre", user.getNombre());
             session.setAttribute("role", "ROLE_" + user.getRol().name());
 
             return new User(user.getEmail(), user.getPassword(), autorizaciones);
+        }else{
+            throw new AuthenticationException("Usuario no encontrado") {};
         }
-        return null;
     }
 
-    public void createAdminUser(String email, String contrasenha, String nombre, String apellido, String role){
+    public void createSuperAdminUser(String email, String contrasenha, String nombre, String apellido, String role) {
+
         Usuario usuario = Usuario.builder()
                 .email(email)
                 .password(new BCryptPasswordEncoder().encode(contrasenha))
@@ -70,7 +71,16 @@ public class UsuarioServicio implements UserDetailsService {
                 .rol(RolEnum.valueOf(role))
                 .activo(true)
                 .build();
+                
         usuarioRepositorio.save(usuario);
+    }
+
+    public Usuario getUsuario(String email){
+        Optional<Usuario> respuesta = usuarioRepositorio.buscarPorEmail(email);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
     }
 
 }

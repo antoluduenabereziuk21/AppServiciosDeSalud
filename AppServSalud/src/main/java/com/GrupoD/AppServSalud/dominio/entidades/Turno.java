@@ -1,29 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.GrupoD.AppServSalud.dominio.entidades;
 
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author antolube20
- */
+import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
+
 @Entity
 @Data
 @Getter
@@ -45,7 +41,11 @@ public class Turno {
     @Temporal(TemporalType.DATE)
     private Date FechaTurno;
 
+    private HorarioEnum horaTurno;
+
     private Boolean estado;
+    private Boolean activoPaciente;
+    private Boolean activoProfesional;
     
     @ManyToOne
     private Profesional profesional;
@@ -53,9 +53,12 @@ public class Turno {
     @ManyToOne
     private Paciente paciente;
     
+    @OneToOne
+    @JoinColumn(name="oferta_id")
+    private Oferta oferta;
+
     public Turno(){
         this.estado = true;
     }
-    
 
 }

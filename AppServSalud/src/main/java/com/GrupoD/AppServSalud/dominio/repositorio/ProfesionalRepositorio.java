@@ -5,7 +5,6 @@
  */
 package com.GrupoD.AppServSalud.dominio.repositorio;
 
-import com.GrupoD.AppServSalud.dominio.entidades.Paciente;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import java.util.List;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfesionalRepositorio extends JpaRepository<Profesional, String>{
     
-    @Query("SELECT p FROM Profesional p WHERE p.especialidad =: especialidad")
+    @Query("SELECT p FROM Profesional p WHERE p.especialidad = :especialidad")
     List<Profesional> buscarPorEspecialidad(@Param("especialidad") EspecialidadEnum especialidad);
 
     

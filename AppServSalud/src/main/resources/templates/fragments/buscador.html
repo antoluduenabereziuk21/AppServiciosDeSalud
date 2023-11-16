@@ -1,0 +1,44 @@
+<!--<div class="container mt-5 mb-5 justify-content-center align-items-center">-->
+<!--    <form   id="searchForm"-->
+<!--            class="d-flex mt-2 "-->
+<!--            role="search"-->
+<!--    >-->
+<!--        <input-->
+<!--                class="form-control"-->
+<!--                type="search"-->
+<!--                placeholder="Turnos, Especialidades, Obras Sociales, Profesionales"-->
+<!--                aria-label="Search"-->
+<!--        >-->
+<!--        <button-->
+<!--                class="btn btn-outline-primary"-->
+<!--                type="submit"-->
+<!--        >Buscar</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<div class="container" th:fragment="buscador">
+    <form
+        id="searchForm"
+        class="d-flex mt-2"
+        role="search"
+    >
+        <input
+            class="form-control"
+            type="search"
+            placeholder="Turnos, Especialidades, Obras Sociales, Profesionales"
+            aria-label="Search"
+        >
+        <button
+            class="btn btn-outline-primary mx-2"
+            type="submit"
+        >Buscar</button>
+    </form>
+    <!-- Contenedor para las opciones de búsqueda -->
+    <div
+        id="searchOptions"
+        class="mt-3 rounded-2"
+        style="border: none;"
+    >
+        <!-- Las opciones se agregarán dinámicamente aquí -->
+    </div>
+</div>

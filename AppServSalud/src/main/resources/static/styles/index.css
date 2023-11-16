@@ -1,12 +1,4 @@
-body {
-    min-height: auto;
-    background-image: linear-gradient(rgba(222, 240, 222, 0.75), rgba(138, 186, 138, 0.75)), url(../assets/HospitalHouse.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-}
-
-.progress-bar {
+#index .progress-bar {
     transition: width 1s linear;
 }
 
@@ -22,7 +14,7 @@ body {
     transition: all 1s ease;
 }
 
-.tablas {
+#index .tablas {
     background-color: rgb(23, 104, 38);
     text-align: left;
     width: 70%;
@@ -30,35 +22,72 @@ body {
     ;
 }
 
-.tablas th,
-.tablas td {
+#index .tablas th,
+#index .tablas td {
     border: solid green;
     font-size: 28px;
     margin: 5%
 }
 
-.tabla {
+#index .tabla {
     background-color: rgb(23, 104, 38);
 }
 
-.perfil {
-    width: 70%;
-    text-align: 50%;
-}
 
-.perfil th,
-.perfil td {
+
+#index .perfil th,
+#index .perfil td {
     border-collapse: collapse;
 }
 
-footer {
-    margin-top: 100%;
-    align-items: end;
-    background-color: rgba(114, 169, 114, 0.25)
+#index .contenedor-video {
+  margin: 0 auto;
+  position: relative !important;
+  width: 100%;
+  height: 100%;
 }
 
-.footer_textos {
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
+#video_overlays {
+  position: absolute !important;
+  background-image: linear-gradient(to right, rgba(114, 169, 114, 0.25), rgba(114, 169, 114, 0.25));
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#index .row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+#index .info-home {
+  display: flex;
+  flex-direction: column;
+}
+
+#index .info-home h1 {
+  font-family: Roboto;
+  font-size: 40px;
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+#index .contenedor-video video {
+  z-index: -1;
+  min-width: 100%;
+  border: none;
+  display: block;
 }

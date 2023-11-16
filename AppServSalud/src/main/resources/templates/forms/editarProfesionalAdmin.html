@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaft.org"
+>
+    <head th:replace="/fragments/head :: head">
+    <body>
+        <header th:replace="/fragments/header :: header"></header>
+
+        <div th:replace="/fragments/toast :: div"></div>
+        <div class="container">
+            <form
+                class="formulario"
+                th:action="@{/admin/modProfesional/__${profesional.email}__}"
+                method="POST"
+            >
+                <div class="text-center mb-5">
+                    <h3 class="card-title">EDITAR PROFESIONAL</h3>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="input-group mb-3">
+                            <label
+                                for="profesionalNombre"
+                                class="input-group-text"
+                            >Nombre</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="nombre"
+                                placeholder="Juan"
+                                id="profesionalNombre"
+                                th:value="${profesional.nombre}"
+                                autofocus
+                            >
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="input-group mb-3">
+                            <label
+                                for="profesionalApellido"
+                                class="input-group-text"
+                            >Apellido</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="apellido"
+                                placeholder="Rodriguez"
+                                id="profesionalApellido"
+                                th:value="${profesional.apellido}"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="profesionalDni"
+                            >N° de Documento</label>
+                            <input
+                                class="form-control"
+                                type="number"
+                                name="dni"
+                                placeholder="77888999"
+                                id="profesionalDni"
+                                th:value="${profesional.dni}"
+                            >
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="fechaDeNacimiento"
+                            >Nacimiento</label>
+                            <input
+                                class="form-control"
+                                type="date"
+                                name="fechaNacimiento"
+                                id="fechaNacimiento"
+                                th:value="${profesional.fechaNacimiento}"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="profesionalSexo"
+                            >Sexo</label>
+                            <select
+                                class="form-select"
+                                id="profesionalSexo"
+                                name="sexo"
+                            >
+                                <option
+                                    th:selected="${profesional.sexo.name == 'MASCULINO'}"
+                                    value="MASCULINO"
+                                >Masculino</option>
+                                <option
+                                    th:selected="${profesional.sexo.name == 'FEMENINO'}"
+                                    value="FEMENINO"
+                                >Femenino</option>
+                                <option
+                                    th:selected="${profesional.sexo.name == 'X'}"
+                                    value="X"
+                                >X</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="input-group mb-3">
+                            <label
+                                for="profesionalCorreo"
+                                class="input-group-text"
+                            >Correo</label>
+                            <input
+                                type="email"
+                                class="form-control"
+                                name="email"
+                                placeholder="email@email.com"
+                                id="profesionalCorreo"
+                                th:value="${profesional.email}"
+                            >
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="profesionalTelefono"
+                            >N° de Telefono</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="telefono"
+                                placeholder="1123456789"
+                                id="profesionalTelefono"
+                                th:value="${profesional.telefono}"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="profesionalMatricula"
+                            >N° de Matrícula</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="matriculaProfesional"
+                                placeholder="0123456789"
+                                id="profesionalMatricula"
+                                th:value="${profesional.matriculaProfesional}"
+                            >
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="input-group mb-3">
+                            <label
+                                class="input-group-text"
+                                for="especialidad"
+                            >Especialidad</label>
+                            <select
+                                class="form-select"
+                                id="especialidad"
+                                name="especialidad"
+                            >
+                                <option
+                                    th:selected="${profesional.especialidad.name == 'CLINICA'}"
+                                    value="CLINICA"
+                                >Clínica</option>
+                                <option
+                                    th:selected="${profesional.especialidad.name == 'CARDIOLOGIA'}"
+                                    value="CARDIOLOGIA"
+                                >Cardiologia</option>
+                                <option
+                                    th:selected="${profesional.especialidad.name == 'GINECOLOGIA'}"
+                                    value="GINECOLOGIA"
+                                >Ginecologia</option>
+                                <option
+                                    th:selected="${profesional.especialidad.name == 'PEDIATRIA'}"
+                                    value="PEDIATRIA"
+                                >Pediatria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-4 d-grid">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                        >
+                            Editar
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                >
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1
+                                    class="modal-title fs-5"
+                                    id="exampleModalLabel"
+                                >Modal title</h1>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <label
+                                        class="input-group-text"
+                                        for="contrasenha"
+                                    >Contraseña</label>
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        name="password"
+                                        placeholder="********"
+                                        id="password"
+                                    >
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >Cancelar</button>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <script th:src="@{/js/toast.js}"></script>
+    </body>
+</html>
