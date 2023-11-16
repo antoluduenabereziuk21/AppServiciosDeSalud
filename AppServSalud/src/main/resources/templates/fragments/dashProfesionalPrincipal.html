@@ -255,7 +255,7 @@
               <tbody class="table-group-divider">
                 <tr
                   th:each="turno : ${turnos}"
-                  th:if="${turno.activoProfesional}"
+                  th:if="${turno.estado.name == 'CONFIRMADO'}"
                 >
                   <td th:text="${turno.fechaTurno}">fecha</td>
                   <td th:text="${turno.paciente.nombre} + ' ' +${turno.paciente.apellido} ">paciente</td>
@@ -301,7 +301,7 @@
               <tbody class="table-group-divider">
                 <tr
                   th:each="turno : ${turnos}"
-                  th:if="${!turno.activoProfesional}"
+                  th:if="${turno.estado.name == 'EN_ESPERA'}"
                 >
                   <td th:text="${turno.fechaTurno}">fecha</td>
                   <td>09:00Hs</td>

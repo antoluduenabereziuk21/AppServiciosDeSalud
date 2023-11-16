@@ -4,14 +4,11 @@ package com.GrupoD.AppServSalud.controlador;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
-import com.GrupoD.AppServSalud.dominio.servicios.NotificacionServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
-import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

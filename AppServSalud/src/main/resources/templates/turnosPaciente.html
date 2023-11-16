@@ -16,7 +16,6 @@
                         <th>Hora del turno</th>
                         <th>Detalle</th>
                         <th>Estado del turno</th>
-                        <th>Aceptado por Profesional</th>
                         <th>Ubicacion</th>
                         <th>Precio</th>
                         <th>Cancelar</th>
@@ -29,8 +28,7 @@
                         <td th:text="${turno.oferta.fecha}"></td>
                         <td th:text="${turno.horaTurno}"></td>
                         <td th:text="${turno.oferta.detalle}"></td>
-                        <td th:text="${turno.estado == true} ? 'Activo' : 'Inactivo'"></td>
-                        <td th:text="${turno.activoProfesional == true} ? 'Aceptado' : 'En Progreso'"></td>
+                        <td th:text="${turno.estado}"></td>
                         <td th:text="${turno.oferta.ubicacion}"></td>
                         <td th:text="${turno.oferta.precio}"></td>
                         <td>

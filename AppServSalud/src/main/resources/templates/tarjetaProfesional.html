@@ -1,52 +1,37 @@
 <!DOCTYPE html>
-<html
-    lang="es"
-    xmlns:th="http://www.thymeleaft.org"
->
-    <head th:replace="/fragments/head :: head"></head>
-    <body>
-        <header th:replace="/fragments/header :: header"></header>
-        <main>
-            <div class="container mt-3" >
-                <h1 style="color: #EE7734">Nuestros médicos: <span th:text="${especialidad}"></span></h1>
-                <p th:if="${especialidad == 'cardiologia'}">
-                    Cuenta con recursos tecnológicos de avanzada y especialistas con amplia experiencia y reconocida trayectoria que nos permiten alcanzar los más altos estándares de calidad en la prevención, diagnóstico y tratamiento de las enfermedades cardíacas.
-                </p>
-                <p th:if="${especialidad == 'pediatria'}">
-                    Excelencia médica y calidad al servicio de los más pequeños, en un ambiente especialmente diseñado para ellos. Nuestro equipo altamente calificado combina experiencia médica con un enfoque cálido y familiar.
-                </p>
-                <p th:if="${especialidad == 'ginecologia'}">
-                    Promueve el cuidado de la salud integral de la mujer. Con profesionales altamente capacitados, logra satisfacer las demandas que los avances de las ciencias biomédicas y la tecnología imponen, siempre dentro de un ambiente cálido, de respeto a la paciente. Cuenta con distintas secciones avocadas a la prevención primaria y secundaria, así como también en el tratamiento de las enfermedades avanzadas.
-                </p>
-                <p th:if="${especialidad == 'clinica'}">
-                    El área de Clínica Médica está inspirado en una forma de ver la medicina con foco en el paciente y su familia. Cuenta con profesionales de amplia experiencia de formación médica continua por medio de ateneos y cursos interdisciplinarios enfocados a mejorar el servicio y compromiso asumido. En el área ambulatoria se brinda atención clínica integral y consultorios de atención para pacientes recientemente externados que requieran control inmediato antes de ver a su médico de cabecera.
-                </p> 
-            </div>
-            
-            <div class="container mt-5 mb-5">
-                <div class="row justify-content-center align-items-center">
-                    <div
-                        th:each="profesional : ${profesionales}"
-                        class="col-sm-3 mb-3"
-                    >
-                        <div
-                            class="card"
-                            style="width: 18rem;"
-                        >
-                            <img
-                                th:src="@{/assets/cardiologia.jpg}"
-                                alt="..."
-                            >
-                            <div class="card-body">
-                                <h5
-                                    th:text="${'Dr/a. '+profesional.apellido}"
-                                    class="card-title"
-                                >Dr.Menganito</h5>
-                                <h7 th:text="${profesional.especialidad}">Especialidad</h7>
-                                <p
-                                    class="card-text"
-                                    th:text="${profesional.descripcion}"
-                                >
+<html lang="es" xmlns:th="http://www.thymeleaft.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+    <header th:replace="/fragments/header :: header"></header>
+    <main>
+        <div class="container mt-3" >
+            <h1 style="color: #EE7734">Nuestros médicos: <span th:text="${especialidad}"></span></h1>
+            <p th:if="${especialidad == 'cardiologia'}">
+                Cuenta con recursos tecnológicos de avanzada y especialistas con amplia experiencia y reconocida trayectoria que nos permiten alcanzar los más altos estándares de calidad en la prevención, diagnóstico y tratamiento de las enfermedades cardíacas.
+            </p>
+            <p th:if="${especialidad == 'pediatria'}">
+                Excelencia médica y calidad al servicio de los más pequeños, en un ambiente especialmente diseñado para ellos. Nuestro equipo altamente calificado combina experiencia médica con un enfoque cálido y familiar.
+            </p>
+            <p th:if="${especialidad == 'ginecologia'}">
+                Promueve el cuidado de la salud integral de la mujer. Con profesionales altamente capacitados, logra satisfacer las demandas que los avances de las ciencias biomédicas y la tecnología imponen, siempre dentro de un ambiente cálido, de respeto a la paciente. Cuenta con distintas secciones avocadas a la prevención primaria y secundaria, así como también en el tratamiento de las enfermedades avanzadas.
+            </p>
+            <p th:if="${especialidad == 'clinica'}">
+                El área de Clínica Médica está inspirado en una forma de ver la medicina con foco en el paciente y su familia. Cuenta con profesionales de amplia experiencia de formación médica continua por medio de ateneos y cursos interdisciplinarios enfocados a mejorar el servicio y compromiso asumido. En el área ambulatoria se brinda atención clínica integral y consultorios de atención para pacientes recientemente externados que requieran control inmediato antes de ver a su médico de cabecera.
+            </p> 
+        </div>
+        <div class="container mt-5 mb-5">
+            <div class="row justify-content-center align-items-center">
+                <div th:each="profesional : ${profesionales}" class="col-sm-3 mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <img th:src="@{/assets/cardiologia.jpg}" alt="...">
+                        <div class="card-body">
+                            <input type="hidden" th:value="${profesional.id}">
+                            <h5 th:text="${'Dr/a. '+profesional.apellido}" class="card-title">Dr.Menganito</h5>
+                            <h7 th:text="${profesional.especialidad}">Especialidad</h7>
+                            <p>Nombre: <span th:text="${profesional.nombre}"></span></p>
+                            <p class="card-text" th:text="${profesional.descripcion}">
 
                             </p>
                             <span>Reputación</span>

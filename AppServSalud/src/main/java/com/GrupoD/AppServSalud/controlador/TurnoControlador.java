@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.servicios.TurnoServicio;
@@ -43,12 +44,15 @@ public class TurnoControlador {
     }
 
     @GetMapping("/misTurnos")
-    public String misTurnos(/*@PathVariable String email,*/ ModelMap modelo) {
+    public String misTurnos(@RequestParam(name = "exito",required = false) String exito,
+            @RequestParam(name = "error", required = false) String error ,ModelMap modelo) {
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
             modelo.put("usuario", usuario);
+            modelo.put("exito",exito);
+            modelo.put("error",error);
             modelo.put("turnos", turnoServicio.listarTurnosPorPaciente(userDetails.getUsername()));
         } catch (MiExcepcion e) {
             return "redirect:/?error=" + URLEncoder.encode(e.getMessage());
@@ -70,16 +74,11 @@ public class TurnoControlador {
     public String cancelarTurno(@PathVariable String idTurno, ModelMap modelo){
         try{
             turnoServicio.cancelarTurno(idTurno);
-            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                    .getPrincipal();
-            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            modelo.put("usuario", usuario);
-            modelo.put("exito","Se Cancelo existosamente el turno");
         }catch (MiExcepcion e){
             modelo.put("error","No se pudo Cancelar el turno");
-            return "redirect:/?error=" + URLEncoder.encode(e.getMessage());
+            return "redirect:/turno/misTurnos?error=" + URLEncoder.encode(e.getMessage());
         }
-        return "turnosPaciente.html";
+        return "redirect:/turno/misTurnos?exito=" + URLEncoder.encode("Turno cancelado con exito");
     }
 
 }
