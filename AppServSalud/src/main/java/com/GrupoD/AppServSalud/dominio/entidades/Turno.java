@@ -3,6 +3,8 @@ package com.GrupoD.AppServSalud.dominio.entidades;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,17 +15,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.GrupoD.AppServSalud.utilidades.EstadoTurno;
 import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 
 @Entity
 @Data
-@Getter
-@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "turno")
 public class Turno {
@@ -43,9 +44,10 @@ public class Turno {
 
     private HorarioEnum horaTurno;
 
-    private Boolean estado;
-    private Boolean activoPaciente;
-    private Boolean activoProfesional;
+    @Enumerated(EnumType.STRING)
+    private EstadoTurno estado;
+
+    private String observaciones;
     
     @ManyToOne
     private Profesional profesional;
@@ -56,9 +58,5 @@ public class Turno {
     @OneToOne
     @JoinColumn(name="oferta_id")
     private Oferta oferta;
-
-    public Turno(){
-        this.estado = true;
-    }
 
 }

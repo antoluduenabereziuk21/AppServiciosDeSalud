@@ -16,6 +16,13 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String>{
     @Query("SELECT t FROM Turno t WHERE t.paciente.email = :email")
     List<Turno> listarTurnosPorPaciente(@Param("email") String email);
 
+    @Query(
+        "SELECT t FROM Turno t WHERE " +
+        "t.paciente.email = :#{#filtro.paciente.email} AND " +
+        "t.estado in :#{#filtro.estados}"
+    )
+    List<Turno> listarPorEstadoDelTurno(@Param("filtro") FiltroTurno filtro);
+
     @Query("SELECT t FROM Turno t WHERE t.profesional.id = :id")
     List<Turno> listarTurnosPorProfesional(@Param("id") String id);
 
@@ -24,7 +31,8 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String>{
         "SELECT t.id FROM Turno t WHERE "+
         "t.paciente.id = :#{#filtro.paciente.id} AND "+
         "t.oferta.fecha = :#{#filtro.oferta.fecha} AND "+
-        "t.oferta.horario = :#{#filtro.oferta.horario}"
+        "t.oferta.horario = :#{#filtro.oferta.horario} AND "+
+        "t.estado in :#{#filtro.estados}"
     )
     List<String> filtrarTrunosPorDiaYFecha(@Param("filtro") FiltroTurno filtro);
 
@@ -32,7 +40,8 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String>{
         "SELECT t.id FROM Turno t WHERE "+
         "t.paciente.id = :#{#filtro.paciente.id} AND "+
         "t.profesional.id = :#{#filtro.profesional.id} AND "+
-        "t.oferta.fecha = :#{#filtro.oferta.fecha}"
+        "t.oferta.fecha = :#{#filtro.oferta.fecha} AND " +
+        "t.estado in :#{#filtro.estados}"
     )
     List<String> filtrarTurnosPorDiayProfesional(@Param("filtro") FiltroTurno filtro);
 }

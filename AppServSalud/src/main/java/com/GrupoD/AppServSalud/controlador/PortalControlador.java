@@ -4,14 +4,11 @@ package com.GrupoD.AppServSalud.controlador;
 import com.GrupoD.AppServSalud.dominio.entidades.Profesional;
 import com.GrupoD.AppServSalud.dominio.entidades.Usuario;
 import com.GrupoD.AppServSalud.dominio.repositorio.ProfesionalRepositorio;
-import com.GrupoD.AppServSalud.dominio.servicios.NotificacionServicio;
 import com.GrupoD.AppServSalud.dominio.servicios.UsuarioServicio;
-import com.GrupoD.AppServSalud.excepciones.MiExcepcion;
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.RolEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -170,10 +167,10 @@ public class PortalControlador {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            modelo.put("usuario", usuario);
-            return "tarjetaProfesional.html";
+           
         }
-        return "redirect:/login";
+         modelo.put("usuario", usuario);
+            return "tarjetaProfesional.html";
     }
 
     @PreAuthorize("hasRole('ROLE_PACIENTE')")

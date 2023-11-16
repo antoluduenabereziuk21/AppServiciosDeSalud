@@ -25,34 +25,39 @@
         <br>
         <br>
         <section id="servicios-cards" class="d-flex justify-content-evenly m-5">
-            <div class="card col-sm-3 efectos-card-propios">
+            <a th:href="@{/especialidades}" class="card col-sm-3 efectos-card-propios" style="text-decoration: none;">
                 <img th:src="@{/assets/clinico2.jpg}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title">Especialidades Médicas</h5>
+                    <p class="card-text">Nuestros médicos están altamente capacitados y experimentados. Están dedicados
+                        a brindar la mejor atención posible a sus pacientes.</p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <button class="btn btn-primary">Ver mas</button>
                 </div>
-            </div>
-            <div class="card col-sm-3 efectos-card-propios">
-                <img th:src="@{/assets/pediatria.jpg}" class="card-img-top" alt="...">
+            </a>
+            <a th:href="@{/especialidades}" class="card col-sm-3 efectos-card-propios" style="text-decoration: none;">
+                <img th:src="@{/assets/agendaturno.jpg}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
+                    <h5 class="card-title">Turnos</h5>
+                    <p class="card-text">Con Mediya, puede programar una cita con un médico en cuestión de minutos.
+                        Simplemente seleccione el médico y la hora que le convienen, y confirme su cita.
                     </p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <button class="btn btn-primary">Ver mas</button>
                 </div>
-            </div>
-            <div class="card col-sm-3 efectos-card-propios">
-                <img th:src="@{/assets/cardiologia.jpg}" class="card-img-top" alt="...">
+            </a>
+            <div class="card col-sm-3 efectos-card-propios" style="text-decoration: none;" >
+                <img th:src="@{/assets/diagnosticoonline.jpg}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This card has even longer content than the first to show that equal height
-                        action.</p>
+                    <h5 class="card-title">Diagnóstico Online</h5>
+                    <p class="card-text">Un diagnóstico médico en línea es un servicio que le permite obtener una
+                        evaluación de su salud por parte de un médico de forma remota. Esto puede ser una excelente
+                        opción si tiene síntomas leves o si no puede programar una cita con un médico en persona..</p>
                     <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <button class="btn btn-outline">Ver mas</button>
                 </div>
             </div>
+            
         </section>
         <br>
         <br>
@@ -69,33 +74,44 @@
         <br>
         <br>
         <section class="d-flex justify-content-evenly m-5">
-            <a href="" class="p-2 imagenes-circulares">
-                <img th:src="@{/assets/clinica.jpg}" alt="">
+            <a th:href="@{/especialidades}" class="p-2 imagenes-circulares">
+                <img th:src="@{/assets/medicos.jpg}" alt="">
                 <div>
-                    <p>+</p>
-                    <p>text</p>
+                    <p>Nuestros</p>
+                    <p>Medicos</p>
                 </div>
             </a>
-            <a href="" class="p-2 imagenes-circulares">
-                <img th:src="@{/assets/cardiologia.jpg}" alt="">
+            <a  th:href="@{/especialidades}" class="p-2 imagenes-circulares">
+                <img th:src="@{/assets/agendaturno.jpg}" alt="">
                 <div>
-                    <p>+</p>
-                    <p>text</p>
+                    <p>Solicite</p>
+                    <p>su Turno</p>
                 </div>
             </a>
-            <a href="" class="p-2 imagenes-circulares">
+            <a th:href="@{/infoTurnos}"  class="p-2 imagenes-circulares">
                 <img th:src="@{/assets/pediatria.jpg}" alt="">
                 <div>
-                    <p>+</p>
-                    <p>text</p>
+                    <p>Obras</p>
+                    <p>Sociales</p>
                 </div>
-
             </a>
         </section>
         <br>
         <br>
+        <br>
+        <section id="sobrenosotros">
+          <h2>¿Quienes somos en Medi Ya!?</h2>
+          <p>
+            Somos profesionales de la salud comprometidos con la creación de nuestra plataforma. Ofrecemos servicios personalizados, permitiendo que cada profesional se una, comparta su especialidad y horario, facilitando a los pacientes agendar citas fácilmente. Imaginamos un mundo donde la atención médica sea eficiente, efectiva y centrada en el paciente. Tu salud es nuestra prioridad.</p>
+        </section>
+        <br>
+        <br>
+        <br>
         <section id="testimonios">
-            <h3>TESTIMONIOS....</h3>
+            <h3>Testimonios: </h3>
+            <p>"La experiencia con los doctores de MediYa fue muy diferente. Me sentí muy cómoda y confiada en que me iban a ayudar. La doctora Marcuzi Mariana me escuchó atentamente y me explicó todo con claridad. Estoy muy contenta de haber elegido este servicio. "  <i>-Aimara Mengana.</i></p>
+            <p> "Me encontraba muy mal y no podía ir al médico en persona. Gracias a los doctores de MediYa pude obtener una evaluación de mi salud de forma rápida y sencilla. El doctor Perez Marcos me dio un diagnóstico preciso y me recomendó un tratamiento que me ha ayudado a mejorar mucho. "  <i>-Maria Garcia.</i></p>
+            <p>"La experiencia con el pediatra de esta web ha sido increíble.  Brinda atención profesional y comprensiva a mi hijo. La facilidad para programar citas en línea y la valiosa información disponible hacen que confíe plenamente en este servicio. ¡Recomendado para todas las madres preocupadas! ¡Por la salud de sus hijos!. "  <i>-Carlota Menendez.</i></p>
         </section>
         <br>
         <br>
