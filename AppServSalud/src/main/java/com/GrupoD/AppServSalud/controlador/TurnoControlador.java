@@ -45,7 +45,12 @@ public class TurnoControlador {
 
     @GetMapping("/misTurnos")
     public String misTurnos(@RequestParam(name = "exito",required = false) String exito,
-            @RequestParam(name = "error", required = false) String error ,ModelMap modelo) {
+            @RequestParam(name = "error", required = false) String error ,
+            @RequestParam(name = "estado", required = false) String estado,
+            ModelMap modelo) {
+        if (estado == null){
+            estado = "EN_ESPERA";
+        }
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
@@ -53,7 +58,8 @@ public class TurnoControlador {
             modelo.put("usuario", usuario);
             modelo.put("exito",exito);
             modelo.put("error",error);
-            modelo.put("turnos", turnoServicio.listarTurnosPorPaciente(userDetails.getUsername()));
+            modelo.put("turnos", turnoServicio.filtrarPorEstadoYPaciente(userDetails.getUsername(), estado));
+            modelo.put("estado", estado);
         } catch (MiExcepcion e) {
             return "redirect:/?error=" + URLEncoder.encode(e.getMessage());
         }

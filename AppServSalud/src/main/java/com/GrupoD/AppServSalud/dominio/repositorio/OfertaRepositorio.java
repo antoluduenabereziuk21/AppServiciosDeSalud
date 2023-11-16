@@ -5,7 +5,6 @@ import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
 import com.GrupoD.AppServSalud.utilidades.TipoConsultaEnum;
 import com.GrupoD.AppServSalud.utilidades.filterclass.FiltroOferta;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
