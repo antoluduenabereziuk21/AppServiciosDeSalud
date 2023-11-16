@@ -154,10 +154,10 @@ public class PortalControlador {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-            modelo.put("usuario", usuario);
-            return "tarjetaProfesional.html";
+           
         }
-        return "redirect:/login";
+         modelo.put("usuario", usuario);
+            return "tarjetaProfesional.html";
     }
 
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
