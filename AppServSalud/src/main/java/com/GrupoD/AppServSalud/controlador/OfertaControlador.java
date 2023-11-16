@@ -29,9 +29,9 @@ public class OfertaControlador {
                     precioOferta, profesionalOferta);
             modelo.put("exito", "La solicitud fue cargada correctamente");
         } catch (MiExcepcion ex) {
-            return "redirect:/profesional/dashboard?error="+URLEncoder.encode(ex.getMessage(), StandardCharsets.UTF_8);
+            return "redirect:/profesional/dashboard?error="+URLEncoder.encode(ex.getMessage());
         }
-        return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("La solicitud fue cargada correctamente", StandardCharsets.UTF_8);
+        return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("La solicitud fue cargada correctamente");
     }
 
     @PostMapping("/reservar")
@@ -40,9 +40,9 @@ public class OfertaControlador {
         try{
             ofertaServicio.reservarOferta(idOferta, idPaciente);
         }catch(MiExcepcion ex){
-            return "redirect:/especialidades?error="+URLEncoder.encode(ex.getMessage(), StandardCharsets.UTF_8);
+            return "redirect:/especialidades?error="+URLEncoder.encode(ex.getMessage());
         }
-        return "redirect:/especialidades?exito="+URLEncoder.encode("La oferta fue reservada correctamente", StandardCharsets.UTF_8);
+        return "redirect:/especialidades?exito="+URLEncoder.encode("La oferta fue reservada correctamente");
 
     }
 }

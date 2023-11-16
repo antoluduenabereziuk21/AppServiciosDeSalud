@@ -41,7 +41,7 @@ public class TurnoControlador {
         try {
             modelo.put("turnos", turnoServicio.listarTurnosPorPaciente(email));
         } catch (MiExcepcion e) {
-            return "redirect:/?error="+URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+            return "redirect:/?error="+URLEncoder.encode(e.getMessage());
         }
         return "turnosPaciente.html";
     }
@@ -51,9 +51,9 @@ public class TurnoControlador {
         try {
             turnoServicio.aceptarTurno(idTurno);
         } catch (MiExcepcion e) {
-            return "redirect:/profesional/dashboard?error="+URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+            return "redirect:/profesional/dashboard?error="+URLEncoder.encode(e.getMessage());
         }
-        return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("Turno aceptado con exito", StandardCharsets.UTF_8);
+        return "redirect:/profesional/dashboard?exito="+URLEncoder.encode("Turno aceptado con exito");
     }
     
 }
