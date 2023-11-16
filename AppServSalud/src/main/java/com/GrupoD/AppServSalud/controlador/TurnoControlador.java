@@ -66,4 +66,20 @@ public class TurnoControlador {
         return "redirect:/profesional/dashboard?exito=" + URLEncoder.encode("Turno aceptado con exito");
     }
 
+    @GetMapping("/cancelarTurno/{idTurno}")
+    public String cancelarTurno(@PathVariable String idTurno, ModelMap modelo){
+        try{
+            turnoServicio.cancelarTurno(idTurno);
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+            modelo.put("usuario", usuario);
+            modelo.put("exito","Se Cancelo existosamente el turno");
+        }catch (MiExcepcion e){
+            modelo.put("error","No se pudo Cancelar el turno");
+            return "redirect:/?error=" + URLEncoder.encode(e.getMessage());
+        }
+        return "turnosPaciente.html";
+    }
+
 }
