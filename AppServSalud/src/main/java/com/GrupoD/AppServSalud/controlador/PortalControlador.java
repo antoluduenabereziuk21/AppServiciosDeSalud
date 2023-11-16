@@ -34,26 +34,27 @@ public class PortalControlador {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping("/")
-    public String index(ModelMap modelo,HttpSession session) {
-//        try {
-//            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-//                    .getPrincipal();
-//            Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
-//            modelo.put("usuario", usuario);
-//            return "index.html";
-//        } catch (Exception e) {
-//            modelo.put("usuario", null);
-//            return "index.html";
-//        }
-        Usuario usuario= null;
-        if(session.getAttribute("usuario")!=null) {
+    public String index(ModelMap modelo, HttpSession session) {
+        // try {
+        // UserDetails userDetails = (UserDetails)
+        // SecurityContextHolder.getContext().getAuthentication()
+        // .getPrincipal();
+        // Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
+        // modelo.put("usuario", usuario);
+        // return "index.html";
+        // } catch (Exception e) {
+        // modelo.put("usuario", null);
+        // return "index.html";
+        // }
+        Usuario usuario = null;
+        if (session.getAttribute("usuario") != null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             usuario = usuarioServicio.getUsuario(userDetails.getUsername());
 
             int cantidadNotificaciones = usuario.getNotificaciones().size();
-            System.out.println("estoy recibiendo las notificaciones :" +cantidadNotificaciones);
-            modelo.put("cantidadNotificaciones",cantidadNotificaciones);
+            System.out.println("estoy recibiendo las notificaciones :" + cantidadNotificaciones);
+            modelo.put("cantidadNotificaciones", cantidadNotificaciones);
         }
         modelo.put("usuario", usuario);
         return "index.html";
@@ -74,7 +75,7 @@ public class PortalControlador {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Usuario usuario = usuarioServicio.getUsuario(userDetails.getUsername());
         modelo.put("usuario", usuario);
-        if (usuario.getRol().equals(RolEnum.PACIENTE)){
+        if (usuario.getRol().equals(RolEnum.PACIENTE)) {
             return "redirect:/especialidades";
         }
         if (usuario.getRol().equals(RolEnum.MEDICO)) {
@@ -145,7 +146,8 @@ public class PortalControlador {
                     .getPrincipal();
             usuario = usuarioServicio.getUsuario(userDetails.getUsername());
             modelo.put("usuario", usuario);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         if (error != null) {
             modelo.addAttribute("error", error);
         }
@@ -157,14 +159,14 @@ public class PortalControlador {
     }
 
     @GetMapping("/tarjetaProfesional/{especialidad}")
-    public String tarjetaProfesional(@PathVariable String especialidad, ModelMap modelo,HttpSession session) {
-        modelo.put("especialidad",especialidad);
+    public String tarjetaProfesional(@PathVariable String especialidad, ModelMap modelo, HttpSession session) {
+        modelo.put("especialidad", especialidad);
         String espProf = especialidad.toUpperCase();
         List<Profesional> profesionales = profesionalRepositorio
                 .buscarPorEspecialidad(EspecialidadEnum.valueOf(espProf));
         modelo.addAttribute("profesionales", profesionales);
         Usuario usuario = null;
-        if(session.getAttribute("usuario") != null){
+        if (session.getAttribute("usuario") != null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             usuario = usuarioServicio.getUsuario(userDetails.getUsername());
