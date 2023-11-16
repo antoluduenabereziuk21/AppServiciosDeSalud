@@ -26,14 +26,14 @@ public class HistoriaClinica {
     private String historia;
      
     @ManyToMany
-    @JoinTable(name = "historia_clinica_profesional",
-            joinColumns = @JoinColumn(name = "id_historia_clinica"),
-            inverseJoinColumns = @JoinColumn(name = "id_profesional"))
-    private List<Profesional> profesional;
+    private Profesional profesional;
 
+    @ManyToOne
+    private Paciente paciente;
+    
     @ManyToMany
-    @JoinTable(name = "historia_clinica_paciente",
-            joinColumns = @JoinColumn(name = "id_historia_clinica"),
-            inverseJoinColumns = @JoinColumn(name = "id_paciente"))
-    private List<Paciente> paciente;
+    @JoinTable(name = "historiaClinica_registroConsulta",
+            joinColumns = @JoinColumn(name = "id_historiaClinica"),
+            inverseJoinColumns = @JoinColumn(name = "id_registroConsulta"))
+    private List<RegistroConsulta> registroConsulta;
 }
