@@ -151,6 +151,7 @@ public class PortalControlador {
 
     @GetMapping("/tarjetaProfesional/{especialidad}")
     public String tarjetaProfesional(@PathVariable String especialidad, ModelMap modelo) {
+        modelo.put("especialidad",especialidad);
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
@@ -161,6 +162,7 @@ public class PortalControlador {
             modelo.addAttribute("profesionales", profesionales);
             modelo.addAttribute("ofertas", ofertaServicio.listarOferta());
             modelo.put("usuario", usuario);
+           
             return "tarjetaProfesional.html";
         } catch (Exception e) {
             String espProf = especialidad.toUpperCase();
