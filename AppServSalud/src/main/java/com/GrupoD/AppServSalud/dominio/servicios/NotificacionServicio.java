@@ -51,6 +51,33 @@ public class NotificacionServicio {
         receptor.getNotificaciones().add(notificacion);
         usuarioRepositorio.save(receptor);
     }
+    @Transactional
+    public void crearNotificacionCancelacionTurno(String idUsuario, String idReceptor) throws MiExcepcion {
+
+        Optional<Usuario> emisorOptional = usuarioRepositorio.findById(idUsuario);
+        Optional<Usuario> receptorOptional = usuarioRepositorio.findById(idReceptor);
+        if (!emisorOptional.isPresent()) {
+            throw new MiExcepcion("El usuario Emisor no existe");
+        }
+        if (!receptorOptional.isPresent()) {
+            throw new MiExcepcion("El usuario Receptor no existe");
+        }
+        Usuario emisor = emisorOptional.get();
+        Usuario receptor = receptorOptional.get();
+        Notificacion notificacion = new Notificacion();
+
+        notificacion.setFechaEmision(new Date());
+        notificacion.setLeido(false);
+        notificacion.setMensaje(
+                "El usuario " + emisor.getNombre() + " " + emisor.getApellido() + " DNI: " + emisor.getDni()
+                        + " ha Cancelado un turno con usted.");
+        notificacion.setResumen("Cancelacion de turno");
+        notificacion.setRemitente(receptor.getId());
+
+        receptor.getNotificaciones().add(notificacion);
+        usuarioRepositorio.save(receptor);
+    }
+
 
     @Transactional
     public void crearNotificacionEstadoTurno(String idPaciente, String idProfesional, boolean aceptado) throws MiExcepcion{
@@ -70,7 +97,7 @@ public class NotificacionServicio {
         notificacion.setLeido(false);
         notificacion.setMensaje(
                 "El usuario " + emisor.getNombre() + " " + emisor.getApellido() + " DNI: " + emisor.getDni()
-                        + " ha " + (aceptado ? "aceptado" : "rechazado") + " su solicitud de turno.");
+                        + " ha " + (aceptado ? "aceptado" : "cancelado") + " su solicitud de turno.");
         notificacion.setResumen("Solicitud de turno");
         notificacion.setRemitente(receptor.getId());
 
