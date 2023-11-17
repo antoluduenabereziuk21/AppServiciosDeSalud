@@ -102,7 +102,7 @@ public class AdminController {
     
     try {
       adminServicio.modificarAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono);
-      return "redirect:/admin/perfil/" + email+"?exito=Administrador modificado correctamente";
+      return "redirect:/perfil/" + email+"?exito=Administrador modificado correctamente";
     } catch (MiExcepcion e) {
       modelo.put("error", e.getMessage());
       modelo.put("admin", adminServicio.buscarPorEmail(emailPath));
