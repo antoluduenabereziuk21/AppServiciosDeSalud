@@ -4,6 +4,7 @@
     xmlns:th="http://www.thymeleaft.org"
 >
     <head th:replace="/fragments/head :: head"></head>
+  
     <body>
 
         <header th:replace="/fragments/header :: header"></header>
@@ -11,28 +12,52 @@
             <div class="container content mt-5 mb-5">
                 <div class="row">
                     <div class="col-md-8">
+
+                        
+                        <div class="bg-success p-2 text-dark bg-opacity-50" style="border-radius: 10px">
                         <div class="seccion-generica-general">
-                            <h2><span style="font-size: 18pt;color: #006cb0"><strong>Turnos presenciales y consultas
-                                        virtuales</strong></span></h2>
+                            <h2><span style="font-size: 22pt;color: #006cb0"><strong>
+                                        Turnos presenciales y consultas
+                                        virtuales</strong>
+                                </span>
+                            </h2>
                             <p>&nbsp;</p>
-                            <p>Solicitá tu turno ingresando a <span
-                                    style="text-decoration: underline;font-size: 12pt"><span style="color: #006cb0"><a
-                                            href="#"
-                                        >turnos</a></span></span> o llamando al teléfono
-                                <strong>111-1111-111</strong> de lunes a viernes de 8 a 20hs.
+                            <p style="font-size: 14pt">Solicitá tu turno ingresando a 
+                                <span
+                                  
+                                     style="color: #006cb0; text-decoration: underline">
+                                        <a
+                                            href="/especialidades"
+                                        >Servicios Médicos</a>
+                                    
+                                </span>, elegir la especialidad que esta necesitando y seleccionar
+                                 un turno de las ofertas del especialista. También podes solicitarlo
+                                  llamando al teléfono
+                                <strong>0810-132-12341</strong> de lunes a viernes de 8hs a 20hs.
                             </p>
-                            <p>&nbsp;</p>
-                            <hr>
-                            <p style="text-align: center"><strong>Optimizá tu tiempo</strong> . Al finalizar tu consulta
-                                gestióná tus turnos para prácticas médicas complementarias o nuevas consultas ese mismo
-                                día.
-                            </p>
-                            <hr>
-                            <h2></h2>
-                            <h2><span style="color: #006cb0"><strong><span style="font-size: 18pt">Portal de
-                                            Pacientes</span></strong></span></h2>
                             <p>&nbsp;</p>
 
+
+                              <div class="fondoOptimizar" style="background-color:  #EE7734;">
+                                <hr>
+                                <p style="text-align: center;font-size: 14pt">
+                                <strong>Optimizá tu tiempo</strong> . Al finalizar tu consulta
+                                gestioná tus turnos para prácticas médicas complementarias o nuevas
+                                 consultas ese mismo día.
+                            </p>
+                            <hr>
+                        </div>
+                            <h2></h2>
+                            <h2><span style="color: #006cb0">
+                                <strong>
+                                    <span style="font-size: 22pt">
+                                Portal de Pacientes
+                                     </span>
+                                </strong>
+                                </span>
+                            </h2>
+                            <p>&nbsp;</p>
+                        </div>
                             <div
                                 class="accordion"
                                 id="accordionExample"
@@ -57,12 +82,12 @@
                                         data-bs-parent="#accordionExample"
                                     >
                                         <div class="accordion-body">
-                                            <strong>Pasos para crear Cuenta</strong> Para crear una cuenta primero
-                                            debreas
-                                            dirigirte a registrarce ,
-                                            luego cargar tus datos personales que encontraras en el fomrulario , y luego
-                                            ingresar.
-                                            Ya con esto tendras acceso a todos los servicios.
+                                            <strong>Pasos para crear Cuenta</strong> 
+                                            Para crear una cuenta primero deberás
+                                            dirigirte a <a href="/paciente/registro">registrarse</a>,
+                                            luego cargar tus datos personales que encontrarás 
+                                            en el formulario, luego ingresar.
+                                            Ya con esto tendrás acceso a todos los servicios.
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +101,7 @@
                                             aria-expanded="false"
                                             aria-controls="collapseTwo"
                                         >
-                                            ¿Cómo reservar mis turnos?
+                                            ¿Como reservar mis turnos?
                                         </button>
                                     </h2>
                                     <div
@@ -85,15 +110,16 @@
                                         data-bs-parent="#accordionExample"
                                     >
                                         <div class="accordion-body">
-                                            <strong>Pasos para reservar Turnos.</strong> Lo primero que deberas hacer es
-                                            ingrear con tus credenciales(email,password), si aun no las tienes revisa
-                                            ¿Como
-                                            Crear Una Cuenta?.
-                                            Luego de ingresar dirijete ala seccion turnos , donde encontraras la oferta
-                                            de
-                                            profesionales y con sus dias y horarios de atencion, tan solo tiene que
-                                            elejir ,
-                                            el dia y horario que se ajusten a ti .
+                                            <strong>Pasos para reservar Turnos.</strong> 
+                                            Lo primero que deberás hacer es
+                                            ingresar con tus credenciales (email, password),
+                                             si aun no las tienes revisa
+                                            ¿Cómo Crear Una Cuenta?.
+                                            Luego de ingresar dirígete a la sección <a href="/especialidades">Servicios Meédicos</a>, 
+                                            donde encontrarás la oferta de profesionales, 
+                                            con sus días y horarios de atención, tan solo 
+                                            tiene que elegir, el día y horario que se ajusten 
+                                            a ti.
                                         </div>
                                     </div>
                                     <div class="accordion-item">
@@ -106,7 +132,8 @@
                                                 aria-expanded="false"
                                                 aria-controls="collapseThree"
                                             >
-                                                ¿Cómo ver y descargar los resultados de mis estudios?
+                                                ¿Cómo ver y descargar los resultados de mis 
+                                                estudios?
                                             </button>
                                         </h2>
                                         <div
@@ -115,8 +142,9 @@
                                             data-bs-parent="#accordionExample"
                                         >
                                             <div class="accordion-body">
-                                                <strong>EN DESARROLLO</strong> Estamos trabajando para brindar una mejor
-                                                experiencia de uso, gracias por su interes .
+                                                <strong>EN DESARROLLO</strong> Estamos trabajando
+                                                 para brindar una mejor experiencia de uso, 
+                                                 gracias por su interés.
                                             </div>
                                         </div>
                                     </div>
@@ -129,47 +157,63 @@
                         class="col-md-4"
                         style="margin:0 auto;"
                     >
-                        <div class="bloque-informacion-generica">
-                            <div class="informacion-util-generica">
-                                <h1> Información Útil </h1>
-                                <div class="informacion-util-generica-bloque">
-                                    <h2> Cerro </h2>
-                                    <!-- Insertar Sede de Sucursal <p> <strong> Dirección: </strong> </*?php echo $sede_address;?> </p> -->
-                                    <p><strong>Ubicación: </strong>Pedro Simón Laplace 5749, esq. Blas Pascal – Villa
-                                        Belgrano- Córdoba</p>
-                                    <p><strong>Teléfono:&nbsp;</strong>0810-132-1234</p>
-                                    <p><strong><span
-                                                class=""
-                                                data-color-group="turquoise"
-                                            >Horarios:</span></strong> Lunes a viernes de 8 a 20 hs.</p>
-                                    <p><strong><span
-                                                class=""
-                                                data-color-group="turquoise"
-                                            >Email:</span> </strong>hospitalhouse@mailcom</p>
-                                    <hr>
-                                    <p style="text-align: center">Ver el listado de <strong>Obras Sociales</strong> y
-                                        <strong>Prepagas</strong> haciendo clic
-                                        <button
-                                            type="button"
-                                            class="btn text-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#obrasSociales"
-                                        >
-                                            <strong>AQUÍ</strong>
-                                        </button>
-                                    </p>
-                                    <p style="text-align: center">Ver el listado de <b>Especialidad
-                                            Médicas</b>&nbsp;haciendo clic <a
-                                            href="/especialidades"><strong>AQUÍ</strong></a></p>
-                                    <hr>
-                                    <p>&nbsp;</p>
-                                    <!-- Insertar Mapa de Google <a href="https://www.google.com/maps/search/</*?php echo $sede_address;?>" target="_blank"> <i class="fas fa-map-marker-alt"></i> Mapa </a>-->
+
+
+
+                    <div class="card" id="infoturno">
+                        <div class="card-header" id="infoturno" style="align-items: center;">
+                            <h1> <span style="font-size: 20pt;color: #006cb0"><strong> Información Útil </strong></span> </h1>
+                           
+                        </div>
+                        <div class="card-body" id="infoturno">
+                          <blockquote class="blockquote mb-0">
+                            <div class="informacion-util-generica-bloque" id="infoturno">
+                              <div style="font-size: 13pt" class="tamaño-texto">
+                                <h4><strong>Sede Central MediYa!</strong></h4>
+                                <p>&nbsp;</p>
+                                <p><strong style="text-decoration: underline">Ubicación: </strong>
+                                    Nameless 1234, Palermo, CABA.</p>
+                                <p><strong>Teléfono:&nbsp;</strong>0810-132-1234</p>
+                                <p><strong><span
+                                            class=""
+                                            data-color-group="turquoise"
+                                        >Horarios:</span></strong> Lunes a viernes de 8 a 20 hs.</p>
+                                <p>
+                                    <strong>
+                                        <span
+                                            class=""
+                                            data-color-group="turquoise"
+                                        >   Email:
+                                        </span> 
+                                    </strong>mediya@mail.com
+                                </p>
+                                <p>&nbsp;</p>
                                 </div>
+                            <footer style="background-color: white" id="infoturno">
+                                <hr>
+                                <p style="text-align: center">Ver el listado de <strong>Obras Sociales</strong> y
+                                    <strong>Prepagas</strong> haciendo clic <button
+                                        type="button"
+                                        class="btn text-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#obrasSociales"
+                                    >
+                                        <strong><u>AQUÍ</u></strong>
+                                    </button>
+                                </p>
+                                <p style="text-align: center">Ver el listado de <b>Especialidad
+                                        Médicas</b>&nbsp;haciendo clic <a
+                                        href="/especialidades"><strong>AQUÍ</strong></a></p>
+                                <hr>
+                                <p>&nbsp;</p>
+                              </footer>
                             </div>
+                          </blockquote>
+                          </div>
                         </div>
                     </div>
-                </div>
-
+                </div> 
+                     
                 <div
                     class="modal fade"
                     id="obrasSociales"
