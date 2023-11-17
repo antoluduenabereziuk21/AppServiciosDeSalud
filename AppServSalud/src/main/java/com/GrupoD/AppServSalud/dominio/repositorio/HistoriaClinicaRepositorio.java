@@ -30,8 +30,7 @@ public interface HistoriaClinicaRepositorio extends JpaRepository <HistoriaClini
      */
     @Query("SELECT hc FROM HistoriaClinica hc JOIN hc.paciente p JOIN p.profesional pr WHERE pr.id = :profesionalId")
     List<HistoriaClinica> findHistoriasClinicasByProfesional(@Param("profesionalId") String profesionalId);
-
-
+    
      @Query("SELECT p FROM Paciente p JOIN p.historiaClinica hc JOIN hc.profesional pr WHERE pr.id = :profesionalId")
     List<Paciente> findPacientesAtendidosPorProfesional(@Param("profesionalId") String profesionalId);
 
