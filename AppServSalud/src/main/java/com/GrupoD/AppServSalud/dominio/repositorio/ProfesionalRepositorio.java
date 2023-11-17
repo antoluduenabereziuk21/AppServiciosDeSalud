@@ -55,5 +55,5 @@ public interface ProfesionalRepositorio extends JpaRepository<Profesional, Strin
             "(:#{#filtro.activo} is null or p.activo = :#{#filtro.activo})"
     )
     List<Profesional> buscarPorFiltro(@Param("filtro") FiltroUsuario usuario);
-
+       
 }

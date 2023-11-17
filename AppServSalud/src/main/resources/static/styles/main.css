@@ -17,6 +17,24 @@ body {
   background-attachment: fixed;
 }
 
+#offcanvasNavbar{
+  width: 50vw;
+  background-color: var(--color-fondo-contenedores);
+  border-color: var(--color-bordes);
+  overflow: unset;
+  font-size: large;
+}
+
+#menuPerfil{
+  width: 180px;
+  position: absolute;
+  top: 50px;
+  left: -110px;
+  list-style: none;
+  z-index: 1;
+  border-color: var(--color-bordes);
+}
+
 footer {
   background-color: var(--color-fondo-contenedores);
 }
@@ -100,13 +118,15 @@ footer {
   position: relative;
   width: 200px;
   height: 200px;
+  border-radius: 50%;
+  box-shadow: 1.5px 2px 4px #0000005b;
+  border: 2px solid var(--color-bordes);
 }
 
 .imagen-redonda {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  border: 2px solid var(--color-bordes);
 }
 
 #contenedor-imagen-formulario {
@@ -115,6 +135,7 @@ footer {
   height: 200px;
   border-radius: 50%;
   box-shadow: 1.5px 2px 4px #0000005b;
+  border: 2px solid var(--color-bordes);
 
   .etiqueta-icono {
     display: block;
@@ -139,21 +160,23 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
   }
 
-  .icono-modificar {
+  #icono-modificar {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
-    font-size: 24px;
     display: none;
+    z-index: 1;
+    color: #888;
+    font-size: 35px;
   }
 }
 
 #contenedor-imagen-formulario:hover {
+  scale: 1.05;
   .etiqueta-icono::after {
     position: absolute;
     top: 50%;
@@ -162,10 +185,10 @@ footer {
   }
 
   .imagen-redonda {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 
-  .icono-modificar {
+  #icono-modificar {
     display: block;
   }
 }

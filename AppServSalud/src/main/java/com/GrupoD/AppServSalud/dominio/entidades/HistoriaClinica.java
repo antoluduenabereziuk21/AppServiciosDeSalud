@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class HistoriaClinica {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -25,15 +28,14 @@ public class HistoriaClinica {
     
     private String historia;
      
-    @ManyToMany
-    @JoinTable(name = "historia_clinica_profesional",
-            joinColumns = @JoinColumn(name = "id_historia_clinica"),
-            inverseJoinColumns = @JoinColumn(name = "id_profesional"))
-    private List<Profesional> profesional;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Profesional profesional;
 
-    @ManyToMany
-    @JoinTable(name = "historia_clinica_paciente",
-            joinColumns = @JoinColumn(name = "id_historia_clinica"),
-            inverseJoinColumns = @JoinColumn(name = "id_paciente"))
-    private List<Paciente> paciente;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistroConsulta> registrosConsultas = new ArrayList<>();
 }

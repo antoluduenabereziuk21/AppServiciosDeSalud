@@ -15,7 +15,7 @@
   <section class="row">
     <!-- CONTENEDOR "OFERTAS" -->
     <div
-      class="col-sm-6 d-grid"
+      class="col-sm-5 d-grid"
       th:if="${!ofertas.isEmpty}"
     >
       <div
@@ -35,9 +35,10 @@
               th:each="oferta : ${ofertas}"
             >
               <div class="card">
-                <p
-                  th:text="${oferta.fecha} + ' ' + ${oferta.horario} + ' ' + (${oferta.reservado} ? RESERVADO : LIBRE)">
+                <p th:text="${oferta.fecha}">
                 </p>
+                <p th:text="${oferta.horario}"></p>
+                <p th:text="(${oferta.reservado} ? RESERVADO : LIBRE)"></p>
               </div>
             </div>
           </div>
@@ -58,7 +59,7 @@
     </div>
     <!-- CONTENEDOR "SIN OFERTAS" -->
     <div
-      class="col-sm-6"
+      class="col-sm-5"
       th:if="${ofertas.isEmpty}"
     >
       <div
@@ -232,12 +233,13 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-7">
       <!-- PROXIMOS TURNOS -->
       <div class="">
         <div class="mt-2 mb-2">
           <h5>Próximos Turnos</h5>
         </div>
+        <p>Profesional ID: <span th:text="${usuario.id}"></span></p>
         <div class="">
           <div
             class="row d-grid"
@@ -249,7 +251,7 @@
                   <th>Fecha</th>
                   <th>Paciente</th>
                   <th>Hora</th>
-                  <th>Acciones</th>
+                  <th class="text-end">Acciones</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider">
@@ -261,15 +263,40 @@
                   <td th:text="${turno.paciente.nombre} + ' ' +${turno.paciente.apellido} ">paciente</td>
                   <!-- <td th:text="${turno.horaTurno}">hora</td> -->
                   <td>13:00Hs</td>
-                  <td>
-                    <select
-                      name=""
-                      id=""
-                      class="btn btn-outline-success btn-sm"
-                    >
-                      <option value="">Crear Registro</option>
-                      <option value="">Cancelar</option>
-                    </select>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <button
+                        class="btn btn-sm btn-outline-primary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Opciones
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#crearRegistro"
+                            th:data-id-paciente="${turno.paciente.id}"
+                            th:data-id-profesional="${usuario.id}"
+                            th:data-dni-paciente="${turno.paciente.dni}"
+                            th:data-nombre-paciente="${turno.paciente.nombre}"
+                            th:data-apellido-paciente="${turno.paciente.apellido}"
+                            th:data-obraSocial-paciente="${turno.paciente.obraSocial}"
+                            onclick="setFormValues(this)"
+                          >
+                            Crear Registro
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item btn">
+                            Cancelar Turno
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -291,11 +318,11 @@
               <thead>
                 <tr>
                   <th>Fecha</th>
-                  <th>Hora</th>
                   <th>Paciente</th>
+                  <th>Hora</th>
                   <!-- <th>Obra Social</th> -->
                   <th>Estado</th>
-                  <th>Acciones</th>
+                  <th class="text-end">Acciones</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider">
@@ -304,11 +331,37 @@
                   th:if="${turno.estado.name == 'EN_ESPERA'}"
                 >
                   <td th:text="${turno.fechaTurno}">fecha</td>
-                  <td>09:00Hs</td>
                   <td th:text="${turno.paciente.nombre} + ' ' +${turno.paciente.apellido} ">paciente</td>
+                  <td>09:00Hs</td>
                   <!-- <td th:text="${turno.paciente.obraSocial.name}">obra social</td> -->
                   <td th:text="${turno.estado}">estado</td>
-                  <td><a th:href="@{/turno/aceptarTurno/__${turno.id}__}">Aceptar</a></td>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <button
+                        class="btn btn-sm btn-outline-primary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Opciones
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            th:href="@{/turno/aceptarTurno/__${turno.id}__}"
+                            class="dropdown-item"
+                          >
+                            Aceptar
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item">
+                            Rechazar
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -317,13 +370,97 @@
       </div>
       <!-- TURNOS CANCELADOS -->
       <div class="">
-          <div
-            class="row d-grid text-end"
-            style="border:1px solid #DDD;"
-          >
-            <a href="#">Ver Cancelados</a>
-          </div>
+        <div
+          class="row d-grid text-end"
+          style="border:1px solid #DDD;"
+        >
+          <a href="#">Ver Cancelados</a>
+        </div>
       </div>
     </div>
   </section>
+  <!-- MODAL CREAR REGISTROS -->
+  <div
+    class="modal fade"
+    id="crearRegistro"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1
+            class="modal-title fs-5"
+            id="exampleModalLabel"
+          >
+            Crear Registro
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+          </button>
+        </div>
+        <div class="modal-body">
+          <form
+            th:action="@{/registroDeConsulta/cargarRegistro}"
+            method="POST"
+          >
+            <p for="dniPaciente">Nombre del Paciente: <span id="nombrePaciente"></span> <span id="apellidoPaciente"></span></p>
+            <p for="dniPaciente">DNI: <span id="dniPaciente"></span></p>
+            <p for="obraSocialPaciente">Obra Social: <span id="obraSocialPaciente"></span></p>
+            <input
+              type=""
+              id="idPacienteInput"
+              name="idPaciente"
+            />
+            <input
+              type="hidden"
+              id="idProfesionalInput"
+              name="idProfesional"
+            />
+
+            <label for="floatingTextarea">Registro</label>
+            <textarea
+              class="form-control"
+              name="detalleConsulta"
+              placeholder="Escriba el registro aqui"
+              id="floatingTextarea"
+              rows="4"
+            ></textarea>
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              Guardar Registro
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:inline="javascript">
+    function setFormValues(button) {
+      var idPaciente = button.getAttribute('data-id-paciente');
+      var idProfesional = button.getAttribute('data-id-profesional');
+      var dniPaciente = button.getAttribute('data-dni-paciente');
+      var nombrePaciente = button.getAttribute('data-nombre-paciente');
+      var apellidoPaciente = button.getAttribute('data-apellido-paciente');
+      var obraSocialPaciente = button.getAttribute('data-obraSocial-paciente');
+
+      document.getElementById('idPacienteInput').value = idPaciente;
+      document.getElementById('dniPaciente').textContent = dniPaciente;
+      document.getElementById('nombrePaciente').textContent = nombrePaciente;
+      document.getElementById('apellidoPaciente').textContent = apellidoPaciente;
+      document.getElementById('obraSocialPaciente').textContent = obraSocialPaciente;
+      document.getElementById('idProfesionalInput').value = idProfesional;
+
+    }
+  </script>
 </div>

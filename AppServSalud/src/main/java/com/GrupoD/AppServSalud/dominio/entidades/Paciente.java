@@ -25,4 +25,7 @@ public class Paciente extends Usuario {
     @Enumerated(EnumType.STRING)
     private ObraSocialEnum obraSocial;
 
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
+    private HistoriaClinica historiaClinica;
+
 }
