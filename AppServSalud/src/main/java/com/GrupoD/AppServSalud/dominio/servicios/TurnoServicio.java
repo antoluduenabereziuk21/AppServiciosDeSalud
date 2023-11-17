@@ -124,4 +124,14 @@ public class TurnoServicio {
 
     }
 
+    public List<Turno> filtrarPorEstadoYPaciente(String email, String estado) throws MiExcepcion{
+        Validacion.validarStrings(email,estado);
+        FiltroTurno filtro = new FiltroTurno();
+        Paciente paciente = new Paciente();
+        paciente.setEmail(email);
+        filtro.setPaciente(paciente);
+        filtro.setEstados(new EstadoTurno[]{EstadoTurno.valueOf(estado)});
+        return turnoRepositorio.listarPorEstadoDelTurno(filtro);
+    }
+
 }
