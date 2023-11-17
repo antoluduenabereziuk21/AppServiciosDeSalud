@@ -347,11 +347,13 @@
             </div>
         </div>
     </div>
+    <div th:replace="/fragments/spinner :: div"></div>
     <script th:inline="javascript">
         const botones = document.querySelectorAll('button[id^="notificacion-"]');
         const botones_array = Array.from(botones);
         botones_array.forEach(element => {
             element.addEventListener("click", (e) => {
+                document.getElementById("spinner").style.display = "flex";
                 const idNotificacion = e.target.classList[2];
                 fetch(
                     `http://localhost:8080/datos/marcarLeida/${idNotificacion}`
@@ -360,24 +362,26 @@
                         if (response.ok) {
                             const notificacion = document.getElementById(`notificacion-${idNotificacion}`);
                             notificacion.style.display = "none";
-
+                            const notificacion_numero = document.getElementById("numeroDeNotificaciones");
                             // Decrementar el número de notificaciones solo si es mayor a cero
                             const notificacionesNoLeidas = parseInt(notificacion_numero.innerText);
-                            if (notificacionesNoLeidas > 0) {
+                            if (notificacionesNoLeidas > 1) {
                                 notificacion_numero.innerText = notificacionesNoLeidas - 1;
                             }
 
                             // Ocultar el número si ya no quedan notificaciones por leer
-                            if (parseInt(notificacion_numero.innerText) === 0) {
+                            if (notificacionesNoLeidas <= 1) {
                                 notificacion_numero.style.display = "none";
-                                document.getElementById("numeroDeNotificacionesFondo").style.display = "none";
+                                document.getElementById("btnNotificacionesCant").style.display = "none";
                             }
                         } else {
                             throw new Error('Error al marcar la notificación como leída');
                         }
+                        document.getElementById("spinner").style.display = "none";
                     })
                     .catch(error => {
                         console.error('Error:', error);
+                        document.getElementById("spinner").style.display = "none";
                     });
             })
         });
