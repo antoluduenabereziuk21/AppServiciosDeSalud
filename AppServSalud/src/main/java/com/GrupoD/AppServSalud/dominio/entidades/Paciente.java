@@ -25,7 +25,7 @@ public class Paciente extends Usuario {
     @Enumerated(EnumType.STRING)
     private ObraSocialEnum obraSocial;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
     private HistoriaClinica historiaClinica;
 
 }

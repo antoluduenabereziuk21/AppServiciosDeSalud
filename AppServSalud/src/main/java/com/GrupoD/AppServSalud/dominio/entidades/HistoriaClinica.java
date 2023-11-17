@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +28,14 @@ public class HistoriaClinica {
     
     private String historia;
      
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Profesional profesional;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
     
-    @Embedded
-    private List<RegistroConsulta> registroConsulta = new ArrayList<RegistroConsulta>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistroConsulta> registrosConsultas = new ArrayList<>();
 }
