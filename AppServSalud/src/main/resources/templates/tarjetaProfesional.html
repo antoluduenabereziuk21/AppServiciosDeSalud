@@ -149,14 +149,14 @@
                     `http://localhost:8080/datos/ofertas?fecha=${fecha}&idProfesional=${idProfesional}`
                 ).then(response => response.json())
                     .then(data => {
-                        if (data.length == 0) {
+                        if (data.length === 0) {
                             document.getElementById("horarios-" + idProfesional).innerHTML = "<option value=''>No hay horarios disponibles</option>";
                             document.getElementById("reservar-"+idProfesional).disabled = true;
                         } else {
                             const horarios = data.map(oferta => {
                                 return `<option value="${oferta[0]}">${oferta[1]}</option>`
                             })
-                            document.getElementById("idOferta-"+idProfesional).value = data[1][0];
+                            document.getElementById("idOferta-"+idProfesional).value = data[0][0];
                             document.getElementById("horarios-" + idProfesional).innerHTML = horarios.join("");
                             document.getElementById("reservar-"+idProfesional).disabled = false;
                         }
@@ -183,14 +183,15 @@
                     `http://localhost:8080/datos/ofertas?fecha=${fecha}&idProfesional=${idProfesional}`
                 ).then(response => response.json())
                     .then(data => {
-                        if (data.length == 0) {
+                        console.log(data);
+                        if (data.length === 0) {
                             document.getElementById("horarios-" + idProfesional).innerHTML = "<option value=''>No hay horarios disponibles</option>";
                             document.getElementById("reservar-"+ idProfesional).disabled = true;
                         } else {
                             const horarios = data.map(oferta => {
                                 return `<option value="${oferta[0]}">${oferta[1]}</option>`
                             })
-                            document.getElementById("idOferta-"+idProfesional).value = data[1][0];
+                            document.getElementById("idOferta-"+idProfesional).value = data[0][0];
                             document.getElementById("horarios-" + idProfesional).innerHTML = horarios.join("");
                             document.getElementById("reservar-"+ idProfesional).disabled = false;
                         }

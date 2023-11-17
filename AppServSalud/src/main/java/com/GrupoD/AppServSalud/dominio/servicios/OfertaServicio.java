@@ -54,6 +54,7 @@ public class OfertaServicio {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaOerta = null;
+        System.out.println(horarioOferta);
         try {
             fechaOerta = dateFormat.parse(fechaConsulta);
         } catch (ParseException ex) {
@@ -72,8 +73,13 @@ public class OfertaServicio {
         oferta.setDetalle(detalleOferta);
         oferta.setPrecio(precioOferta);
         oferta.setUbicacion(ubicacionOferta);
-        oferta.setHorario(HorarioEnum.valueOf("_" + horarioOferta + "HS"));
+        try{
+            oferta.setHorario(HorarioEnum.valueOf("HORARIO_" + horarioOferta + "_00_HS"));
+        }catch (IllegalArgumentException e){
+            throw new MiExcepcion("El horario no es valido");
+        }
         oferta.setFecha(fechaOerta);
+        oferta.setReservado(false);
 
         ofertaRepositorio.save(oferta);
     }

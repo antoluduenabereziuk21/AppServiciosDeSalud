@@ -57,7 +57,7 @@ public class OfertaControlador {
     public String enviarOferta(String tipoConsulta, String detalleOferta, String fechaConsulta,
             String horarioOferta, String ubicacionOferta, Double precioOferta, String profesionalOferta,
             ModelMap modelo) {
-
+        // horarioOferta = "HORARIO_" + horarioOferta + "_00_HS";
         try {
             ofertaServicio.crearOferta(tipoConsulta, detalleOferta, fechaConsulta, horarioOferta, ubicacionOferta,
                     precioOferta, profesionalOferta);
