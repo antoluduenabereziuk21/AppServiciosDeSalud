@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -103,7 +102,7 @@ public class AdminController {
     
     try {
       adminServicio.modificarAdmin(emailPath, email, nombre, apellido, dni, sexo, telefono);
-      return "redirect:/admin/perfil/" + email+"?exito=Administrador modificado correctamente";
+      return "redirect:/perfil/" + email+"?exito=Administrador modificado correctamente";
     } catch (MiExcepcion e) {
       modelo.put("error", e.getMessage());
       modelo.put("admin", adminServicio.buscarPorEmail(emailPath));

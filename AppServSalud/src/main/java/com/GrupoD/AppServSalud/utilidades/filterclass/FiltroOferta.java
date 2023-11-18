@@ -1,7 +1,6 @@
 package com.GrupoD.AppServSalud.utilidades.filterclass;
 
 import java.util.Date;
-import java.util.List;
 
 import com.GrupoD.AppServSalud.utilidades.EspecialidadEnum;
 import com.GrupoD.AppServSalud.utilidades.HorarioEnum;
