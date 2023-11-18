@@ -25,7 +25,6 @@ const decrementar = () => {
     if (valorActualNum > 0) {
         progressBar.style.width = (valorActualNum - 1.5) + '%';
     } else {
-        // Oculta la notificación con una animación después de un retraso de 1 segundo (1000 ms)
         setTimeout(function () {
             toastExito.style.right = '-100%';
         }, 1000);
@@ -42,7 +41,6 @@ const decrementar2 = () => {
     if (valorActualNum > 0) {
         progressBar.style.width = (valorActualNum - 1.5) + '%';
     } else {
-        // Oculta la notificación con una animación después de un retraso de 1 segundo (1000 ms)
         setTimeout(function () {
             toastError.style.right = '-100%';
         }, 1000);
@@ -62,4 +60,8 @@ window.onload = function () {
     setInterval(function () {
         decrementar2();
     }, 80);
+    setTimeout(() => {
+        toastExito.style.display = 'none';
+    }, 7000);
+
 }

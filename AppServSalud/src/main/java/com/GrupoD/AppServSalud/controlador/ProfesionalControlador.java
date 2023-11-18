@@ -50,7 +50,8 @@ public class ProfesionalControlador {
 
   @Autowired
   UsuarioServicio usuarioServicio;
-
+  
+  @PreAuthorize("hasRole('ROLE_MEDICO')")
   @GetMapping("/dashboard")
   public String homeProfesional(@RequestParam(name = "exito", required = false) String exito,
       @RequestParam(name = "error", required = false) String error, ModelMap modelo) {

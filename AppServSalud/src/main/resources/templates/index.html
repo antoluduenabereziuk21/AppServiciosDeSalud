@@ -1,132 +1,129 @@
 <!DOCTYPE html>
-<html
-    lang="es"
-    xmlns:th="http://www.thymeleaft.org"
->
-    <head th:replace="/fragments/head :: head"></head>
-    <body>
+<html lang="es" xmlns:th="http://www.thymeleaft.org">
 
-        <header th:replace="/fragments/header :: header"></header>
+<head th:replace="/fragments/head :: head"></head>
 
-        <div th:replace="/fragments/toast :: div"></div>
-        <main id="index">
-            <div class="mb-5">
-                <section class="contenedor-video">
-                    <div id="video_overlays">
-                        <div class="info-home row">
-                            <h1> ¿En qué podemos ayudarte? </h1>
-                            <div th:replace="/fragments/buscador :: buscador"></div>
-                        </div>
+<body>
+
+    <header th:replace="/fragments/header :: header"></header>
+
+    <div th:replace="/fragments/toast :: div"></div>
+    <main id="index">
+        <div class="mb-3">
+            <section class="contenedor-video">
+                <div id="video_overlays">
+                    <div class="info-home row">
+                        <h1> ¿En qué podemos ayudarte? </h1>
+                        <div th:replace="/fragments/buscador :: buscador"></div>
                     </div>
-                    <video
-                        autoplay
-                        muted
-                        loop
-                    >
-                        <source
-                            th:src="@{/assets/MediVideo.MP4}"
-                            type="video/mp4"
-                        >
-                    </video>
-
-                </section>
-                <div class="container justify-content-center align-items-center mt-5">
-
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img
-                                    th:src="@{/assets/profSalud.jpg}"
-                                    class="img-fluid rounded-start"
-                                    alt="..."
-                                >
-                            </div>
-                            <div
-                                class="col-md-8"
-                                style=" background-color:rgba(255, 140, 0, 1)"
-                            >
-                                <div class="card-body justify-content-center align-items-center">
-                                    <h5 class="card-title">TURNOS</h5>
-                                    <p class="card-text">Mirá cómo programar tus consultas presenciales o virtuales.</p>
-                                    <button class="btn btn-primary"><a
-                                            class="nav-link active"
-                                            aria-current="page"
-                                            href="/infoTurnos"
-                                        >Ver Mas</a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img
-                                    th:src="@{/assets/profSalud.jpg}"
-                                    class="img-fluid rounded-start"
-                                    alt="..."
-                                >
-                            </div>
-                            <div
-                                class="col-md-8"
-                                style="background-color: #20c997"
-                            >
-                                <div class="card-body justify-content-center align-items-center">
-                                    <h5 class="card-title">ESPECIALIDADES MÉDICAS</h5>
-                                    <p class="card-text">Conocé todas las especialidades que tenemos para ofrecerte. Y
-                                        nuestros
-                                        Profesionales</p>
-                                    <button class="btn btn-primary"><a
-                                            class="nav-link active"
-                                            aria-current="page"
-                                            href="/especialidades"
-                                        >Ver Mas</a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-                <!-- <div class="container justify-content-center align-items-center">
-                    <div class="card mb-3 mt-5">
-                        <div class="row g-0">
-                            <div class="col-md-6">
-                                <img
-                                    th:src="@{/assets/turnosProfesionales.jpg}"
-                                    class="img-fluid rounded-start"
-                                    alt="..."
-                                >
-                            </div>
-                            <div
-                                class="col-md-6"
-                                style="background-color: rgba(114, 169, 114, 0.25)"
-                            >
-                                <div class="card-body justify-content-center align-items-center">
-                                    <h5 class="card-title">Portal de Paciente</h5>
-                                    <h6>GESTIÓN DE TURNOS</h6>
-                                    <p class="card-text">Desde aquí podrás programar consultas médicas para vos y tu
-                                        familia,
-                                        consultar tus turnos asignados y ver los resultados de tus estudios.</p>
-                                    <button class="btn btn-primary"><a
-                                            class="nav-link active"
-                                            aria-current="page"
-                                            href="/login"
-                                        >A Mi Portal</a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                <video autoplay muted loop>
+                    <source th:src="@{/assets/MediVideo.webm}" type="video/mp4">
+                </video>
+            </section>
+        </div>
+        <br>
+        <br>
+        <section id="servicios-cards" class="d-flex justify-content-evenly m-5">
+            <a th:href="@{/especialidades}" class="card col-sm-3 efectos-card-propios" style="text-decoration: none;">
+                <img th:src="@{/assets/clinico2.jpg}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Especialidades Médicas</h5>
+                    <p class="card-text">Nuestros médicos están altamente capacitados y experimentados. Están dedicados
+                        a brindar la mejor atención posible a sus pacientes.</p>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <button class="btn btn-primary">Ver mas</button>
+                </div>
+            </a>
+            <a th:href="@{/especialidades}" class="card col-sm-3 efectos-card-propios" style="text-decoration: none;">
+                <img th:src="@{/assets/agendaturno.jpg}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Turnos</h5>
+                    <p class="card-text">Con Mediya, puede programar una cita con un médico en cuestión de minutos.
+                        Simplemente seleccione el médico y la hora que le convienen, y confirme su cita.
+                    </p>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <button class="btn btn-primary">Ver mas</button>
+                </div>
+            </a>
+            <div class="card col-sm-3 efectos-card-propios" style="text-decoration: none;" >
+                <img th:src="@{/assets/diagnosticoonline.jpg}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Diagnóstico Online</h5>
+                    <p class="card-text">Un diagnóstico médico en línea es un servicio que le permite obtener una
+                        evaluación de su salud por parte de un médico de forma remota. Esto puede ser una excelente
+                        opción si tiene síntomas leves o si no puede programar una cita con un médico en persona..</p>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <button class="btn btn-secondary" disabled>Proximamente...</button>
+                </div>
             </div>
-        </main>
+            
+        </section>
+        <br>
+        <br>
+        <section class="row" id="con-nosotros">
+            <div class="col-sm-6" id="trabaja-con-nosotros-1">
+            </div>
+            <div class="col-sm-6" id="trabaja-con-nosotros-2">
+                <div class="text-center">
+                    <h3 id="trabaja-con-nosotros-tittle">Trabaja con nosotros!</h3>
+                    <button class="btn btn-primary">Contactanos</button>
+                </div>
+            </div>
+        </section>
+        <br>
+        <br>
+        <section class="d-flex justify-content-evenly m-5">
+            <a th:href="@{/especialidades}" class="p-2 imagenes-circulares">
+                <img th:src="@{/assets/medicos.jpg}" alt="">
+                <div>
+                    <p>Nuestros</p>
+                    <p>Medicos</p>
+                </div>
+            </a>
+            <a  th:href="@{/especialidades}" class="p-2 imagenes-circulares">
+                <img th:src="@{/assets/agendaturno.jpg}" alt="">
+                <div>
+                    <p>Solicite</p>
+                    <p>su Turno</p>
+                </div>
+            </a>
+            <a th:href="@{/infoTurnos}"  class="p-2 imagenes-circulares">
+                <img th:src="@{/assets/pediatria.jpg}" alt="">
+                <div>
+                    <p>Obras</p>
+                    <p>Sociales</p>
+                </div>
+            </a>
+        </section>
+        <br>
+        <br>
+        <br>
+        <section id="sobrenosotros" class="container">
+          <h2>¿Quienes somos en Medi Ya!?</h2>
+          <p>
+            Somos profesionales de la salud comprometidos con la creación de nuestra plataforma. Ofrecemos servicios personalizados, permitiendo que cada profesional se una, comparta su especialidad y horario, facilitando a los pacientes agendar citas fácilmente. Imaginamos un mundo donde la atención médica sea eficiente, efectiva y centrada en el paciente. Tu salud es nuestra prioridad.</p>
+        </section>
+        <br>
+        <br>
+        <br>
+        <section id="testimonios">
+            <h3>Testimonios: </h3>
+            <p>"La experiencia con los doctores de MediYa fue muy diferente. Me sentí muy cómoda y confiada en que me iban a ayudar. La doctora Marcuzi Mariana me escuchó atentamente y me explicó todo con claridad. Estoy muy contenta de haber elegido este servicio. "  <i>-Aimara Mengana.</i></p>
+            <p> "Me encontraba muy mal y no podía ir al médico en persona. Gracias a los doctores de MediYa pude obtener una evaluación de mi salud de forma rápida y sencilla. El doctor Perez Marcos me dio un diagnóstico preciso y me recomendó un tratamiento que me ha ayudado a mejorar mucho. "  <i>-Maria Garcia.</i></p>
+            <p>"La experiencia con el pediatra de esta web ha sido increíble.  Brinda atención profesional y comprensiva a mi hijo. La facilidad para programar citas en línea y la valiosa información disponible hacen que confíe plenamente en este servicio. ¡Recomendado para todas las madres preocupadas! ¡Por la salud de sus hijos!. "  <i>-Carlota Menendez.</i></p>
+        </section>
+        <br>
+        <br>
+    </main>
 
-        <footer th:replace="/fragments/footer :: footer"></footer>
+    <footer th:replace="/fragments/footer :: footer"></footer>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"
-        ></script>
-        <script th:src="@{/js/toast.js}"></script>
-        <script th:src="@{/js/motorBusqueda.js}"></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script th:src="@{/js/toast.js}"></script>
+    <script th:src="@{/js/motorBusqueda.js}"></script>
+</body>
+
 </html>
